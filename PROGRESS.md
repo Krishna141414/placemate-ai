@@ -9,8 +9,8 @@ Resume rule: read `CLAUDE.md` and this file, then continue `BUILD_PROMPT.md` fro
 | 0 | Preflight | done |
 | 1 | Research & plan | done |
 | 2 | Data | done |
-| 3 | Backend core | next |
-| 4 | RAG | todo |
+| 3 | Backend core | done |
+| 4 | RAG | next |
 | 5 | Tools & agent | todo |
 | 6 | Tests & evaluation | todo |
 | 7 | Frontend app | todo |
@@ -20,7 +20,20 @@ Resume rule: read `CLAUDE.md` and this file, then continue `BUILD_PROMPT.md` fro
 
 ## Next step
 
-Phase 3, step 1: create the venv (`py -3.14 -m venv backend/.venv`), pinned `backend/requirements.txt` (CPU torch from the PyTorch CPU index), then the FastAPI app factory, config, DB models, schemas, logging, error handlers and seed script. Interfaces are fixed in the plan (Task 3).
+Phase 4, step 1: RAG ingestion. Extend `backend/app/rag/loader.py` (load corpus, clean, PDF text), then `chunker.py`, `models.py` (embedder + reranker singletons), `index.py` (FAISS + BM25, save/load/ensure), `retriever.py` (baseline vs final), then LLM providers, injection guard, pipeline and `/api/ask`. Register the index build as a startup hook in `app/main.py` (`app.state.startup_hooks`). Confirm the Gemini model id with a live call if a key is available (D-28).
+
+## Phase 3 - Backend core (done 2026-11-14)
+
+- venv on Python 3.14; `backend/requirements.txt` is a full `pip freeze` (95 pins) with the PyTorch CPU index. `torch 2.15.0+cpu`, `torch.cuda.is_available()` is False.
+- 3.1 `app/main.py` (factory + lifespan), `config.py`, `db.py`, `models.py` (User, StudentProfile, Document, Conversation, Message, Application, PrepPlan, AgentRun, Event), `schemas.py`, `logging_conf.py` (JSON lines, request id, PII scrub filter), `errors.py` (one error envelope), `seed.py` (`python -m app.seed [--reset]`).
+- 3.2 `security/auth.py` (argon2id, JWT in httpOnly SameSite=Lax cookie, role dependencies), `security/rate_limit.py` (sliding window: auth 10/min, probe 5/min, default 60/min), `security/headers.py` (request context, security headers, origin check), CORS limited to `FRONTEND_ORIGIN`. `security/pii.py` written early because the log filter uses it.
+- 3.3 Server started with uvicorn: `/health` ok, `/docs` serves Swagger UI, login as the demo student works, `/api/meta/companies` returns 12.
+- Tests: `tests/test_auth.py` + `tests/test_security_http.py`, 38 passed.
+
+Notes:
+- One requirements file instead of the planned runtime/dev split: one command to set up, and the test tools are needed for the required test evidence anyway.
+- In development an unset `SECRET_KEY` generates a random key once into `backend/storage/dev_secret.key` (ignored). In production the app refuses to start without a real key.
+- `GOOGLE_API_KEY` is accepted as an alias for `GEMINI_API_KEY`.
 
 ## Phase 2 - Data (done 2026-11-14)
 

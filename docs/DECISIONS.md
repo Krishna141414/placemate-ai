@@ -39,3 +39,18 @@ Short record of each design choice and the reason. Newest phase at the bottom.
 | D-26 | Architecture diagram uses the project palette, in the project file only | The Diagram Design skill's global style guide was left at its defaults; changing a global tool for one project is not this project's call. |
 | D-27 | Last30days ran cookie-free and its first-run setup was not persisted | I did not read browser cookies or write to the user's global last30days config without being asked. Sources were Reddit, Hacker News, GitHub and web. |
 | D-28 | Gemini model id is confirmed with a live call in Phase 4 | Docs show `gemini-2.x` is no longer current (GA: `gemini-3.6-flash`, `gemini-3.5-flash-lite`); the free-tier choice is verified rather than assumed. |
+
+## Phase 3 - Backend core
+
+| # | Decision | Reason |
+|---|---|---|
+| D-29 | Middleware is plain ASGI, not `BaseHTTPMiddleware` | Streaming (SSE) responses pass through untouched, and the request-id context variable stays valid. |
+| D-30 | Order: CORS, security headers, request context, origin check, rate limit, routes | Every response, including 403, 429 and 500, carries CORS and hardening headers and a request id. |
+| D-31 | Unhandled exceptions are caught in the request-context middleware | The client gets a generic message and a request id; the traceback goes only to the log. |
+| D-32 | The role is read from the database on every request, not from the token | A forged or stale role claim cannot grant access. |
+| D-33 | Unknown email and wrong password give the same response and cost the same time | Prevents account enumeration. A dummy hash is verified when the email is unknown. |
+| D-34 | Rate limiting keys on the socket address, not `X-Forwarded-For` | The header is client-controlled. Behind a trusted proxy this would need to change. |
+| D-35 | A separate `probe` limit class (5/min) on `/api/meta/ping` | The Security page can show a real 429 without locking the demo account out of login. |
+| D-36 | Only the demo student and coordinator have known passwords | The other seeded students exist for analytics and get random unusable passwords. |
+| D-37 | Validation errors return field names and reasons, never the submitted value | Avoids reflecting user input (or a mistyped password) back in a response. |
+| D-38 | One pinned `requirements.txt` from `pip freeze` | Reproducible installs with a single command. |

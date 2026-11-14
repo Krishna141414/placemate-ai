@@ -2,7 +2,7 @@
 
 Every item in the official brief and in `CLAUDE.md`, where it is implemented, what proves it, and its status. Updated at the end of every phase.
 
-Status values: `planned`, `in progress`, `done`. Last updated: Phase 2 (2026-11-14).
+Status values: `planned`, `in progress`, `done`. Last updated: Phase 3 (2026-11-14).
 
 ## A. Official brief
 
@@ -84,8 +84,8 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 2 (2026-11-
 | # | Requirement | Implemented in | Proof | Status |
 |---|---|---|---|---|
 | F1 | FastAPI, SQLAlchemy + SQLite, Pydantic, FAISS, rank-bm25 | `backend/` | `requirements.txt` | planned |
-| F2 | Structured JSON logging | `app/logging_conf.py` | `tests/test_logging.py` | planned |
-| F3 | OpenAPI at `/docs` | `app/main.py` | Manual check in Phase 3 | planned |
+| F2 | Structured JSON logging | `app/logging_conf.py` | `tests/test_security_http.py` | done |
+| F3 | OpenAPI at `/docs` | `app/main.py` | Manual check in Phase 3 | done |
 | F4 | Next.js App Router, TypeScript, Tailwind, shadcn/ui | `frontend/` | Build | planned |
 | F5 | AI Elements for chat, citations, reasoning, tool calls | `frontend/components/ai-elements/` | Ask and Prep pages | planned |
 | F6 | Motion; GSAP + ScrollTrigger + Lenis on landing | `frontend/components/landing/` | Landing page | planned |
@@ -97,20 +97,20 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 2 (2026-11-
 
 | # | Requirement | Implemented in | Proof | Status |
 |---|---|---|---|---|
-| G1 | JWT in httpOnly cookie, student / coordinator roles | `app/security/auth.py` | `tests/test_auth.py` | planned |
-| G2 | argon2 password hashing | `app/security/auth.py` | `tests/test_auth.py` | planned |
+| G1 | JWT in httpOnly cookie, student / coordinator roles | `app/security/auth.py` | `tests/test_auth.py` | done |
+| G2 | argon2 password hashing | `app/security/auth.py` | `tests/test_auth.py` | done |
 | G3 | Role check on every admin route | `app/api/admin.py` | `test_admin.py::all_admin_routes_forbidden` | planned |
-| G4 | Input validation | `app/schemas.py` | `tests/test_ask_api.py`, `test_auth.py` | planned |
+| G4 | Input validation | `app/schemas.py` | `tests/test_ask_api.py`, `test_auth.py` | done |
 | G5 | Upload validation: type, size, sanitised filename | `app/security/uploads.py` | `tests/test_admin.py` | planned |
-| G6 | Rate limiting | `app/security/rate_limit.py` | `tests/test_security_http.py` | planned |
-| G7 | CORS restricted to the frontend origin | `app/main.py` | `tests/test_security_http.py` | planned |
-| G8 | Security headers | `app/security/headers.py` | `tests/test_security_http.py` | planned |
+| G6 | Rate limiting | `app/security/rate_limit.py` | `tests/test_security_http.py` | done |
+| G7 | CORS restricted to the frontend origin | `app/main.py` | `tests/test_security_http.py` | done |
+| G8 | Security headers | `app/security/headers.py` | `tests/test_security_http.py` | done |
 | G9 | Injection guard on user input | `app/security/injection.py` | `tests/test_injection.py`, eval block rate | planned |
 | G10 | Injection guard on retrieved / uploaded text | `app/security/injection.py` | `tests/test_injection.py` | planned |
 | G11 | PII redaction before any LLM; never logged | `app/security/pii.py`, `logging_conf.py` | `tests/test_pii.py` | planned |
 | G12 | Secrets only in `.env`; `.env.example` committed | `.env.example`, `app/config.py` | Phase 0 | done |
-| G13 | No stack traces to users | `app/errors.py` | `tests/test_security_http.py` | planned |
-| G14 | Dependency pinning | `requirements.txt`, `package-lock.json` | Files | planned |
+| G13 | No stack traces to users | `app/errors.py` | `tests/test_security_http.py` | done |
+| G14 | Dependency pinning | `requirements.txt`, `package-lock.json` | Files | done |
 | G15 | `SECURITY.md` with file locations | `SECURITY.md` | Document | planned |
 
 ## H. Evaluation and testing
