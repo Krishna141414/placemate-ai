@@ -7,8 +7,8 @@ Resume rule: read `CLAUDE.md` and this file, then continue `BUILD_PROMPT.md` fro
 | Phase | Name | Status |
 |---|---|---|
 | 0 | Preflight | done |
-| 1 | Research & plan | next |
-| 2 | Data | todo |
+| 1 | Research & plan | done |
+| 2 | Data | next |
 | 3 | Backend core | todo |
 | 4 | RAG | todo |
 | 5 | Tools & agent | todo |
@@ -20,7 +20,19 @@ Resume rule: read `CLAUDE.md` and this file, then continue `BUILD_PROMPT.md` fro
 
 ## Next step
 
-Phase 1, step 1: Last30days research on AI career/placement copilots and RAG product UIs -> `docs/research.md`.
+Phase 2, step 1: create the fictional sample data in `backend/data/` (policy, 12 companies with YAML front matter, 15 interviews, 6 guides, students, resumes). Front matter format is fixed in `docs/superpowers/plans/2026-11-14-placemate.md` (Task 2).
+
+## Phase 1 - Research & plan (done 2026-11-14)
+
+- 1.1 Last30days ran (Reddit 17 threads, HN 13 stories, GitHub 4 items + 15 web pages). X / YouTube / TikTok not configured; Polymarket timed out. Eight takeaways in `docs/research.md`. Community evidence on campus-placement tools was thin and is flagged as such in the doc.
+- 1.2 Context7 docs pulled for FastAPI, Next.js 16 (`proxy.ts` replaces `middleware.ts`), shadcn (`init`, `mcp init --client claude`), AI Elements (`npx ai-elements@latest add <name>`), google-genai, Lenis + GSAP. Summary table at the end of `docs/research.md`.
+- 1.3 Superpowers brainstorming + writing-plans used. Plan: `docs/superpowers/plans/2026-11-14-placemate.md`. Executing inline.
+- 1.4 Written: `docs/requirements.md`, `docs/architecture.md` (Diagram Design figure as HTML + SVG + PNG, plus Mermaid), `docs/REQUIREMENTS_MATRIX.md`, `docs/DECISIONS.md` (D-01 to D-28).
+
+Notes:
+- The Diagram Design PNG helper needs Python Playwright, which is not installed. The PNG was rendered with the Playwright MCP instead; the SVG came from the skill's own exporter and the file passes its `self_check.py`.
+- `.env.example` still names `gemini-2.5-flash`; docs show that family is no longer current. To fix in Phase 4 after a live call confirms the free-tier model (D-28).
+- A Gemini/Google key appears to exist in the machine's process environment (seen as "present" by a tool diagnostic, value never read). Phase 4 checks whether the app can use it.
 
 ## Phase 0 - Preflight (done 2026-11-14)
 

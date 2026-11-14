@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1040 544" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="architecture-diagram-title architecture-diagram-desc" id="architecture-diagram-root">
+        <title id="architecture-diagram-title">PlaceMate system architecture</title>
+        <desc id="architecture-diagram-desc">Students and coordinators use a Next.js app that calls a FastAPI edge, which routes to a RAG pipeline, a prep agent and deterministic tools; these use an LLM router, a FAISS and BM25 index over placement documents, and a SQLite database.</desc>
+        <defs>
+      <style>@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;family=Noto+Serif:ital@0;1&amp;family=Noto+Sans+KR:wght@400;500;600&amp;family=Noto+Serif+KR:wght@400&amp;family=Noto+Sans+TC:wght@400;500;600&amp;family=Noto+Serif+TC:wght@400&amp;display=swap');
+      #architecture-diagram-root { --color-paper:   #ffffff;
+      --color-ink:     #0b1f3a;
+      --color-muted:   #475569;
+      --color-accent:  #1d4ed8;
+      --font-sans:     'Geist', system-ui, sans-serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace; }
+      #architecture-diagram-root { font-family: var(--font-sans); color: var(--color-ink); }
+      #architecture-diagram-root .diagram-container { width: 100%; overflow-x: auto; }
+      @media print {
+#architecture-diagram-root .diagram-container { overflow-x: visible; }
+}</style>
+          <marker id="architecture-diagram-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#475569"/></marker>
+          <marker id="architecture-diagram-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#1d4ed8"/></marker>
+          <marker id="architecture-diagram-arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#475569"/></marker>
+        </defs>
+
+        <rect width="100%" height="100%" fill="#ffffff"/>
+
+        <!-- Zones -->
+        <rect x="608" y="64" width="200" height="408" rx="8" fill="#0b1f3a" stroke="#0b1f3a" stroke-width="0.8" fill-opacity="0.02" stroke-opacity="0.10"/>
+        <rect x="676" y="68" width="64" height="12" rx="2" fill="#ffffff"/>
+        <text x="708" y="77" fill="#64748b" font-size="7" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.14em">AI CORE</text>
+
+        <rect x="848" y="64" width="176" height="408" rx="8" fill="#0b1f3a" stroke="#0b1f3a" stroke-width="0.8" fill-opacity="0.02" stroke-opacity="0.10"/>
+        <rect x="884" y="68" width="104" height="12" rx="2" fill="#ffffff"/>
+        <text x="936" y="77" fill="#64748b" font-size="7" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.14em">MODELS AND DATA</text>
+
+        <!-- Connectors (drawn before nodes) -->
+        <!-- Users -> Frontend -->
+        <line x1="160" y1="276" x2="216" y2="276" stroke="#475569" stroke-width="1.2" marker-end="url(#architecture-diagram-arrow)"/>
+        <!-- Frontend -> API -->
+        <line x1="360" y1="276" x2="416" y2="276" stroke="#475569" stroke-width="1.2" marker-end="url(#architecture-diagram-arrow)"/>
+        <rect x="370" y="256" width="36" height="12" rx="2" fill="#ffffff"/>
+        <text x="388" y="265" fill="#64748b" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">HTTPS</text>
+
+        <!-- API -> RAG -->
+        <path d="M 560,254 H 584 Q 592,254 592,246 V 148 Q 592,140 600,140 H 624" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#architecture-diagram-arrow)"/>
+        <!-- API -> Agent -->
+        <line x1="560" y1="276" x2="624" y2="276" stroke="#475569" stroke-width="1.2" marker-end="url(#architecture-diagram-arrow)"/>
+        <!-- API -> Tools -->
+        <path d="M 560,298 H 584 Q 592,298 592,306 V 404 Q 592,412 600,412 H 624" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#architecture-diagram-arrow)"/>
+
+        <!-- Agent -> RAG -->
+        <line x1="708" y1="232" x2="708" y2="184" stroke="#475569" stroke-width="1.2" marker-end="url(#architecture-diagram-arrow)"/>
+        <rect x="716" y="202" width="58" height="12" rx="2" fill="#ffffff"/>
+        <text x="745" y="211" fill="#64748b" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">RETRIEVES</text>
+        <!-- Agent -> Tools -->
+        <line x1="708" y1="320" x2="708" y2="368" stroke="#475569" stroke-width="1.2" marker-end="url(#architecture-diagram-arrow)"/>
+        <rect x="716" y="338" width="38" height="12" rx="2" fill="#ffffff"/>
+        <text x="735" y="347" fill="#64748b" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">CALLS</text>
+
+        <!-- RAG -> Index -->
+        <line x1="792" y1="124" x2="864" y2="124" stroke="#475569" stroke-width="1.2" marker-end="url(#architecture-diagram-arrow)"/>
+        <!-- RAG -> LLM router -->
+        <path d="M 792,156 H 820 Q 828,156 828,164 V 248 Q 828,256 836,256 H 864" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#architecture-diagram-arrow)"/>
+        <!-- Agent -> LLM router -->
+        <line x1="792" y1="288" x2="864" y2="288" stroke="#475569" stroke-width="1.2" marker-end="url(#architecture-diagram-arrow)"/>
+        <!-- Agent -> SQLite -->
+        <path d="M 792,304 H 820 Q 828,304 828,312 V 384 Q 828,392 836,392 H 864" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#architecture-diagram-arrow)"/>
+        <!-- Tools -> SQLite -->
+        <line x1="792" y1="424" x2="864" y2="424" stroke="#475569" stroke-width="1.2" marker-end="url(#architecture-diagram-arrow)"/>
+
+        <!-- Nodes -->
+        <!-- Users -->
+        <rect x="32" y="232" width="128" height="88" rx="6" fill="#ffffff"/>
+        <rect x="32" y="232" width="128" height="88" rx="6" fill="#f8fafc" stroke="#0b1f3a" stroke-width="1" stroke-opacity="0.28"/>
+        <rect x="40" y="238" width="28" height="12" rx="2" fill="none" stroke="#0b1f3a" stroke-width="0.8" stroke-opacity="0.30"/>
+        <text x="54" y="247" fill="#0b1f3a" font-size="7" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.08em" fill-opacity="0.75">USER</text>
+        <text x="96" y="276" fill="#0b1f3a" font-size="12" font-weight="600" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">Users</text>
+        <text x="96" y="292" fill="#475569" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">student</text>
+        <text x="96" y="306" fill="#475569" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">coordinator</text>
+
+        <!-- Frontend -->
+        <rect x="216" y="232" width="144" height="88" rx="6" fill="#ffffff"/>
+        <rect x="216" y="232" width="144" height="88" rx="6" fill="#ffffff" stroke="#0b1f3a" stroke-width="1" stroke-opacity="0.28"/>
+        <rect x="224" y="238" width="24" height="12" rx="2" fill="none" stroke="#0b1f3a" stroke-width="0.8" stroke-opacity="0.30"/>
+        <text x="236" y="247" fill="#0b1f3a" font-size="7" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.08em" fill-opacity="0.75">UI</text>
+        <text x="288" y="276" fill="#0b1f3a" font-size="12" font-weight="600" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">Next.js app</text>
+        <text x="288" y="292" fill="#475569" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">landing · guided tour</text>
+        <text x="288" y="306" fill="#475569" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">10 app pages</text>
+
+        <!-- API edge -->
+        <rect x="416" y="232" width="144" height="88" rx="6" fill="#ffffff"/>
+        <rect x="416" y="232" width="144" height="88" rx="6" fill="#ffffff" stroke="#0b1f3a" stroke-width="1" stroke-opacity="0.28"/>
+        <rect x="424" y="238" width="28" height="12" rx="2" fill="none" stroke="#0b1f3a" stroke-width="0.8" stroke-opacity="0.30"/>
+        <text x="438" y="247" fill="#0b1f3a" font-size="7" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.08em" fill-opacity="0.75">API</text>
+        <text x="488" y="276" fill="#0b1f3a" font-size="12" font-weight="600" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">FastAPI edge</text>
+        <text x="488" y="292" fill="#475569" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">JWT cookie · roles</text>
+        <text x="488" y="306" fill="#475569" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">rate limit · CORS</text>
+
+        <!-- RAG pipeline (focal) -->
+        <rect x="624" y="96" width="168" height="88" rx="6" fill="#ffffff"/>
+        <rect x="624" y="96" width="168" height="88" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1"/>
+        <rect x="632" y="102" width="28" height="12" rx="2" fill="none" stroke="#1d4ed8" stroke-width="0.8" stroke-opacity="0.45"/>
+        <text x="646" y="111" fill="#1d4ed8" font-size="7" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.08em">RAG</text>
+        <text x="708" y="140" fill="#0b1f3a" font-size="12" font-weight="600" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">RAG pipeline</text>
+        <text x="708" y="156" fill="#334155" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">guard → BM25+FAISS → RRF</text>
+        <text x="708" y="170" fill="#334155" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">rerank → cited answer</text>
+
+        <!-- Prep agent (focal) -->
+        <rect x="624" y="232" width="168" height="88" rx="6" fill="#ffffff"/>
+        <rect x="624" y="232" width="168" height="88" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1"/>
+        <rect x="632" y="238" width="34" height="12" rx="2" fill="none" stroke="#1d4ed8" stroke-width="0.8" stroke-opacity="0.45"/>
+        <text x="649" y="247" fill="#1d4ed8" font-size="7" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.08em">AGENT</text>
+        <text x="708" y="276" fill="#0b1f3a" font-size="12" font-weight="600" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">Prep agent</text>
+        <text x="708" y="292" fill="#334155" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">plan → steps → recovery</text>
+        <text x="708" y="306" fill="#334155" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">approval gate → save</text>
+
+        <!-- Tools -->
+        <rect x="624" y="368" width="168" height="88" rx="6" fill="#ffffff"/>
+        <rect x="624" y="368" width="168" height="88" rx="6" fill="#ffffff" stroke="#0b1f3a" stroke-width="1" stroke-opacity="0.28"/>
+        <rect x="632" y="374" width="34" height="12" rx="2" fill="none" stroke="#0b1f3a" stroke-width="0.8" stroke-opacity="0.30"/>
+        <text x="649" y="383" fill="#0b1f3a" font-size="7" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.08em" fill-opacity="0.75">TOOLS</text>
+        <text x="708" y="412" fill="#0b1f3a" font-size="12" font-weight="600" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">Deterministic tools</text>
+        <text x="708" y="428" fill="#475569" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">eligibility · resume match</text>
+        <text x="708" y="442" fill="#475569" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">PII redaction · tracker</text>
+
+        <!-- Index + documents -->
+        <rect x="864" y="96" width="144" height="88" rx="6" fill="#ffffff"/>
+        <rect x="864" y="96" width="144" height="88" rx="6" fill="#f8fafc" stroke="#0b1f3a" stroke-width="1" stroke-opacity="0.28"/>
+        <rect x="872" y="102" width="34" height="12" rx="2" fill="none" stroke="#0b1f3a" stroke-width="0.8" stroke-opacity="0.30"/>
+        <text x="889" y="111" fill="#0b1f3a" font-size="7" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.08em" fill-opacity="0.75">STORE</text>
+        <text x="936" y="140" fill="#0b1f3a" font-size="12" font-weight="600" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">Index + documents</text>
+        <text x="936" y="156" fill="#475569" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">FAISS · BM25</text>
+        <text x="936" y="170" fill="#475569" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">docs + uploads</text>
+
+        <!-- LLM router -->
+        <rect x="864" y="232" width="144" height="88" rx="6" fill="#ffffff"/>
+        <rect x="864" y="232" width="144" height="88" rx="6" fill="#f8fafc" stroke="#0b1f3a" stroke-width="1" stroke-opacity="0.28"/>
+        <rect x="872" y="238" width="28" height="12" rx="2" fill="none" stroke="#0b1f3a" stroke-width="0.8" stroke-opacity="0.30"/>
+        <text x="886" y="247" fill="#0b1f3a" font-size="7" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.08em" fill-opacity="0.75">LLM</text>
+        <text x="936" y="276" fill="#0b1f3a" font-size="12" font-weight="600" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">LLM router</text>
+        <text x="936" y="292" fill="#475569" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">Gemini → local Qwen</text>
+        <text x="936" y="306" fill="#475569" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">→ extractive fallback</text>
+
+        <!-- SQLite -->
+        <rect x="864" y="368" width="144" height="88" rx="6" fill="#ffffff"/>
+        <rect x="864" y="368" width="144" height="88" rx="6" fill="#f8fafc" stroke="#0b1f3a" stroke-width="1" stroke-opacity="0.28"/>
+        <rect x="872" y="374" width="24" height="12" rx="2" fill="none" stroke="#0b1f3a" stroke-width="0.8" stroke-opacity="0.30"/>
+        <text x="884" y="383" fill="#0b1f3a" font-size="7" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.08em" fill-opacity="0.75">DB</text>
+        <text x="936" y="412" fill="#0b1f3a" font-size="12" font-weight="600" font-family="'Geist', system-ui, sans-serif" text-anchor="middle">SQLite</text>
+        <text x="936" y="428" fill="#475569" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">users · chats · plans</text>
+        <text x="936" y="442" fill="#475569" font-size="9" font-family="'Geist Mono', ui-monospace, monospace" text-anchor="middle">agent runs · events</text>
+
+        <!-- Legend -->
+        <line x1="32" y1="496" x2="1008" y2="496" stroke="#0b1f3a" stroke-width="0.8" stroke-opacity="0.10"/>
+        <text x="32" y="520" fill="#475569" font-size="8" font-family="'Geist Mono', ui-monospace, monospace" letter-spacing="0.14em">LEGEND</text>
+
+        <rect x="104" y="510" width="20" height="12" rx="2" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1"/>
+        <text x="132" y="520" fill="#475569" font-size="9" font-family="'Geist', system-ui, sans-serif">AI component</text>
+
+        <rect x="232" y="510" width="20" height="12" rx="2" fill="#ffffff" stroke="#0b1f3a" stroke-width="1" stroke-opacity="0.28"/>
+        <text x="260" y="520" fill="#475569" font-size="9" font-family="'Geist', system-ui, sans-serif">Application code</text>
+
+        <rect x="376" y="510" width="20" height="12" rx="2" fill="#f8fafc" stroke="#0b1f3a" stroke-width="1" stroke-opacity="0.28"/>
+        <text x="404" y="520" fill="#475569" font-size="9" font-family="'Geist', system-ui, sans-serif">User, model or data store</text>
+
+        <line x1="560" y1="516" x2="592" y2="516" stroke="#475569" stroke-width="1.2" marker-end="url(#architecture-diagram-arrow)"/>
+        <text x="600" y="520" fill="#475569" font-size="9" font-family="'Geist', system-ui, sans-serif">Call</text>
+
+        <rect x="656" y="510" width="20" height="12" rx="2" fill="#0b1f3a" stroke="#0b1f3a" stroke-width="0.8" fill-opacity="0.02" stroke-opacity="0.10"/>
+        <text x="684" y="520" fill="#475569" font-size="9" font-family="'Geist', system-ui, sans-serif">Zone</text>
+      </svg>
