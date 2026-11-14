@@ -8,8 +8,8 @@ Resume rule: read `CLAUDE.md` and this file, then continue `BUILD_PROMPT.md` fro
 |---|---|---|
 | 0 | Preflight | done |
 | 1 | Research & plan | done |
-| 2 | Data | next |
-| 3 | Backend core | todo |
+| 2 | Data | done |
+| 3 | Backend core | next |
 | 4 | RAG | todo |
 | 5 | Tools & agent | todo |
 | 6 | Tests & evaluation | todo |
@@ -20,7 +20,21 @@ Resume rule: read `CLAUDE.md` and this file, then continue `BUILD_PROMPT.md` fro
 
 ## Next step
 
-Phase 2, step 1: create the fictional sample data in `backend/data/` (policy, 12 companies with YAML front matter, 15 interviews, 6 guides, students, resumes). Front matter format is fixed in `docs/superpowers/plans/2026-11-14-placemate.md` (Task 2).
+Phase 3, step 1: create the venv (`py -3.14 -m venv backend/.venv`), pinned `backend/requirements.txt` (CPU torch from the PyTorch CPU index), then the FastAPI app factory, config, DB models, schemas, logging, error handlers and seed script. Interfaces are fixed in the plan (Task 3).
+
+## Phase 2 - Data (done 2026-11-14)
+
+- `backend/data/placement_policy.md` (15 sections: eligibility, backlogs, company categories, one-offer policy with the dream exception, PPO, attendance 75 percent, process stages, debarment, offer acceptance in 3 working days, documents, dress code).
+- 12 companies in `backend/data/companies/` with YAML front matter (criteria, skills, rounds, deadline) and a prose body.
+- 15 interview experiences in `backend/data/interviews/`, 6 guides in `backend/data/guides/`.
+- `students_seed.json` (10 students + coordinator), 3 demo resumes with fake contact details for the PII redactor.
+- `backend/data/fixtures/injected_notice.md`: planted-instruction document for injection tests; not indexed by default.
+- About 12,000 words in total. All fictional; the college is "Kaveri Ridge Institute of Technology (KRIT)".
+
+Demo student design (Ananya Rao: CSE, CGPA 7.8, 1 active backlog, batch 2027):
+- Eligible: nimbusware, quantaleaf, kairoscloud, brightpath, tessera.
+- Fails CGPA only: orbitpay (8.0), mosaicai (8.0). Fails CGPA and backlogs: veltrix (8.5, 0 backlogs).
+- Fails backlogs only: lumengrid (0 allowed). Fails branch: ferrowind, halcyon. Fails batch: zephyrnet (2026 only).
 
 ## Phase 1 - Research & plan (done 2026-11-14)
 

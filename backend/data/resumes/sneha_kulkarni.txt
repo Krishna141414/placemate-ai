@@ -1,0 +1,25 @@
+SNEHA KULKARNI
+Contact: +91-90000-67890 | sneha.kulkarni@krit.example
+Address: Plot 42, Sahakar Nagar, Near Ganesh Temple, Pune, Maharashtra 411009
+
+CAREER OBJECTIVE
+Electronics and Communication student seeking an embedded systems or IoT role.
+
+EDUCATION
+B.Tech, Electronics and Communication Engineering, Kaveri Ridge Institute of Technology, 2023 to 2027, CGPA 7.2
+
+SKILLS
+C, C++, Embedded C, Microcontrollers (ARM Cortex-M, 8051), Arduino, IoT, Sensors, UART, SPI, I2C, Python basics, MATLAB, Digital Electronics
+
+PROJECTS
+Smart Irrigation Controller (Embedded C, ARM, IoT)
+- Soil-moisture based pump controller that reports readings over MQTT to a small dashboard.
+
+Wearable Pulse Monitor (Arduino, C++)
+- Read a pulse sensor over I2C, filtered the signal and showed the heart rate on an OLED display.
+
+Line Follower Robot (8051)
+- Second-year project using IR sensors and PWM motor control.
+
+ACTIVITIES
+- Member, robotics club. Conducted an Arduino workshop for first-year students.

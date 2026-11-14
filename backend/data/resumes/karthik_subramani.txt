@@ -1,0 +1,28 @@
+KARTHIK SUBRAMANI
+Mobile: 9000054321
+Email: karthik.subramani@krit.example
+Address: No. 18, Temple Street, Gandhipuram, Coimbatore, Tamil Nadu 641012
+
+SUMMARY
+Information Technology student with a strong interest in backend development and problem solving in Java.
+
+EDUCATION
+B.Tech, Information Technology, Kaveri Ridge Institute of Technology, 2023 to 2027, CGPA 8.7
+
+TECHNICAL SKILLS
+Java, Spring Boot, SQL, PostgreSQL, Data Structures, Algorithms, Object Oriented Programming, DBMS, Operating Systems, REST API, Git, Docker basics, Redis basics
+
+PROJECTS
+Campus Marketplace API (Java, Spring Boot, PostgreSQL)
+- REST API for buying and selling used books with JWT login and role-based access.
+- Designed the schema, wrote indexes for search, and cached listings in Redis.
+
+Ticket Booking Simulator (Java)
+- Multi-threaded seat booking with locking to prevent double booking; wrote JUnit tests.
+
+URL Shortener (Java, Docker)
+- Small service with base-62 ids, packaged with Docker; notes on how it would scale (system design basics).
+
+ACHIEVEMENTS
+- 500+ problems solved, with a focus on graphs and dynamic programming.
+- Finalist, inter-college hackathon, 2026.

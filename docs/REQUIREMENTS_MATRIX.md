@@ -2,7 +2,7 @@
 
 Every item in the official brief and in `CLAUDE.md`, where it is implemented, what proves it, and its status. Updated at the end of every phase.
 
-Status values: `planned`, `in progress`, `done`. Last updated: Phase 1 (2026-11-14).
+Status values: `planned`, `in progress`, `done`. Last updated: Phase 2 (2026-11-14).
 
 ## A. Official brief
 
@@ -60,11 +60,11 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 1 (2026-11-
 
 | # | Requirement | Implemented in | Proof | Status |
 |---|---|---|---|---|
-| D1 | `placement_policy.md` | `backend/data/` | File | planned |
-| D2 | About 12 fictional company profiles + JDs | `backend/data/companies/` | Files | planned |
-| D3 | About 15 interview experiences | `backend/data/interviews/` | Files | planned |
-| D4 | About 6 prep guides | `backend/data/guides/` | Files | planned |
-| D5 | `students_seed.json`, demo resumes | `backend/data/` | Files | planned |
+| D1 | `placement_policy.md` | `backend/data/` | File | done |
+| D2 | About 12 fictional company profiles + JDs | `backend/data/companies/` | Files | done |
+| D3 | About 15 interview experiences | `backend/data/interviews/` | Files | done |
+| D4 | About 6 prep guides | `backend/data/guides/` | Files | done |
+| D5 | `students_seed.json`, demo resumes | `backend/data/` | Files | done |
 | D6 | Fictional only, marked as sample data | `backend/data/README.md`, `README.md` | Document | planned |
 | D7 | Upload `.md` / `.txt` / `.pdf` then re-index | `app/api/admin.py`, `app/rag/index.py` | `tests/test_admin.py` | planned |
 

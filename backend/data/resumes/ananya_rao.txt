@@ -1,0 +1,44 @@
+ANANYA RAO
+Phone: +91 90000 12345
+Email: ananya.rao@krit.example
+Address: Flat 204, Lakeview Residency, 5th Cross, Vidyanagar, Mysuru, Karnataka 570017
+LinkedIn: linkedin.example/in/ananya-rao-demo
+
+OBJECTIVE
+Final-year Computer Science student looking for a software engineering role where I can build backend services and work with data.
+
+EDUCATION
+B.Tech, Computer Science and Engineering, Kaveri Ridge Institute of Technology, 2023 to 2027
+CGPA: 7.8 (up to 6th semester)
+Class XII, 86 percent, 2023
+
+SKILLS
+Languages: Python, JavaScript, C
+Web: Django, HTML, CSS, REST API basics
+Databases: SQL, MySQL
+Tools: Git, GitHub, VS Code, Postman
+Core: Data Structures, Object Oriented Programming, DBMS
+
+PROJECTS
+Hostel Mess Feedback Portal (Python, Django, MySQL)
+- Built a web app where students rate each meal and wardens see weekly summaries.
+- Wrote SQL queries for daily and weekly reports; used Git for version control with two teammates.
+- Used by about 300 students in one hostel block for a semester.
+
+Library Seat Tracker (Python, Flask, SQLite)
+- A small REST API that tracks free seats in the reading hall, with an HTML and JavaScript front end.
+- Added input validation and basic tests with pytest.
+
+Bus Route Finder (C)
+- Command-line program that finds the shortest route between campus bus stops using Dijkstra's algorithm.
+
+INTERNSHIP
+Web Development Intern, Greenleaf Software (fictional), Mysuru, June to July 2026
+- Fixed front-end bugs in a Django admin panel and wrote two reporting queries in SQL.
+
+ACHIEVEMENTS
+- Solved 250+ problems on coding practice sites, mostly arrays, strings and trees.
+- Second place, department coding contest, 2025.
+
+ACTIVITIES
+- Coordinator, college coding club: organised weekly problem-solving sessions.

@@ -1,0 +1,99 @@
+{
+  "_note": "Fictional sample data. No real people. The first student is the demo login.",
+  "coordinator": {
+    "email": "coordinator@placemate.demo",
+    "name": "Prof. Kavya Raman"
+  },
+  "students": [
+    {
+      "email": "student@placemate.demo",
+      "name": "Ananya Rao",
+      "branch": "CSE",
+      "cgpa": 7.8,
+      "active_backlogs": 1,
+      "batch": 2027,
+      "resume_file": "ananya_rao.txt"
+    },
+    {
+      "email": "karthik.subramani@krit.example",
+      "name": "Karthik Subramani",
+      "branch": "IT",
+      "cgpa": 8.7,
+      "active_backlogs": 0,
+      "batch": 2027,
+      "resume_file": "karthik_subramani.txt"
+    },
+    {
+      "email": "sneha.kulkarni@krit.example",
+      "name": "Sneha Kulkarni",
+      "branch": "ECE",
+      "cgpa": 7.2,
+      "active_backlogs": 0,
+      "batch": 2027,
+      "resume_file": "sneha_kulkarni.txt"
+    },
+    {
+      "email": "imran.sheikh@krit.example",
+      "name": "Imran Sheikh",
+      "branch": "MECH",
+      "cgpa": 6.8,
+      "active_backlogs": 1,
+      "batch": 2027,
+      "resume_file": null
+    },
+    {
+      "email": "divya.nair@krit.example",
+      "name": "Divya Nair",
+      "branch": "CSE",
+      "cgpa": 9.1,
+      "active_backlogs": 0,
+      "batch": 2027,
+      "resume_file": null
+    },
+    {
+      "email": "arjun.patil@krit.example",
+      "name": "Arjun Patil",
+      "branch": "EEE",
+      "cgpa": 6.2,
+      "active_backlogs": 2,
+      "batch": 2027,
+      "resume_file": null
+    },
+    {
+      "email": "pooja.reddy@krit.example",
+      "name": "Pooja Reddy",
+      "branch": "IT",
+      "cgpa": 7.5,
+      "active_backlogs": 0,
+      "batch": 2027,
+      "resume_file": null
+    },
+    {
+      "email": "rahul.verma@krit.example",
+      "name": "Rahul Verma",
+      "branch": "CSE",
+      "cgpa": 5.8,
+      "active_backlogs": 3,
+      "batch": 2027,
+      "resume_file": null
+    },
+    {
+      "email": "tanvi.joshi@krit.example",
+      "name": "Tanvi Joshi",
+      "branch": "CIVIL",
+      "cgpa": 7.9,
+      "active_backlogs": 0,
+      "batch": 2027,
+      "resume_file": null
+    },
+    {
+      "email": "nikhil.bose@krit.example",
+      "name": "Nikhil Bose",
+      "branch": "ECE",
+      "cgpa": 8.3,
+      "active_backlogs": 0,
+      "batch": 2027,
+      "resume_file": null
+    }
+  ]
+}
