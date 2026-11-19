@@ -54,3 +54,18 @@ Short record of each design choice and the reason. Newest phase at the bottom.
 | D-36 | Only the demo student and coordinator have known passwords | The other seeded students exist for analytics and get random unusable passwords. |
 | D-37 | Validation errors return field names and reasons, never the submitted value | Avoids reflecting user input (or a mistyped password) back in a response. |
 | D-38 | One pinned `requirements.txt` from `pip freeze` | Reproducible installs with a single command. |
+
+## Phase 4 - RAG
+
+| # | Decision | Reason |
+|---|---|---|
+| D-39 | Gemini model `gemini-3.5-flash-lite` | Confirmed live with the available key: listed, stable, about 1 s for a short answer. Resolves D-28. |
+| D-40 | Each chunk is indexed as "Title > Section path" + text, but source cards show only the text | "Minimum CGPA: 7.0" is useless without knowing which company it belongs to; the heading makes it findable without cluttering the card. |
+| D-41 | Refusal threshold: cross-encoder logit 0.0 | On the sample corpus real questions score about 4 to 8 and off-topic ones about -8 to -11. 0.0 sits in the gap; the eval set checks it. |
+| D-42 | Router rejects an answer with no valid citation and moves to the next provider | An uncited answer cannot be checked, so it is treated as a failed answer, not shown. |
+| D-43 | The extractive fallback uses only passages within 3.0 logits of the best one, and keeps list items whole | Without this it quoted a neighbouring company's rules; with it, an answer stays inside the right document. |
+| D-44 | Retrieved passages are scanned again by the injection guard before use | Defence in depth: a document that reached the index another way still cannot steer the model. |
+| D-45 | A canary string in the system prompt; any answer containing it is discarded | Detects prompt leakage without relying on the model's cooperation. |
+| D-46 | Links and HTML are stripped from answers unless the URL appears in a source | Blocks data exfiltration through rendered links or images. |
+| D-47 | The local model gets only the top 3 passages, cut to 700 characters | A 0.5B model on CPU must answer in seconds; it is a fallback, not the main path. |
+| D-48 | Questions stored in analytics events are scrubbed of emails and phone numbers | Coordinators see what is asked, not who can be contacted. |

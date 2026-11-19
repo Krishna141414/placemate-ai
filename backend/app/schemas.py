@@ -98,6 +98,7 @@ class SourceOut(BaseModel):
     doc_type: str
     section: str
     snippet: str
+    text: str = ""
     score: float
 
 

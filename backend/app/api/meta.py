@@ -33,8 +33,23 @@ def company_out(company: Company) -> CompanyOut:
 
 @router.get("/health", summary="Liveness check")
 def health() -> dict:
+    from app.rag import index as index_module
+
     settings = get_settings()
-    return {"status": "ok", "version": settings.app_version, "env": settings.app_env}
+    store = index_module._current
+    return {
+        "status": "ok",
+        "version": settings.app_version,
+        "env": settings.app_env,
+        "index": {"ready": store is not None, "documents": store.document_count if store else 0, "chunks": len(store) if store else 0},
+    }
+
+
+@router.get("/api/meta/providers", summary="LLM providers and which one is configured")
+def providers(_user: User = Depends(get_current_user)) -> list[dict]:
+    from app.llm.router import provider_status
+
+    return provider_status()
 
 
 @router.get("/api/meta/companies", response_model=list[CompanyOut], summary="Companies visiting campus")

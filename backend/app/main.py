@@ -36,8 +36,15 @@ async def lifespan(app: FastAPI):
     init_db(settings.db_url)
     with SessionLocal() as db:
         seed_demo_data(db)
-    for hook in app.state.startup_hooks:
-        hook()
+    # Load (or build) the search index and warm the reranker, so the first
+    # question is not the one that pays for model loading.
+    from app.rag.index import IndexStore
+    from app.rag.models import rerank_scores
+
+    with SessionLocal() as db:
+        index = IndexStore.ensure(db)
+    rerank_scores("warm up", ["warm up"])
+    logger.info("index_ready", extra={"documents": index.document_count, "chunks": len(index)})
     logger.info("startup_complete", extra={"env": settings.app_env, "provider": settings.llm_provider})
     yield
     logger.info("shutdown")
@@ -53,7 +60,6 @@ def create_app() -> FastAPI:
         description=DESCRIPTION,
         lifespan=lifespan,
     )
-    app.state.startup_hooks = []
 
     register_error_handlers(app)
 
@@ -73,10 +79,11 @@ def create_app() -> FastAPI:
         max_age=600,
     )
 
-    from app.api import auth, meta
+    from app.api import ask, auth, meta
 
     app.include_router(meta.router)
     app.include_router(auth.router)
+    app.include_router(ask.router)
 
     return app
 

@@ -2,7 +2,7 @@
 
 Every item in the official brief and in `CLAUDE.md`, where it is implemented, what proves it, and its status. Updated at the end of every phase.
 
-Status values: `planned`, `in progress`, `done`. Last updated: Phase 3 (2026-11-14).
+Status values: `planned`, `in progress`, `done`. Last updated: Phase 4 (2026-11-19).
 
 ## A. Official brief
 
@@ -12,7 +12,7 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 3 (2026-11-
 | A2 | Prepare requirements | `docs/requirements.md` | Document | done |
 | A3 | Prepare architecture | `docs/architecture.md`, `docs/architecture-diagram.*` | Document + diagram | done |
 | A4 | Suitable AI components, not every technique | `docs/architecture.md` section 3 | Justification + "not used" table | done |
-| A5 | RAG | `backend/app/rag/` | `tests/test_rag.py`, eval Hit@3 / MRR | planned |
+| A5 | RAG | `backend/app/rag/` | `tests/test_rag.py`, eval Hit@3 / MRR | done |
 | A6 | Tools | `backend/app/tools/` | `tests/test_eligibility.py`, `test_resume.py`, `test_applications.py` | planned |
 | A7 | Agent | `backend/app/agent/` | `tests/test_agent.py`, eval agent task success | planned |
 | A8 | Evaluation | `eval/` | `eval/results/`, `docs/evaluation.md` | planned |
@@ -30,7 +30,7 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 3 (2026-11-
 
 | # | Requirement | Implemented in | Proof | Status |
 |---|---|---|---|---|
-| B1 | Student asks placement questions | `app/api/ask.py`, `frontend/app/(app)/ask` | `tests/test_ask_api.py`, smoke test | planned |
+| B1 | Student asks placement questions | `app/api/ask.py`, `frontend/app/(app)/ask` | `tests/test_ask_api.py`, smoke test | in progress |
 | B2 | Student checks eligibility | `app/tools/eligibility.py`, eligibility page | `tests/test_eligibility.py` | planned |
 | B3 | Student matches resume to a job | `app/tools/resume.py`, resume page | `tests/test_resume.py` | planned |
 | B4 | Student gets a prep plan | `app/agent/`, prep page | `tests/test_agent.py` | planned |
@@ -43,10 +43,10 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 3 (2026-11-
 
 | # | Requirement | Implemented in | Proof | Status |
 |---|---|---|---|---|
-| C1 | Hybrid retrieval: BM25 + vector with RRF | `app/rag/retriever.py` | `tests/test_rag.py`; eval baseline vs final | planned |
-| C2 | Cross-encoder reranking | `app/rag/retriever.py` | `tests/test_rag.py` | planned |
-| C3 | Grounded generation with numbered citations | `app/rag/pipeline.py`, `citations.py` | eval groundedness, citation accuracy | planned |
-| C4 | Refuse when not in documents | `app/rag/pipeline.py` | `test_rag.py::refusal`, eval refusal accuracy | planned |
+| C1 | Hybrid retrieval: BM25 + vector with RRF | `app/rag/retriever.py` | `tests/test_rag.py`; eval baseline vs final | done |
+| C2 | Cross-encoder reranking | `app/rag/retriever.py` | `tests/test_rag.py` | done |
+| C3 | Grounded generation with numbered citations | `app/rag/pipeline.py`, `citations.py` | eval groundedness, citation accuracy | done |
+| C4 | Refuse when not in documents | `app/rag/pipeline.py` | `test_rag.py::refusal`, eval refusal accuracy | done |
 | C5 | `check_eligibility` (CGPA, backlogs, branch, batch) | `app/tools/eligibility.py` | `tests/test_eligibility.py` | planned |
 | C6 | `match_resume` (skills + embedding similarity) | `app/tools/resume.py` | `tests/test_resume.py` | planned |
 | C7 | `track_application` | `app/tools/applications.py` | `tests/test_applications.py` | planned |
@@ -72,12 +72,12 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 3 (2026-11-
 
 | # | Requirement | Implemented in | Proof | Status |
 |---|---|---|---|---|
-| E1 | Gemini via `google-genai`, key from `.env` | `app/llm/gemini.py` | `tests/test_llm.py` | planned |
-| E2 | Local fallback (cached Qwen2.5-0.5B-Instruct) | `app/llm/local.py` | `tests/test_llm.py` | planned |
-| E3 | Extractive fallback with citations | `app/llm/extractive.py` | `tests/test_llm.py` | planned |
-| E4 | Automatic fallback; works with no key | `app/llm/router.py` | `test_llm.py::fallback_chain` | planned |
-| E5 | Provider badge | `AnswerResult.provider`, Ask page | Screenshot | planned |
-| E6 | MiniLM embeddings, ms-marco reranker, CPU torch only | `app/rag/models.py`, `requirements.txt` | Preflight in `PROGRESS.md` | planned |
+| E1 | Gemini via `google-genai`, key from `.env` | `app/llm/gemini.py` | `tests/test_llm.py` | done |
+| E2 | Local fallback (cached Qwen2.5-0.5B-Instruct) | `app/llm/local.py` | `tests/test_llm.py` | done |
+| E3 | Extractive fallback with citations | `app/llm/extractive.py` | `tests/test_llm.py` | done |
+| E4 | Automatic fallback; works with no key | `app/llm/router.py` | `test_llm.py::fallback_chain` | done |
+| E5 | Provider badge | `AnswerResult.provider`, Ask page | Screenshot | in progress |
+| E6 | MiniLM embeddings, ms-marco reranker, CPU torch only | `app/rag/models.py`, `requirements.txt` | Preflight in `PROGRESS.md` | done |
 
 ## F. Stack and run
 
@@ -105,8 +105,8 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 3 (2026-11-
 | G6 | Rate limiting | `app/security/rate_limit.py` | `tests/test_security_http.py` | done |
 | G7 | CORS restricted to the frontend origin | `app/main.py` | `tests/test_security_http.py` | done |
 | G8 | Security headers | `app/security/headers.py` | `tests/test_security_http.py` | done |
-| G9 | Injection guard on user input | `app/security/injection.py` | `tests/test_injection.py`, eval block rate | planned |
-| G10 | Injection guard on retrieved / uploaded text | `app/security/injection.py` | `tests/test_injection.py` | planned |
+| G9 | Injection guard on user input | `app/security/injection.py` | `tests/test_injection.py`, eval block rate | done |
+| G10 | Injection guard on retrieved / uploaded text | `app/security/injection.py` | `tests/test_injection.py` | done |
 | G11 | PII redaction before any LLM; never logged | `app/security/pii.py`, `logging_conf.py` | `tests/test_pii.py` | planned |
 | G12 | Secrets only in `.env`; `.env.example` committed | `.env.example`, `app/config.py` | Phase 0 | done |
 | G13 | No stack traces to users | `app/errors.py` | `tests/test_security_http.py` | done |
