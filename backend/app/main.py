@@ -79,11 +79,15 @@ def create_app() -> FastAPI:
         max_age=600,
     )
 
-    from app.api import ask, auth, meta
+    from app.api import admin, agent, applications, ask, auth, meta, tools
 
     app.include_router(meta.router)
     app.include_router(auth.router)
     app.include_router(ask.router)
+    app.include_router(tools.router)
+    app.include_router(applications.router)
+    app.include_router(agent.router)
+    app.include_router(admin.router)
 
     return app
 

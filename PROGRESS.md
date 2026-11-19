@@ -11,8 +11,8 @@ Resume rule: read `CLAUDE.md` and this file, then continue `BUILD_PROMPT.md` fro
 | 2 | Data | done |
 | 3 | Backend core | done |
 | 4 | RAG | done |
-| 5 | Tools & agent | next |
-| 6 | Tests & evaluation | todo |
+| 5 | Tools & agent | done |
+| 6 | Tests & evaluation | next |
 | 7 | Frontend app | todo |
 | 8 | Landing showcase + Guided Tour | todo |
 | 9 | Verify | todo |
@@ -20,7 +20,21 @@ Resume rule: read `CLAUDE.md` and this file, then continue `BUILD_PROMPT.md` fro
 
 ## Next step
 
-Phase 5, step 1: tools. `backend/app/tools/eligibility.py` (`check_eligibility`), `skills.py` + `resume.py` (`match_resume`, PII redaction first via `security/pii.py`), `applications.py` (`track_application`), then `api/tools.py` and `api/applications.py`. Then the prep agent (`app/agent/`), then coordinator upload + re-index + analytics (`api/admin.py`, `services/analytics.py`). Interfaces are in the plan (Task 5).
+Phase 6, step 1: run `pytest --cov=app` (all tests incl. slow), record the summary and coverage. Then step 2: `eval/cases.json` (~40 cases in 6 categories), `eval/run_eval.py` + `metrics.py` + `charts.py`, run baseline vs final, save to `eval/results/` and copy `summary.json` to `frontend/public/eval-summary.json`. Then `docs/evaluation.md` and `docs/test-evidence.md` from the real output files. Add `scripts/test.ps1` and `scripts/eval.ps1`.
+
+## Phase 5 - Tools & agent (done 2026-11-19)
+
+- 5.1 Tools: `tools/eligibility.py` (`check_eligibility`, `check_all`; per-criterion pass/fail with required, actual, reason; missing profile fields reported, not guessed), `tools/skills.py` (skill vocabulary with aliases and implications), `tools/resume.py` (`match_resume`: PII redaction first, then skill coverage + MiniLM section similarity; match % = 60% skill + 40% semantic; advice), `tools/applications.py` (`track_application` upsert). `security/uploads.py` (type, size, magic bytes, UTF-8, filename sanitising).
+- 5.2 Agent: `agent/state.py`, `planner.py` (rule-based; skips the resume step when there is none), `steps.py` (five steps + fallbacks for process retrieval and the plan summary), `plan_builder.py` (weeks from the deadline; gaps first, one topic per round, mock interviews last), `executor.py` (budget of 8 tool calls incl. retries, 2 retries per step, fallback / skip / fail, state saved after each step, approval gate; approve writes plan + application in one transaction; 409 on a second approve). Ineligible students get reasons and up to 3 eligible alternatives, and nothing to save.
+- 5.3 Coordinator: `api/admin.py` (upload + re-index, list, delete uploads, reindex, analytics, logs), `services/analytics.py` (totals, top and unanswered questions, blocked attempts, provider usage and latency, questions per day, eligibility per company with the top blocker).
+- APIs: `/api/tools/eligibility[/all]`, `/api/tools/resume-match`, `/api/tools/resume-extract`, `/api/applications` CRUD, `/api/prep-plans`, `/api/agent/runs` (JSON), `/api/agent/runs/stream` (SSE), `/api/agent/runs/{id}[/approve|/reject]`, `/api/admin/*`.
+- Tests: 351 non-slow tests pass (new: `test_eligibility.py`, `test_pii.py`, `test_resume.py`, `test_applications.py`, `test_agent.py`, `test_admin.py`).
+- Live check with Gemini: agent stream for Nimbusware with a demo fault (retrieve_process recovered after one retry), 17 events in 5.8 s, Gemini wrote a 6-sentence cited summary; approve saved plan 1 and added the application; analytics and logs updated.
+
+Notes:
+- Bugs found by the new tests and fixed: phone numbers written "091 98765 43210" or "0 98765 43210" were not redacted; "Electronics and Communication" counted as the communication skill.
+- This FastAPI version wraps included routers, so `app.routes` no longer lists their paths; the admin role test reads routes from the OpenAPI schema instead.
+- `backend/storage/` (not committed) now holds activity from live checks; reset with `python -m app.seed --reset` before recording.
 
 ## Phase 4 - RAG (done 2026-11-19)
 

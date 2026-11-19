@@ -69,3 +69,23 @@ Short record of each design choice and the reason. Newest phase at the bottom.
 | D-46 | Links and HTML are stripped from answers unless the URL appears in a source | Blocks data exfiltration through rendered links or images. |
 | D-47 | The local model gets only the top 3 passages, cut to 700 characters | A 0.5B model on CPU must answer in seconds; it is a fallback, not the main path. |
 | D-48 | Questions stored in analytics events are scrubbed of emails and phone numbers | Coordinators see what is asked, not who can be contacted. |
+
+## Phase 5 - Tools and agent
+
+| # | Decision | Reason |
+|---|---|---|
+| D-49 | Eligibility compares CGPA at two decimals | A cut-off of 7.0 must not fail a 7.0 student because of float noise. |
+| D-50 | Missing profile fields fail that criterion with "not set" | The tool never guesses a student's CGPA or batch. |
+| D-51 | Resume skills come from a fixed vocabulary with aliases and implications | Predictable and explainable ("MySQL" implies "SQL"); every matched and missing skill can be shown. |
+| D-52 | Match % = 60% skill coverage + 40% semantic similarity, formula shown in the UI | Skills are what companies list; similarity credits related experience the keyword list misses. The weights are a judgement call, so they are published rather than hidden. |
+| D-53 | Semantic similarity is "best resume section per job-description section", averaged and rescaled from 0.15-0.60 | MiniLM truncates long input; section-level matching avoids that, and the observed cosine range on the sample data is mapped to 0-1. |
+| D-54 | The agent's tool-call budget counts retries | A run with failing steps still stops; the limit is about cost, not about step names. |
+| D-55 | Only process retrieval and the plan summary have fallbacks | Process retrieval falls back to the structured rounds; the summary falls back to a template. Eligibility has no honest substitute, so its failure stops the run. |
+| D-56 | The plan's structure is rule-based; the model only writes the cited summary | The plan must be identical whichever provider is up, and a 0.5B local model cannot be trusted to produce a structured plan. |
+| D-57 | Plan length follows the application deadline (2-4 weeks) | A plan that ends after the deadline is useless. |
+| D-58 | Approving keeps an application the student already tracks | The agent must not overwrite a status like "online_test" with "planned". |
+| D-59 | `demo_fault` can only target four named steps and fails each once | The tour can show recovery on demand; it cannot be used to break eligibility or loop. |
+| D-60 | Uploads are checked by magic bytes as well as extension, and duplicates are refused by checksum | A renamed binary or the same notice uploaded twice should not reach the index. |
+| D-61 | Stored upload names get a random prefix and live only in `storage/uploads/` | No overwrites, no path traversal; the original name is kept only in sanitised form. |
+| D-62 | Eligibility statistics are computed from current profiles, not from check events | "How many students can apply to X" should not depend on who happened to click. |
+| D-63 | Logs are returned as readable sentences, not raw payloads | SHOWCASE.md forbids raw JSON on screen. |

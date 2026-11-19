@@ -2,7 +2,7 @@
 
 Every item in the official brief and in `CLAUDE.md`, where it is implemented, what proves it, and its status. Updated at the end of every phase.
 
-Status values: `planned`, `in progress`, `done`. Last updated: Phase 4 (2026-11-19).
+Status values: `planned`, `in progress`, `done`. Last updated: Phase 5 (2026-11-19).
 
 ## A. Official brief
 
@@ -13,8 +13,8 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 4 (2026-11-
 | A3 | Prepare architecture | `docs/architecture.md`, `docs/architecture-diagram.*` | Document + diagram | done |
 | A4 | Suitable AI components, not every technique | `docs/architecture.md` section 3 | Justification + "not used" table | done |
 | A5 | RAG | `backend/app/rag/` | `tests/test_rag.py`, eval Hit@3 / MRR | done |
-| A6 | Tools | `backend/app/tools/` | `tests/test_eligibility.py`, `test_resume.py`, `test_applications.py` | planned |
-| A7 | Agent | `backend/app/agent/` | `tests/test_agent.py`, eval agent task success | planned |
+| A6 | Tools | `backend/app/tools/` | `tests/test_eligibility.py`, `test_resume.py`, `test_applications.py` | done |
+| A7 | Agent | `backend/app/agent/` | `tests/test_agent.py`, eval agent task success | done |
 | A8 | Evaluation | `eval/` | `eval/results/`, `docs/evaluation.md` | planned |
 | A9 | Testing | `backend/tests/`, `frontend/e2e/` | `docs/test-evidence.md` | planned |
 | A10 | Security considerations | `backend/app/security/` | `SECURITY.md`, security tests | planned |
@@ -31,13 +31,13 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 4 (2026-11-
 | # | Requirement | Implemented in | Proof | Status |
 |---|---|---|---|---|
 | B1 | Student asks placement questions | `app/api/ask.py`, `frontend/app/(app)/ask` | `tests/test_ask_api.py`, smoke test | in progress |
-| B2 | Student checks eligibility | `app/tools/eligibility.py`, eligibility page | `tests/test_eligibility.py` | planned |
-| B3 | Student matches resume to a job | `app/tools/resume.py`, resume page | `tests/test_resume.py` | planned |
-| B4 | Student gets a prep plan | `app/agent/`, prep page | `tests/test_agent.py` | planned |
-| B5 | Student tracks applications | `app/tools/applications.py`, applications page | `tests/test_applications.py` | planned |
-| B6 | Coordinator uploads / updates documents | `app/api/admin.py`, documents page | `tests/test_admin.py` | planned |
-| B7 | Coordinator analytics: top questions, unanswered, eligibility stats | `app/services/analytics.py`, analytics page | `tests/test_admin.py` | planned |
-| B8 | Coordinator views logs | `app/api/admin.py` (`/api/admin/logs`) | `tests/test_admin.py` | planned |
+| B2 | Student checks eligibility | `app/tools/eligibility.py`, eligibility page | `tests/test_eligibility.py` | in progress |
+| B3 | Student matches resume to a job | `app/tools/resume.py`, resume page | `tests/test_resume.py` | in progress |
+| B4 | Student gets a prep plan | `app/agent/`, prep page | `tests/test_agent.py` | in progress |
+| B5 | Student tracks applications | `app/tools/applications.py`, applications page | `tests/test_applications.py` | in progress |
+| B6 | Coordinator uploads / updates documents | `app/api/admin.py`, documents page | `tests/test_admin.py` | in progress |
+| B7 | Coordinator analytics: top questions, unanswered, eligibility stats | `app/services/analytics.py`, analytics page | `tests/test_admin.py` | in progress |
+| B8 | Coordinator views logs | `app/api/admin.py` (`/api/admin/logs`) | `tests/test_admin.py` | in progress |
 
 ## C. AI components
 
@@ -47,13 +47,13 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 4 (2026-11-
 | C2 | Cross-encoder reranking | `app/rag/retriever.py` | `tests/test_rag.py` | done |
 | C3 | Grounded generation with numbered citations | `app/rag/pipeline.py`, `citations.py` | eval groundedness, citation accuracy | done |
 | C4 | Refuse when not in documents | `app/rag/pipeline.py` | `test_rag.py::refusal`, eval refusal accuracy | done |
-| C5 | `check_eligibility` (CGPA, backlogs, branch, batch) | `app/tools/eligibility.py` | `tests/test_eligibility.py` | planned |
-| C6 | `match_resume` (skills + embedding similarity) | `app/tools/resume.py` | `tests/test_resume.py` | planned |
-| C7 | `track_application` | `app/tools/applications.py` | `tests/test_applications.py` | planned |
-| C8 | Agent: plan, eligibility, resume, retrieval, weekly plan | `app/agent/planner.py`, `executor.py`, `steps.py` | `test_agent.py::happy_path` | planned |
-| C9 | Approval before saving | `app/agent/executor.py` | `test_agent.py::approval_required` | planned |
-| C10 | Max steps, saved state | `app/agent/executor.py`, `AgentRun` model | `test_agent.py::max_steps`, `::state_saved` | planned |
-| C11 | Error recovery: retry, fallback, skip | `app/agent/executor.py` | `test_agent.py::recovery_*` | planned |
+| C5 | `check_eligibility` (CGPA, backlogs, branch, batch) | `app/tools/eligibility.py` | `tests/test_eligibility.py` | done |
+| C6 | `match_resume` (skills + embedding similarity) | `app/tools/resume.py` | `tests/test_resume.py` | done |
+| C7 | `track_application` | `app/tools/applications.py` | `tests/test_applications.py` | done |
+| C8 | Agent: plan, eligibility, resume, retrieval, weekly plan | `app/agent/planner.py`, `executor.py`, `steps.py` | `test_agent.py::happy_path` | done |
+| C9 | Approval before saving | `app/agent/executor.py` | `test_agent.py::approval_required` | done |
+| C10 | Max steps, saved state | `app/agent/executor.py`, `AgentRun` model | `test_agent.py::max_steps`, `::state_saved` | done |
+| C11 | Error recovery: retry, fallback, skip | `app/agent/executor.py` | `test_agent.py::recovery_*` | done |
 | C12 | Why fine-tuning, image models, multi-agent are not used | `docs/architecture.md` section 3 | Document | done |
 
 ## D. Data
@@ -66,7 +66,7 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 4 (2026-11-
 | D4 | About 6 prep guides | `backend/data/guides/` | Files | done |
 | D5 | `students_seed.json`, demo resumes | `backend/data/` | Files | done |
 | D6 | Fictional only, marked as sample data | `backend/data/README.md`, `README.md` | Document | planned |
-| D7 | Upload `.md` / `.txt` / `.pdf` then re-index | `app/api/admin.py`, `app/rag/index.py` | `tests/test_admin.py` | planned |
+| D7 | Upload `.md` / `.txt` / `.pdf` then re-index | `app/api/admin.py`, `app/rag/index.py` | `tests/test_admin.py` | done |
 
 ## E. LLM providers
 
@@ -99,15 +99,15 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 4 (2026-11-
 |---|---|---|---|---|
 | G1 | JWT in httpOnly cookie, student / coordinator roles | `app/security/auth.py` | `tests/test_auth.py` | done |
 | G2 | argon2 password hashing | `app/security/auth.py` | `tests/test_auth.py` | done |
-| G3 | Role check on every admin route | `app/api/admin.py` | `test_admin.py::all_admin_routes_forbidden` | planned |
+| G3 | Role check on every admin route | `app/api/admin.py` | `test_admin.py::all_admin_routes_forbidden` | done |
 | G4 | Input validation | `app/schemas.py` | `tests/test_ask_api.py`, `test_auth.py` | done |
-| G5 | Upload validation: type, size, sanitised filename | `app/security/uploads.py` | `tests/test_admin.py` | planned |
+| G5 | Upload validation: type, size, sanitised filename | `app/security/uploads.py` | `tests/test_admin.py` | done |
 | G6 | Rate limiting | `app/security/rate_limit.py` | `tests/test_security_http.py` | done |
 | G7 | CORS restricted to the frontend origin | `app/main.py` | `tests/test_security_http.py` | done |
 | G8 | Security headers | `app/security/headers.py` | `tests/test_security_http.py` | done |
 | G9 | Injection guard on user input | `app/security/injection.py` | `tests/test_injection.py`, eval block rate | done |
 | G10 | Injection guard on retrieved / uploaded text | `app/security/injection.py` | `tests/test_injection.py` | done |
-| G11 | PII redaction before any LLM; never logged | `app/security/pii.py`, `logging_conf.py` | `tests/test_pii.py` | planned |
+| G11 | PII redaction before any LLM; never logged | `app/security/pii.py`, `logging_conf.py` | `tests/test_pii.py` | done |
 | G12 | Secrets only in `.env`; `.env.example` committed | `.env.example`, `app/config.py` | Phase 0 | done |
 | G13 | No stack traces to users | `app/errors.py` | `tests/test_security_http.py` | done |
 | G14 | Dependency pinning | `requirements.txt`, `package-lock.json` | Files | done |

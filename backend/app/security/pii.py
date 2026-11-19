@@ -12,9 +12,9 @@ from dataclasses import dataclass, field
 
 EMAIL_RE = re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b")
 
-# Indian mobile numbers: optional +91 / 91 / 0 prefix, then ten digits starting
-# 6-9, with optional single spaces or hyphens between digits.
-PHONE_RE = re.compile(r"(?<![\w.])(?:\+?91[\s-]*|0)?[6-9]\d(?:[\s-]?\d){8}(?!\d)")
+# Indian mobile numbers: optional +91 / 91 / 091 / 0 prefix, then ten digits
+# starting 6-9, with optional single spaces or hyphens between digits.
+PHONE_RE = re.compile(r"(?<![\w.])(?:\+?0?91[\s-]*|0[\s-]?)?[6-9]\d(?:[\s-]?\d){8}(?!\d)")
 
 PROFILE_LINK_RE = re.compile(
     r"\b(?:https?://)?(?:www\.)?(?:linkedin|github|twitter|x|instagram|facebook)\.[a-z.]+/[^\s,;]+",
