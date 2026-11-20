@@ -13,18 +13,18 @@ Resume rule: read `CLAUDE.md` and this file, then continue `BUILD_PROMPT.md` fro
 | 4 | RAG | done |
 | 5 | Tools & agent | done |
 | 6 | Tests & evaluation | done |
-| 7 | Frontend app | in progress |
-| 8 | Landing showcase + Guided Tour | todo |
+| 7 | Frontend app | done |
+| 8 | Landing showcase + Guided Tour | next |
 | 9 | Verify | todo |
 | 10 | Docs & finish | todo |
 
 ## Next step
 
-Phase 7, step 3 (continued): pages Eligibility (`/eligibility`), Resume match (`/resume`), Prep agent (`/agent`), Applications (`/applications`), then coordinator Documents (`/documents`), Analytics (`/analytics`), Evaluation (`/evaluation`), Security (`/security`). Pattern: `app/(app)/<page>/page.tsx` (server, metadata) + `<page>-view.tsx` (client), data via `lib/use-api.ts`, four states per region. Hallmark sweep after each page (`node ~/.claude/skills/hallmark/scripts/sloplint.mjs --scope app --url http://localhost:3000/<route> --render`).
+Phase 8, step 1: landing page `/` (replace the stub in `frontend/app/page.tsx`) with GSAP + ScrollTrigger + Lenis, six sections from SHOWCASE.md (hero with animated answer card, problem cards, pinned product walkthrough of the 4 features, animated pipeline diagram for RAG and agent, "built responsibly" count-ups read from `/eval-summary.json`, tech stack + footer). Load the gsap-* skills and Humanizer for copy; Hallmark page rules apply (not app scope). Then step 2: Guided Tour (`components/tour/`, `lib/tour-script.ts`) using the `data-tour` attributes already on every page.
 
-Dev servers for checking: backend `backend/.venv/Scripts/python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000` (from `backend/`), frontend `npx next dev --port 3000` (from `frontend/`). Use `localhost` (not 127.0.0.1) in the browser so the session cookie is same-site.
+Dev servers: backend `backend/.venv/Scripts/python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000` (from `backend/`), frontend `npx next dev --port 3000` (from `frontend/`). Browse at `http://localhost:3000`.
 
-## Phase 7 - Frontend app (in progress)
+## Phase 7 - Frontend app (done 2026-11-20)
 
 - 7.1 Next.js 16.4.6 (App Router, TypeScript, Tailwind 4, ESLint) in `frontend/`; first `npm install` hit ECONNRESET, retried with `--fetch-retries`. `cacheComponents` / `partialPrefetching` from the template turned off (all data is fetched client-side from FastAPI). shadcn/ui initialised (radix-nova, Lucide); `npx shadcn@latest mcp init --client claude` wrote `frontend/.mcp.json` (loads next Claude Code session; this session used the shadcn CLI). AI Elements added: conversation, message, prompt-input, suggestion, sources, inline-citation, chain-of-thought, tool, confirmation, shimmer, code-block (`loader` no longer exists in the registry). Theme tokens from SHOWCASE.md in `app/globals.css` (white + navy, accent #1D4ED8, 12px radius, Inter + Geist Mono, light and dark), with the Hallmark stamp + critique at the top.
 - 7.2 Shell: `components/shell/app-shell.tsx` (navy sidebar by role, top bar, theme toggle, user menu, client guard: login redirect, offline page, 403 for the wrong role), `proxy.ts` (cookie presence check), `/login` with demo buttons and safe `?next=`, error pages 404 / 403 (`/forbidden`) / 429 (`/too-many-requests`) / 500 (`error.tsx`), `(app)/template.tsx` page fade.
@@ -36,6 +36,10 @@ Dev servers for checking: backend `backend/.venv/Scripts/python.exe -m uvicorn a
 - Backend: `plain_snippet` strips markdown markers from source snippets (they showed `**bold**`), with a test.
 - Hallmark sloplint (`--scope app`): 0 FAIL, 0 WARN, 1 dismissed (74, #F8FAFC is the SHOWCASE surface). Fixed along the way: dark mode moved to `[data-theme="dark"]` (the `.dark` class block was read as literal colours), glass header made solid, `:active` states, true ellipses, tracked-caps labels removed from the AI Elements Tool card.
 - Checked in the browser: eligibility (OrbitPay fails CGPA), resume match (94%, 4 contact details removed, preview), agent run with a demo fault (recovered after retry, approval dialog, approve saved plan + application), applications table.
+- 7.3 part 3: Documents (drag-drop upload, three ready demo files: a notice, a notice with planted instructions, an invalid binary; stage progress; result with removed lines; table with delete and confirm; rebuild index), Analytics (totals, questions per day stacked chart, most asked, not answered, eligibility per company with top blocker, provider usage, blocked attempts, activity log with type filter), Evaluation (reads `/eval-summary.json`; provider toggle; headline figures; baseline vs final chart with the validated teal/blue pair in light and dark; full metric table; tests and coverage; limits), Security (11 cards with file locations; 8 live "Try it" checks against the backend: injection, 401/403 on an admin route, 413/415 uploads, 429 on the 6th request, PII redaction preview, httpOnly cookie, response headers + CORS, clean 404 envelope).
+- Backend for the UI: `POST /api/meta/redact-preview` (logs nothing), security headers added to CORS `expose_headers`, pluralised log sentences; tests added.
+- Checks: `tsc` clean, ESLint clean, Hallmark sloplint (`--scope app`) 0 FAIL / 0 WARN, `next build` succeeds (17 routes), fast backend suite passes. Browser: every Security check returned "Protected"; coordinator upload stripped both planted lines.
+- Known: Recharts bars animate in, so full-page screenshots taken right after a viewport resize show empty charts; Phase 9 screenshots must wait for the animation. The security page deliberately triggers 401/403/413/415/429/404 responses, which the browser logs as console errors.
 
 Notes:
 - The "hydration mismatch" on inputs seen in the Playwright console is the screenshot tool adding `caret-color: transparent`; not an app bug.

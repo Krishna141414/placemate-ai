@@ -78,3 +78,18 @@ def test_demo_resumes_have_no_contact_details_left(filename):
 def test_empty_input():
     result = redact_pii("")
     assert result.text == "" and result.total == 0
+
+
+def test_redact_preview_endpoint(client, student_client, db):
+    from app.models import Event
+
+    assert client.post("/api/meta/redact-preview", json={"text": "x"}).status_code == 401
+    response = student_client.post(
+        "/api/meta/redact-preview", json={"text": "Call me on 9876543210 or mail me@krit.example"}
+    )
+    assert response.status_code == 200
+    body = response.json()
+    assert body["counts"]["phone"] == 1 and body["counts"]["email"] == 1
+    assert "9876543210" not in body["text"] and "me@krit.example" not in body["text"]
+    assert db.query(Event).filter(Event.type != "login").count() == 0  # the preview itself logs nothing
+    assert student_client.post("/api/meta/redact-preview", json={"text": "x" * 2001}).status_code == 422

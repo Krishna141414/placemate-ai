@@ -147,10 +147,10 @@ def describe_event(event: Event, email: str | None) -> str:
         events.AGENT_APPROVED: lambda: f'Approved prep plan for {p.get("company_id")} (run {p.get("run_id")})',
         events.AGENT_REJECTED: lambda: f'Rejected prep plan for {p.get("company_id")} (run {p.get("run_id")})',
         events.APPLICATION: lambda: f'Application {p.get("action", "updated")} for {p.get("company_id")}: {p.get("status", "")}',
-        events.UPLOAD: lambda: f'Uploaded "{p.get("filename")}" ({p.get("chunks", 0)} chunks)',
+        events.UPLOAD: lambda: f'Uploaded "{p.get("filename")}" ({p.get("chunks", 0)} chunk{"" if p.get("chunks") == 1 else "s"})',
         events.UPLOAD_REJECTED: lambda: f'Rejected upload "{p.get("filename")}": {p.get("code")}',
         events.DOCUMENT_DELETED: lambda: f'Deleted document "{p.get("title")}"',
-        events.REINDEX: lambda: f'Rebuilt the index ({p.get("chunks", 0)} chunks)',
+        events.REINDEX: lambda: f'Rebuilt the index ({p.get("chunks", 0)} chunk{"" if p.get("chunks") == 1 else "s"})',
         events.LOGIN: lambda: f'Logged in as {p.get("role", "")}',
         events.LOGIN_FAILED: lambda: "Failed login attempt",
     }

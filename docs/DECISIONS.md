@@ -104,3 +104,21 @@ Short record of each design choice and the reason. Newest phase at the bottom.
 | D-71 | Model answers under 5 words or repeating prompt markup are rejected | A degenerate local-model answer is worse than an extractive one. |
 | D-72 | Re-grade saved answers after a metric fix instead of calling Gemini again | Cheaper and keeps the answers fixed; `regrade.py` refuses to run if retrieval no longer matches the saved run. |
 | D-73 | Chart colours: teal #0E8F86 (baseline) and brand blue #1D4ED8 (final) | Validated with the dataviz palette checker (lightness, chroma, colour-blind separation, contrast). Slate failed the chroma floor; orange is too close to the reserved warning colour. |
+
+## Phase 7 - Frontend app
+
+| # | Decision | Reason |
+|---|---|---|
+| D-74 | Next.js App Router with every data page as a client component behind a server wrapper for metadata | All data comes from FastAPI with the user's cookie; the wrapper still gives each page its own title. |
+| D-75 | `proxy.ts` only checks that a session cookie exists; the shell checks the role; the API enforces both | Next.js docs: proxy is an optimistic check and must not be the only line of defence. |
+| D-76 | Dark mode via `data-theme` on `<html>` rather than a `.dark` class | Hallmark's linter recognises `:root[data-theme="dark"]` as a theme block; shadcn's `dark:` variant was pointed at the same attribute. |
+| D-77 | AI Elements components are edited where they did not fit: Tool header accepts a badge and icon, InlineCitation accepts a label, Sources is typed as a Collapsible, status icons use theme tokens | They are copied into the project to be owned; document sources have no URL, and agent statuses are not AI SDK tool states. |
+| D-78 | Streams are consumed through a queue and revealed at the pace in `lib/speed.ts` | SHOWCASE.md asks for about 1.5-2 s between steps at medium speed; the backend answers faster than a viewer can follow. |
+| D-79 | The approval is a dialog that shows the exact plan and application record, plus an inline Confirmation card that stays on the page | SHOWCASE.md asks for an approval dialog; the card keeps the decision visible afterwards. |
+| D-80 | Every data region has loading, empty, error and full states, via one `useApi` hook | Hallmark app-screen rule, and a consistent way to show backend failures. |
+| D-81 | Selections live in the URL (`?company=`, `?run=`, `?c=`, `?status=`, `?view=all`) | A refresh or the guided tour can reopen the same state. |
+| D-82 | The Security page runs real requests and shows the real status codes | "Try it" must prove the control, not describe it. |
+| D-83 | `POST /api/meta/redact-preview` exists for any logged-in user and logs nothing | The coordinator cannot call resume matching, but the PII demo should work for both roles. |
+| D-84 | Security headers are listed in CORS `expose_headers` | Otherwise the browser hides them from page code and the Security page could not show them. |
+| D-85 | Evaluation page reads the published `eval-summary.json` and phrases its comparisons from the data | Numbers and the direction of each difference can never drift from the saved run. |
+| D-86 | Analytics chart uses status colours (warning, error) for "not in the documents" and "blocked", always labelled | Those series are states, which is what the status palette is for (dataviz rule); answered uses the categorical blue. |

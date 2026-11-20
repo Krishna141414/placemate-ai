@@ -2,7 +2,7 @@
 
 Every item in the official brief and in `CLAUDE.md`, where it is implemented, what proves it, and its status. Updated at the end of every phase.
 
-Status values: `planned`, `in progress`, `done`. Last updated: Phase 6 (2026-11-20).
+Status values: `planned`, `in progress`, `done`. Last updated: Phase 7 (2026-11-20).
 
 ## A. Official brief
 
@@ -18,7 +18,7 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 6 (2026-11-
 | A8 | Evaluation | `eval/` | `eval/results/`, `docs/evaluation.md` | done |
 | A9 | Testing | `backend/tests/`, `frontend/e2e/` | `docs/test-evidence.md` | in progress |
 | A10 | Security considerations | `backend/app/security/` | `SECURITY.md`, security tests | planned |
-| A11 | Usable application interface | `frontend/` | `screenshots/`, Playwright smoke test | planned |
+| A11 | Usable application interface | `frontend/` | `screenshots/`, Playwright smoke test | in progress |
 | A12 | Submit code | Repository | GitHub `main` | in progress |
 | A13 | Submit README | `README.md` | Document | planned |
 | A14 | Submit architecture | `docs/architecture.md` | Document | done |
@@ -30,14 +30,14 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 6 (2026-11-
 
 | # | Requirement | Implemented in | Proof | Status |
 |---|---|---|---|---|
-| B1 | Student asks placement questions | `app/api/ask.py`, `frontend/app/(app)/ask` | `tests/test_ask_api.py`, smoke test | in progress |
-| B2 | Student checks eligibility | `app/tools/eligibility.py`, eligibility page | `tests/test_eligibility.py` | in progress |
-| B3 | Student matches resume to a job | `app/tools/resume.py`, resume page | `tests/test_resume.py` | in progress |
-| B4 | Student gets a prep plan | `app/agent/`, prep page | `tests/test_agent.py` | in progress |
-| B5 | Student tracks applications | `app/tools/applications.py`, applications page | `tests/test_applications.py` | in progress |
-| B6 | Coordinator uploads / updates documents | `app/api/admin.py`, documents page | `tests/test_admin.py` | in progress |
-| B7 | Coordinator analytics: top questions, unanswered, eligibility stats | `app/services/analytics.py`, analytics page | `tests/test_admin.py` | in progress |
-| B8 | Coordinator views logs | `app/api/admin.py` (`/api/admin/logs`) | `tests/test_admin.py` | in progress |
+| B1 | Student asks placement questions | `app/api/ask.py`, `frontend/app/(app)/ask` | `tests/test_ask_api.py`, smoke test | done |
+| B2 | Student checks eligibility | `app/tools/eligibility.py`, eligibility page | `tests/test_eligibility.py` | done |
+| B3 | Student matches resume to a job | `app/tools/resume.py`, resume page | `tests/test_resume.py` | done |
+| B4 | Student gets a prep plan | `app/agent/`, prep page | `tests/test_agent.py` | done |
+| B5 | Student tracks applications | `app/tools/applications.py`, applications page | `tests/test_applications.py` | done |
+| B6 | Coordinator uploads / updates documents | `app/api/admin.py`, documents page | `tests/test_admin.py` | done |
+| B7 | Coordinator analytics: top questions, unanswered, eligibility stats | `app/services/analytics.py`, analytics page | `tests/test_admin.py` | done |
+| B8 | Coordinator views logs | `app/api/admin.py` (`/api/admin/logs`) | `tests/test_admin.py` | done |
 
 ## C. AI components
 
@@ -76,7 +76,7 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 6 (2026-11-
 | E2 | Local fallback (cached Qwen2.5-0.5B-Instruct) | `app/llm/local.py` | `tests/test_llm.py` | done |
 | E3 | Extractive fallback with citations | `app/llm/extractive.py` | `tests/test_llm.py` | done |
 | E4 | Automatic fallback; works with no key | `app/llm/router.py` | `test_llm.py::fallback_chain` | done |
-| E5 | Provider badge | `AnswerResult.provider`, Ask page | Screenshot | in progress |
+| E5 | Provider badge | `AnswerResult.provider`, Ask page | Screenshot | done |
 | E6 | MiniLM embeddings, ms-marco reranker, CPU torch only | `app/rag/models.py`, `requirements.txt` | Preflight in `PROGRESS.md` | done |
 
 ## F. Stack and run
@@ -86,9 +86,9 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 6 (2026-11-
 | F1 | FastAPI, SQLAlchemy + SQLite, Pydantic, FAISS, rank-bm25 | `backend/` | `requirements.txt` | planned |
 | F2 | Structured JSON logging | `app/logging_conf.py` | `tests/test_security_http.py` | done |
 | F3 | OpenAPI at `/docs` | `app/main.py` | Manual check in Phase 3 | done |
-| F4 | Next.js App Router, TypeScript, Tailwind, shadcn/ui | `frontend/` | Build | planned |
-| F5 | AI Elements for chat, citations, reasoning, tool calls | `frontend/components/ai-elements/` | Ask and Prep pages | planned |
-| F6 | Motion; GSAP + ScrollTrigger + Lenis on landing | `frontend/components/landing/` | Landing page | planned |
+| F4 | Next.js App Router, TypeScript, Tailwind, shadcn/ui | `frontend/` | Build | done |
+| F5 | AI Elements for chat, citations, reasoning, tool calls | `frontend/components/ai-elements/` | Ask and Prep pages | done |
+| F6 | Motion; GSAP + ScrollTrigger + Lenis on landing | `frontend/components/landing/` | Landing page | in progress |
 | F7 | One command to run both | `scripts/dev.ps1` | Fresh-clone check | planned |
 | F8 | `.gitignore` covers venv, node_modules, .next, .env, DB, logs, indexes | `.gitignore` | Phase 0 | done |
 | F9 | `screenshots/` kept with `.gitkeep` | `screenshots/.gitkeep` | Phase 0 | done |
@@ -130,11 +130,11 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 6 (2026-11-
 
 | # | Requirement | Implemented in | Proof | Status |
 |---|---|---|---|---|
-| I1 | White + navy identity, typography, spacing | `frontend/app/globals.css` | Hallmark audit, screenshots | planned |
+| I1 | White + navy identity, typography, spacing | `frontend/app/globals.css` | Hallmark audit, screenshots | done |
 | I2 | Landing: six scroll sections | `frontend/components/landing/` | Screenshots | planned |
-| I3 | Ten app pages with ready examples | `frontend/app/(app)/` | Screenshots | planned |
-| I4 | Error pages 404 / 403 / 429 / 500, toasts, skeletons, empty states | `frontend/app/` | Screenshots | planned |
-| I5 | Demo accounts with "Use demo account" buttons | `app/seed.py`, login page | Smoke test | planned |
+| I3 | Ten app pages with ready examples | `frontend/app/(app)/` | Screenshots | done |
+| I4 | Error pages 404 / 403 / 429 / 500, toasts, skeletons, empty states | `frontend/app/` | Screenshots | done |
+| I5 | Demo accounts with "Use demo account" buttons | `app/seed.py`, login page | Smoke test | done |
 | I6 | Guided Tour: manual default, bar, spotlight, keyboard, survives navigation | `frontend/components/tour/` | Phase 9 tour run | planned |
 | I7 | One speed config shared by tour and animations | `frontend/lib/speed.ts` | Code | planned |
 | I8 | `prefers-reduced-motion` respected | Landing + Motion config | Phase 9 check | planned |

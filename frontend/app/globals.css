@@ -74,6 +74,10 @@
   --on-navy-3: #94a3b8;
   --on-navy-accent: #93c5fd;
 
+  /* evaluation chart series, validated with the dataviz palette checker */
+  --series-baseline: #0e8f86;
+  --series-final: #1d4ed8;
+
   /* the dimmed backdrop behind the tour spotlight */
   --scrim: rgb(11 18 32 / 0.55);
 
@@ -136,6 +140,9 @@
   --sidebar-foreground: #cbd5e1;
   --sidebar-accent: #13213a;
   --sidebar-border: #1a2740;
+
+  --series-baseline: #14a395;
+  --series-final: #4f8ef7;
 
   --link: #93c5fd;
   --cite: #93c5fd;
@@ -201,6 +208,8 @@
   --color-link: var(--link);
   --color-cite: var(--cite);
   --color-cite-soft: var(--cite-soft);
+  --color-series-baseline: var(--series-baseline);
+  --color-series-final: var(--series-final);
 
   --radius-sm: calc(var(--radius) * 0.5);
   --radius-md: calc(var(--radius) * 0.75);

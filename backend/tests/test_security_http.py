@@ -180,3 +180,10 @@ def test_logs_never_contain_emails_or_phone_numbers():
     assert "9000054321" not in text
     assert "90000 12345" not in text
     assert "[EMAIL REDACTED]" in text and "[PHONE REDACTED]" in text
+
+
+def test_security_headers_are_readable_by_the_frontend(client):
+    response = client.get("/health", headers={"Origin": ALLOWED_ORIGIN})
+    exposed = response.headers["access-control-expose-headers"]
+    for name in ("X-Content-Type-Options", "X-Frame-Options", "Content-Security-Policy", "Retry-After"):
+        assert name in exposed

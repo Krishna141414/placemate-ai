@@ -75,7 +75,16 @@ def create_app() -> FastAPI:
         allow_credentials=True,
         allow_methods=["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
         allow_headers=["Content-Type", "Accept"],
-        expose_headers=["X-Request-ID", "Retry-After"],
+        # Exposed so the Security page can show the real headers of a real response.
+        expose_headers=[
+            "X-Request-ID",
+            "Retry-After",
+            "X-Content-Type-Options",
+            "X-Frame-Options",
+            "Referrer-Policy",
+            "Content-Security-Policy",
+            "Permissions-Policy",
+        ],
         max_age=600,
     )
 
