@@ -426,3 +426,13 @@ def test_degenerate_model_answers_are_rejected(app, monkeypatch, text, reason):
     result = answer_question("What is the dress code for interviews?")
     assert result.provider == "extractive"
     assert result.fallbacks == [reason]
+
+
+def test_snippets_are_plain_text():
+    from app.rag.pipeline import plain_snippet
+
+    assert plain_snippet("1. **Online Assessment (90 minutes).** 20 `SQL` questions\n## Heading\nmore") == (
+        "1. Online Assessment (90 minutes). 20 SQL questions Heading more"
+    )
+    long = plain_snippet("word " * 200, 50)
+    assert long.endswith("...") and len(long) <= 53

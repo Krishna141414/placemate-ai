@@ -268,7 +268,7 @@ export function AskView() {
                       onCite={(n) => cite(turn.key, n)}
                     />
                   ) : turn.status === "streaming" ? (
-                    <Shimmer className="text-sm">{turn.steps.at(-1)?.label ? `${turn.steps.at(-1)!.label}...` : "Reading the question..."}</Shimmer>
+                    <Shimmer className="text-sm">{turn.steps.at(-1)?.label ? `${turn.steps.at(-1)!.label}…` : "Reading the question…"}</Shimmer>
                   ) : null}
                   {turn.status === "error" && (
                     <p role="alert" className="text-sm text-error">

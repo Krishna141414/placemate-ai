@@ -20,7 +20,7 @@ from app.llm import router
 from app.llm.base import LLMRequest, Passage, ProviderError
 from app.models import StudentProfile, User
 from app.rag.index import get_index
-from app.rag.pipeline import answer_problem
+from app.rag.pipeline import answer_problem, plain_snippet
 from app.rag.prompts import NOT_IN_DOCUMENTS, SYSTEM_PROMPT, build_prompt
 from app.rag.retriever import retrieve
 from app.security.injection import filter_output, scan_user_input
@@ -59,7 +59,7 @@ def _source(item) -> dict[str, Any]:
         "doc_key": chunk.doc_key,
         "title": chunk.title,
         "section": chunk.section,
-        "snippet": " ".join(chunk.text.split())[:240],
+        "snippet": plain_snippet(chunk.text, 240),
         "text": chunk.text,
         "score": round(float(item.score), 3),
     }

@@ -32,6 +32,10 @@ Dev servers for checking: backend `backend/.venv/Scripts/python.exe -m uvicorn a
 - Backend additions for the UI: `GET /api/tools/resume` (own resume text), `PATCH /api/prep-plans/{id}` (task progress), with tests.
 - AI Elements edits (owned code): Tool status icons use theme tokens; InlineCitation trigger accepts a label; Sources typed as Collapsible.
 - Checked in the browser: login, dashboard, ask with Gemini (cited answer, 6 pipeline steps, conversation saved).
+- 7.3 part 2: Eligibility (single result with animated criteria, all-companies matrix, examples that each fail a different criterion, `?company=` / `?view=all`), Resume match (saved resume / upload / paste, match ring with count-up, matched and missing chips, formula, advice, PII notice with "what the model saw"), Prep agent (SSE timeline of AI Elements Tool cards with plain-language summaries and raw output collapsed, run state panel with the tool-call budget and recoveries, approval dialog showing exactly what gets saved, Confirmation card after the decision, not-eligible alternatives, `?company=&run=`), Applications (table with inline stage change, add/edit dialog, delete confirmation, status tabs in the URL).
+- Backend: `plain_snippet` strips markdown markers from source snippets (they showed `**bold**`), with a test.
+- Hallmark sloplint (`--scope app`): 0 FAIL, 0 WARN, 1 dismissed (74, #F8FAFC is the SHOWCASE surface). Fixed along the way: dark mode moved to `[data-theme="dark"]` (the `.dark` class block was read as literal colours), glass header made solid, `:active` states, true ellipses, tracked-caps labels removed from the AI Elements Tool card.
+- Checked in the browser: eligibility (OrbitPay fails CGPA), resume match (94%, 4 contact details removed, preview), agent run with a demo fault (recovered after retry, approval dialog, approve saved plan + application), applications table.
 
 Notes:
 - The "hydration mismatch" on inputs seen in the Playwright console is the screenshot tool adding `caret-color: transparent`; not an app bug.

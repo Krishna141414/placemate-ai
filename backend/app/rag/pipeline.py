@@ -119,12 +119,21 @@ class AnswerResult:
         return asdict(self)
 
 
-def _snippet(text: str) -> str:
-    text = " ".join(text.replace("...", " ").split())
-    if len(text) <= SNIPPET_CHARS:
+_MARKDOWN_RE = re.compile(r"\*\*|__|`|^#{1,6}\s+", re.MULTILINE)
+
+
+def plain_snippet(text: str, limit: int = SNIPPET_CHARS) -> str:
+    """A short, plain-text excerpt for source cards: no markdown markers."""
+    text = _MARKDOWN_RE.sub("", text.replace("...", " "))
+    text = " ".join(text.split())
+    if len(text) <= limit:
         return text
-    cut = text[:SNIPPET_CHARS].rsplit(" ", 1)[0]
+    cut = text[:limit].rsplit(" ", 1)[0]
     return f"{cut}..."
+
+
+def _snippet(text: str) -> str:
+    return plain_snippet(text)
 
 
 def _source_cards(results: list[ScoredChunk]) -> list[dict[str, Any]]:

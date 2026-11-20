@@ -155,7 +155,7 @@ export function DashboardView() {
               <ul className="space-y-1">
                 {conversations.data!.slice(0, 5).map((conversation) => (
                   <li key={conversation.id}>
-                    <Link href={`/ask?c=${conversation.id}`} className="block rounded-lg px-3 py-2 hover:bg-muted">
+                    <Link href={`/ask?c=${conversation.id}`} className="block rounded-lg px-3 py-2 hover:bg-muted active:bg-secondary">
                       <span className="line-clamp-1 text-sm">{conversation.title}</span>
                       <span className="text-xs text-muted-foreground">{formatDateTime(conversation.updated_at)}</span>
                     </Link>
@@ -251,7 +251,7 @@ function PlanProgress({ plans }: { plans: ApiState<PrepPlan[]> }) {
                     disabled={saving}
                     onClick={() => void toggle(key)}
                     className={cn(
-                      "flex w-full items-start gap-2.5 rounded-md px-2 py-1.5 text-left text-sm hover:bg-muted disabled:opacity-60",
+                      "flex w-full items-start gap-2.5 rounded-md px-2 py-1.5 text-left text-sm hover:bg-muted active:bg-secondary disabled:cursor-not-allowed disabled:opacity-55",
                       checked && "text-muted-foreground line-through",
                     )}
                   >

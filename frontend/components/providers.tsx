@@ -11,7 +11,7 @@ import { SpeedProvider } from "@/lib/speed";
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+    <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem disableTransitionOnChange>
       <SpeedProvider>
         <AuthProvider>
           <TooltipProvider delayDuration={300}>

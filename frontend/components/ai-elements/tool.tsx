@@ -35,6 +35,10 @@ export type ToolPart = ToolUIPart | DynamicToolUIPart;
 export type ToolHeaderProps = {
   title?: string;
   className?: string;
+  /** PlaceMate: replaces the built-in status badge (its labels are AI SDK states). */
+  badge?: ReactNode;
+  /** PlaceMate: replaces the wrench icon. */
+  icon?: ReactNode;
 } & (
   | { type: ToolUIPart["type"]; state: ToolUIPart["state"]; toolName?: never }
   | {
@@ -77,6 +81,8 @@ export const ToolHeader = ({
   type,
   state,
   toolName,
+  badge,
+  icon,
   ...props
 }: ToolHeaderProps) => {
   const derivedName =
@@ -91,9 +97,9 @@ export const ToolHeader = ({
       {...props}
     >
       <div className="flex items-center gap-2">
-        <WrenchIcon className="size-4 text-muted-foreground" />
+        {icon ?? <WrenchIcon className="size-4 text-muted-foreground" />}
         <span className="font-medium text-sm">{title ?? derivedName}</span>
-        {getStatusBadge(state)}
+        {badge ?? getStatusBadge(state)}
       </div>
       <ChevronDownIcon className="size-4 text-muted-foreground transition-transform group-data-[state=open]:rotate-180" />
     </CollapsibleTrigger>
@@ -118,7 +124,7 @@ export type ToolInputProps = ComponentProps<"div"> & {
 
 export const ToolInput = ({ className, input, ...props }: ToolInputProps) => (
   <div className={cn("space-y-2 overflow-hidden", className)} {...props}>
-    <h4 className="font-medium text-muted-foreground text-xs uppercase tracking-wide">
+    <h4 className="font-medium text-muted-foreground text-xs">
       Parameters
     </h4>
     <div className="rounded-md bg-muted/50">
@@ -154,7 +160,7 @@ export const ToolOutput = ({
 
   return (
     <div className={cn("space-y-2", className)} {...props}>
-      <h4 className="font-medium text-muted-foreground text-xs uppercase tracking-wide">
+      <h4 className="font-medium text-muted-foreground text-xs">
         {errorText ? "Error" : "Result"}
       </h4>
       <div

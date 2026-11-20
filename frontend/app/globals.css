@@ -3,11 +3,12 @@
  * nav: navy sidebar, collapses under 60rem · signature: the cited answer with its source cards, and the agent timeline · states: loading, empty, error, full
  * axes: light/grotesk-sans/cool · posture: settled · contrast: pass · v2.0.0 */
 /* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V3 · weakest: V, a sidebar admin shell is the expected form for ten destinations; kept it and spent the identity on the answer-with-sources object instead */
+/* Hallmark · dismissed 74 · #F8FAFC is the subtle surface SHOWCASE.md names for PlaceMate · the brand spec fixes this paper colour, so the stock swatch stays */
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /* ---------------------------------------------------------------- tokens */
 /* Palette from SHOWCASE.md. Every colour below is used through a token. */
@@ -15,7 +16,7 @@
   --navy: #0b1f3a;
   --navy-2: #13294b;
   --slate: #475569;
-  --slate-2: #64748b;
+  --slate-2: #5f6e86;
   --blue: #1d4ed8;
   --blue-hover: #1e40af;
   --blue-soft: #dbeafe;
@@ -54,7 +55,7 @@
   --chart-2: #0e8f86;
   --chart-3: #b45309;
   --chart-4: #b91c1c;
-  --chart-5: #64748b;
+  --chart-5: #5f6e86;
   --radius: 0.75rem;
 
   /* the sidebar is navy, per SHOWCASE.md */
@@ -73,6 +74,9 @@
   --on-navy-3: #94a3b8;
   --on-navy-accent: #93c5fd;
 
+  /* the dimmed backdrop behind the tour spotlight */
+  --scrim: rgb(11 18 32 / 0.55);
+
   /* app-specific roles */
   --link: var(--blue);
   --cite: var(--blue);
@@ -88,9 +92,9 @@
   --shadow-soft: 0 1px 2px rgb(11 31 58 / 0.04), 0 4px 16px rgb(11 31 58 / 0.04);
 }
 
-.dark {
+:root[data-theme="dark"] {
   --paper: #0b1220;
-  --paper-2: #0f172a;
+  --paper-2: #0e1628;
   --paper-3: #162033;
   --rule: #1f2a3d;
   --slate: #94a3b8;
@@ -307,7 +311,7 @@
 .cite-chip:hover,
 .cite-chip[data-active="true"] {
   background: var(--blue);
-  color: #ffffff;
+  color: var(--primary-foreground);
 }
 
 /* Spotlight used by the guided tour. */
@@ -316,6 +320,6 @@
   z-index: 60;
   pointer-events: none;
   border-radius: 14px;
-  box-shadow: 0 0 0 9999px rgb(11 18 32 / 0.55), 0 0 0 2px var(--blue);
+  box-shadow: 0 0 0 9999px var(--scrim), 0 0 0 2px var(--blue);
   transition: transform var(--dur-short) var(--ease-out-soft), opacity var(--dur-short) ease;
 }

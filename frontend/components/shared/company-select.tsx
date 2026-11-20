@@ -26,7 +26,7 @@ export function CompanySelect({
   return (
     <Select value={value} onValueChange={onChange} disabled={disabled || !companies}>
       <SelectTrigger id={id} className={className ?? "w-full sm:w-80"} data-tour={rest["data-tour"]}>
-        <SelectValue placeholder={companies ? placeholder : "Loading companies..."} />
+        <SelectValue placeholder={companies ? placeholder : "Loading companies…"} />
       </SelectTrigger>
       <SelectContent>
         {ORDER.map((category) => {
