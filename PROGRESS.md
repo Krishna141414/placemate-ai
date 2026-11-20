@@ -13,14 +13,29 @@ Resume rule: read `CLAUDE.md` and this file, then continue `BUILD_PROMPT.md` fro
 | 4 | RAG | done |
 | 5 | Tools & agent | done |
 | 6 | Tests & evaluation | done |
-| 7 | Frontend app | next |
+| 7 | Frontend app | in progress |
 | 8 | Landing showcase + Guided Tour | todo |
 | 9 | Verify | todo |
 | 10 | Docs & finish | todo |
 
 ## Next step
 
-Phase 7, step 1: scaffold `frontend/` (create-next-app, TypeScript, Tailwind, App Router, `src/` off), `npx shadcn@latest init`, `npx shadcn@latest mcp init --client claude`, AI Elements components, theme tokens from SHOWCASE.md. Hallmark study is done (notes below); apply the app-screen rules. Then step 2: shell, login with demo buttons, role-protected routes (`proxy.ts` + server-side checks).
+Phase 7, step 3 (continued): pages Eligibility (`/eligibility`), Resume match (`/resume`), Prep agent (`/agent`), Applications (`/applications`), then coordinator Documents (`/documents`), Analytics (`/analytics`), Evaluation (`/evaluation`), Security (`/security`). Pattern: `app/(app)/<page>/page.tsx` (server, metadata) + `<page>-view.tsx` (client), data via `lib/use-api.ts`, four states per region. Hallmark sweep after each page (`node ~/.claude/skills/hallmark/scripts/sloplint.mjs --scope app --url http://localhost:3000/<route> --render`).
+
+Dev servers for checking: backend `backend/.venv/Scripts/python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000` (from `backend/`), frontend `npx next dev --port 3000` (from `frontend/`). Use `localhost` (not 127.0.0.1) in the browser so the session cookie is same-site.
+
+## Phase 7 - Frontend app (in progress)
+
+- 7.1 Next.js 16.4.6 (App Router, TypeScript, Tailwind 4, ESLint) in `frontend/`; first `npm install` hit ECONNRESET, retried with `--fetch-retries`. `cacheComponents` / `partialPrefetching` from the template turned off (all data is fetched client-side from FastAPI). shadcn/ui initialised (radix-nova, Lucide); `npx shadcn@latest mcp init --client claude` wrote `frontend/.mcp.json` (loads next Claude Code session; this session used the shadcn CLI). AI Elements added: conversation, message, prompt-input, suggestion, sources, inline-citation, chain-of-thought, tool, confirmation, shimmer, code-block (`loader` no longer exists in the registry). Theme tokens from SHOWCASE.md in `app/globals.css` (white + navy, accent #1D4ED8, 12px radius, Inter + Geist Mono, light and dark), with the Hallmark stamp + critique at the top.
+- 7.2 Shell: `components/shell/app-shell.tsx` (navy sidebar by role, top bar, theme toggle, user menu, client guard: login redirect, offline page, 403 for the wrong role), `proxy.ts` (cookie presence check), `/login` with demo buttons and safe `?next=`, error pages 404 / 403 (`/forbidden`) / 429 (`/too-many-requests`) / 500 (`error.tsx`), `(app)/template.tsx` page fade.
+- 7.3 so far: Dashboard (eligible companies table, deadlines, recent questions, plan progress with tick-off tasks) and Ask (AI Elements conversation, example chips incl. unanswerable + injection, inline citation chips with hover cards, source cards, "How this was answered" chain-of-thought with provider badge, history in the URL `?c=`). Paced reveal from `lib/speed.ts`.
+- Backend additions for the UI: `GET /api/tools/resume` (own resume text), `PATCH /api/prep-plans/{id}` (task progress), with tests.
+- AI Elements edits (owned code): Tool status icons use theme tokens; InlineCitation trigger accepts a label; Sources typed as Collapsible.
+- Checked in the browser: login, dashboard, ask with Gemini (cited answer, 6 pipeline steps, conversation saved).
+
+Notes:
+- The "hydration mismatch" on inputs seen in the Playwright console is the screenshot tool adding `caret-color: transparent`; not an app bug.
+- Hallmark waiver: the shadcn sidebar collapses at 768px, not 60rem, because changing one breakpoint would desync the component's `md:` classes.
 
 ## Phase 6 - Tests & evaluation (done 2026-11-20)
 

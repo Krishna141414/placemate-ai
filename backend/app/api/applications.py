@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 from app.db import get_db
 from app.errors import AppError
 from app.models import PrepPlan, User
-from app.schemas import ApplicationCreate, ApplicationOut, ApplicationUpdate, PrepPlanOut
+from app.schemas import ApplicationCreate, ApplicationOut, ApplicationUpdate, PlanProgressUpdate, PrepPlanOut
 from app.security.auth import require_student
 from app.services import events
 from app.tools.applications import get_own_application, list_applications, track_application
@@ -64,9 +64,28 @@ def prep_plans(user: User = Depends(require_student), db: Session = Depends(get_
     return [PrepPlanOut.model_validate(row) for row in rows]
 
 
-@router.get("/prep-plans/{plan_id}", response_model=PrepPlanOut, summary="One approved prep plan")
-def prep_plan(plan_id: int, user: User = Depends(require_student), db: Session = Depends(get_db)) -> PrepPlanOut:
+def _own_plan(db: Session, user: User, plan_id: int) -> PrepPlan:
     plan = db.get(PrepPlan, plan_id)
     if plan is None or plan.user_id != user.id:
         raise AppError(404, "plan_not_found", "That plan does not exist.")
+    return plan
+
+
+@router.get("/prep-plans/{plan_id}", response_model=PrepPlanOut, summary="One approved prep plan")
+def prep_plan(plan_id: int, user: User = Depends(require_student), db: Session = Depends(get_db)) -> PrepPlanOut:
+    return PrepPlanOut.model_validate(_own_plan(db, user, plan_id))
+
+
+@router.patch("/prep-plans/{plan_id}", response_model=PrepPlanOut, summary="Mark plan tasks as done")
+def update_plan_progress(
+    plan_id: int, body: PlanProgressUpdate, user: User = Depends(require_student), db: Session = Depends(get_db)
+) -> PrepPlanOut:
+    plan = _own_plan(db, user, plan_id)
+    valid = {f"w{week['week']}-t{i}" for week in plan.plan.get("weeks", []) for i in range(len(week.get("tasks", [])))}
+    unknown = [key for key in body.done if key not in valid]
+    if unknown:
+        raise AppError(422, "unknown_task", f"These task ids are not in the plan: {', '.join(unknown[:5])}.")
+    plan.plan = {**plan.plan, "done": sorted(set(body.done))}
+    db.commit()
+    db.refresh(plan)
     return PrepPlanOut.model_validate(plan)

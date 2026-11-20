@@ -1,0 +1,321 @@
+/* Hallmark · shape: app screen · genre: modern-minimal · theme: brand (SHOWCASE.md)
+ * paper: #FFFFFF / #F8FAFC · accent: #1D4ED8 · display: Inter · body: Inter
+ * nav: navy sidebar, collapses under 60rem · signature: the cited answer with its source cards, and the agent timeline · states: loading, empty, error, full
+ * axes: light/grotesk-sans/cool · posture: settled · contrast: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V3 · weakest: V, a sidebar admin shell is the expected form for ten destinations; kept it and spent the identity on the answer-with-sources object instead */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ---------------------------------------------------------------- tokens */
+/* Palette from SHOWCASE.md. Every colour below is used through a token. */
+:root {
+  --navy: #0b1f3a;
+  --navy-2: #13294b;
+  --slate: #475569;
+  --slate-2: #64748b;
+  --blue: #1d4ed8;
+  --blue-hover: #1e40af;
+  --blue-soft: #dbeafe;
+  --blue-soft-2: #eff6ff;
+  --paper: #ffffff;
+  --paper-2: #f8fafc;
+  --paper-3: #f1f5f9;
+  --rule: #e2e8f0;
+  --success: #15803d;
+  --success-soft: #dcfce7;
+  --warning: #b45309;
+  --warning-soft: #fef3c7;
+  --error: #b91c1c;
+  --error-soft: #fee2e2;
+
+  /* shadcn roles */
+  --background: var(--paper);
+  --foreground: var(--navy);
+  --card: var(--paper);
+  --card-foreground: var(--navy);
+  --popover: var(--paper);
+  --popover-foreground: var(--navy);
+  --primary: var(--blue);
+  --primary-foreground: #ffffff;
+  --secondary: var(--paper-3);
+  --secondary-foreground: var(--navy);
+  --muted: var(--paper-2);
+  --muted-foreground: var(--slate);
+  --accent: var(--blue-soft-2);
+  --accent-foreground: var(--navy);
+  --destructive: var(--error);
+  --border: var(--rule);
+  --input: var(--rule);
+  --ring: var(--blue);
+  --chart-1: #1d4ed8;
+  --chart-2: #0e8f86;
+  --chart-3: #b45309;
+  --chart-4: #b91c1c;
+  --chart-5: #64748b;
+  --radius: 0.75rem;
+
+  /* the sidebar is navy, per SHOWCASE.md */
+  --sidebar: var(--navy);
+  --sidebar-foreground: #e2e8f0;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: var(--navy);
+  --sidebar-accent: var(--navy-2);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #1e3355;
+  --sidebar-ring: #93c5fd;
+
+  /* text on navy surfaces (sidebar, login panel, landing bands) */
+  --on-navy: #ffffff;
+  --on-navy-2: #cbd5e1;
+  --on-navy-3: #94a3b8;
+  --on-navy-accent: #93c5fd;
+
+  /* app-specific roles */
+  --link: var(--blue);
+  --cite: var(--blue);
+  --cite-soft: var(--blue-soft);
+  --focus: var(--blue);
+
+  /* scale and motion (Hallmark app scale, ratio 1.2) */
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long: 420ms;
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --container: 1200px;
+  --shadow-soft: 0 1px 2px rgb(11 31 58 / 0.04), 0 4px 16px rgb(11 31 58 / 0.04);
+}
+
+.dark {
+  --paper: #0b1220;
+  --paper-2: #0f172a;
+  --paper-3: #162033;
+  --rule: #1f2a3d;
+  --slate: #94a3b8;
+  --slate-2: #7c8aa0;
+  --blue-soft: #172554;
+  --blue-soft-2: #111c36;
+  --success: #4ade80;
+  --success-soft: #0f2a1a;
+  --warning: #fbbf24;
+  --warning-soft: #2a1f08;
+  --error: #f87171;
+  --error-soft: #2a1010;
+
+  --background: var(--paper);
+  --foreground: #e2e8f0;
+  --card: var(--paper-2);
+  --card-foreground: #e2e8f0;
+  --popover: var(--paper-2);
+  --popover-foreground: #e2e8f0;
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --secondary: var(--paper-3);
+  --secondary-foreground: #e2e8f0;
+  --muted: var(--paper-2);
+  --muted-foreground: var(--slate);
+  --accent: var(--paper-3);
+  --accent-foreground: #e2e8f0;
+  --destructive: var(--error);
+  --border: var(--rule);
+  --input: var(--rule);
+  --ring: #60a5fa;
+  --chart-1: #60a5fa;
+  --chart-2: #2dd4bf;
+  --chart-3: #fbbf24;
+  --chart-4: #f87171;
+  --chart-5: #94a3b8;
+
+  --sidebar: #08101d;
+  --sidebar-foreground: #cbd5e1;
+  --sidebar-accent: #13213a;
+  --sidebar-border: #1a2740;
+
+  --link: #93c5fd;
+  --cite: #93c5fd;
+  --cite-soft: #172554;
+  --focus: #60a5fa;
+  --shadow-soft: none;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  /* app roles as utilities: text-success, bg-warning-soft, text-cite ... */
+  --color-navy: var(--navy);
+  --color-on-navy: var(--on-navy);
+  --color-on-navy-2: var(--on-navy-2);
+  --color-on-navy-3: var(--on-navy-3);
+  --color-on-navy-accent: var(--on-navy-accent);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-paper-3: var(--paper-3);
+  --color-rule: var(--rule);
+  --color-slate: var(--slate);
+  --color-blue-soft: var(--blue-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-error: var(--error);
+  --color-error-soft: var(--error-soft);
+  --color-link: var(--link);
+  --color-cite: var(--cite);
+  --color-cite-soft: var(--cite-soft);
+
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.33);
+  --radius-2xl: calc(var(--radius) * 1.66);
+  --radius-3xl: calc(var(--radius) * 2);
+  --radius-4xl: calc(var(--radius) * 2.33);
+
+  /* type scale, ratio 1.2 (Hallmark app scope) */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.2rem;
+  --text-xl: 1.44rem;
+  --text-2xl: 1.728rem;
+  --text-3xl: 2.074rem;
+
+  --shadow-soft: var(--shadow-soft);
+  --ease-out-soft: var(--ease-out-soft);
+}
+
+/* ------------------------------------------------------------------ base */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html,
+  body {
+    overflow-x: clip;
+  }
+  html {
+    @apply font-sans;
+    scrollbar-color: var(--slate-2) var(--paper);
+    scroll-padding-top: 80px;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-size: var(--text-base);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    caret-color: var(--blue);
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--blue) 22%, transparent);
+  }
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+    transition: none;
+  }
+  h1,
+  h2,
+  h3 {
+    overflow-wrap: break-word;
+    min-width: 0;
+    text-wrap: balance;
+    letter-spacing: -0.015em;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  .num,
+  td.num,
+  [data-num] {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *:not(.keep-motion),
+  *:not(.keep-motion)::before,
+  *:not(.keep-motion)::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --------------------------------------------------------- app pieces */
+.app-container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+}
+
+/* A numbered citation chip inside an answer. */
+.cite-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.35rem;
+  height: 1.25rem;
+  padding-inline: 0.3rem;
+  margin-inline: 0.1rem;
+  border-radius: 0.375rem;
+  background: var(--cite-soft);
+  color: var(--cite);
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  vertical-align: 0.12em;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color var(--dur-micro) ease, color var(--dur-micro) ease;
+}
+.cite-chip:hover,
+.cite-chip[data-active="true"] {
+  background: var(--blue);
+  color: #ffffff;
+}
+
+/* Spotlight used by the guided tour. */
+.tour-spotlight {
+  position: fixed;
+  z-index: 60;
+  pointer-events: none;
+  border-radius: 14px;
+  box-shadow: 0 0 0 9999px rgb(11 18 32 / 0.55), 0 0 0 2px var(--blue);
+  transition: transform var(--dur-short) var(--ease-out-soft), opacity var(--dur-short) ease;
+}

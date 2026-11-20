@@ -260,6 +260,11 @@ class AgentRunOut(BaseModel):
     updated_at: datetime
 
 
+class PlanProgressUpdate(StrictModel):
+    # Task ids look like "w1-t0": week 1, first task.
+    done: list[str] = Field(default_factory=list, max_length=100)
+
+
 class PrepPlanOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 

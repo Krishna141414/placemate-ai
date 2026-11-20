@@ -367,3 +367,21 @@ def test_agent_runs_are_private_and_student_only(student_client, coordinator_cli
     assert coordinator_client.post(f"/api/agent/runs/{run_id}/approve").status_code == 403
     assert client.post("/api/agent/runs", json={"company_id": "nimbusware"}).status_code == 401
     assert student_client.get("/api/agent/runs/99999").status_code == 404
+
+
+def test_plan_progress_can_be_saved(student_client):
+    run_id = student_client.post("/api/agent/runs", json={"company_id": "nimbusware"}).json()["id"]
+    student_client.post(f"/api/agent/runs/{run_id}/approve")
+    plan = student_client.get("/api/prep-plans").json()[0]
+    updated = student_client.patch(f"/api/prep-plans/{plan['id']}", json={"done": ["w1-t0", "w1-t1", "w1-t0"]})
+    assert updated.status_code == 200
+    assert updated.json()["plan"]["done"] == ["w1-t0", "w1-t1"]
+    bad = student_client.patch(f"/api/prep-plans/{plan['id']}", json={"done": ["w9-t9"]})
+    assert bad.status_code == 422 and bad.json()["error"]["code"] == "unknown_task"
+    assert student_client.patch("/api/prep-plans/99999", json={"done": []}).status_code == 404
+
+
+def test_own_resume_endpoint(student_client, coordinator_client):
+    body = student_client.get("/api/tools/resume").json()
+    assert body["has_resume"] is True and "ANANYA RAO" in body["text"]
+    assert coordinator_client.get("/api/tools/resume").status_code == 403

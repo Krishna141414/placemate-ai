@@ -63,6 +63,12 @@ def resume_match(body: ResumeMatchRequest, user: User = Depends(require_student)
     return ResumeMatchOut(**result.to_dict())
 
 
+@router.get("/resume", summary="The student's own saved resume text")
+def own_resume(user: User = Depends(require_student)) -> dict:
+    text = user.profile.resume_text if user.profile else None
+    return {"text": text or "", "has_resume": bool(text)}
+
+
 @router.post("/resume-extract", summary="Read the text of an uploaded resume (.txt, .md or .pdf)")
 async def resume_extract(file: UploadFile = File(...), _user: User = Depends(require_student)) -> dict:
     data = await read_limited(file, RESUME_MAX_BYTES)
