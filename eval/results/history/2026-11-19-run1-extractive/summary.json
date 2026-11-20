@@ -1,0 +1,81 @@
+{
+  "generated_at": "2026-11-19T10:21:04+00:00",
+  "provider_setting": "extractive",
+  "models": {
+    "gemini": null,
+    "local": "Qwen/Qwen2.5-0.5B-Instruct",
+    "embedding": "sentence-transformers/all-MiniLM-L6-v2",
+    "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2"
+  },
+  "config": {
+    "top_k": 5,
+    "candidates_per_retriever": 20,
+    "rrf_k": 60,
+    "rerank_refusal_threshold": 0.0
+  },
+  "modes": {
+    "baseline": {
+      "cases": 47,
+      "hit_at_3": 1.0,
+      "mrr": 0.98,
+      "answer_quality": 0.8,
+      "groundedness": 0.981,
+      "citation_accuracy": 0.789,
+      "refusal_accuracy": 0.806,
+      "false_refusals": 0,
+      "hallucination_rate": 1.0,
+      "injection_block_rate": 0.0,
+      "unsafe_outputs": 0,
+      "ambiguous_handled": 1.0,
+      "agent_task_success": 0.333,
+      "latency_p50_ms": 80.8,
+      "latency_p95_ms": 107.3,
+      "latency_median_ms": 80.8,
+      "providers": {
+        "extractive": 41
+      },
+      "counts": {
+        "answerable": 25,
+        "with_relevant_docs": 25,
+        "traps": 6,
+        "injection": 6,
+        "ambiguous": 4,
+        "agent": 6,
+        "answered_sentences": 53,
+        "citations": 133
+      }
+    },
+    "final": {
+      "cases": 47,
+      "hit_at_3": 1.0,
+      "mrr": 1.0,
+      "answer_quality": 0.84,
+      "groundedness": 0.957,
+      "citation_accuracy": 0.817,
+      "refusal_accuracy": 0.968,
+      "false_refusals": 0,
+      "hallucination_rate": 0.167,
+      "injection_block_rate": 1.0,
+      "unsafe_outputs": 0,
+      "ambiguous_handled": 1.0,
+      "agent_task_success": 1.0,
+      "latency_p50_ms": 318.9,
+      "latency_p95_ms": 401.3,
+      "latency_median_ms": 318.9,
+      "providers": {
+        "extractive": 29,
+        "none": 12
+      },
+      "counts": {
+        "answerable": 25,
+        "with_relevant_docs": 25,
+        "traps": 6,
+        "injection": 6,
+        "ambiguous": 4,
+        "agent": 6,
+        "answered_sentences": 46,
+        "citations": 104
+      }
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "generated_at": "2026-11-19T10:08:05+00:00",
+  "provider_setting": "gemini",
+  "models": {
+    "gemini": "gemini-3.5-flash-lite",
+    "local": "Qwen/Qwen2.5-0.5B-Instruct",
+    "embedding": "sentence-transformers/all-MiniLM-L6-v2",
+    "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2"
+  },
+  "config": {
+    "top_k": 5,
+    "candidates_per_retriever": 20,
+    "rrf_k": 60,
+    "rerank_refusal_threshold": 0.0
+  },
+  "modes": {
+    "baseline": {
+      "cases": 47,
+      "hit_at_3": 1.0,
+      "mrr": 0.98,
+      "answer_quality": 0.92,
+      "groundedness": 0.946,
+      "citation_accuracy": 0.908,
+      "refusal_accuracy": 0.935,
+      "false_refusals": 2,
+      "hallucination_rate": 0.0,
+      "injection_block_rate": 0.0,
+      "unsafe_outputs": 0,
+      "ambiguous_handled": 1.0,
+      "agent_task_success": 0.333,
+      "latency_p50_ms": 3900.0,
+      "latency_p95_ms": 8716.2,
+      "latency_median_ms": 3900.0,
+      "providers": {
+        "gemini": 41
+      },
+      "counts": {
+        "answerable": 25,
+        "with_relevant_docs": 25,
+        "traps": 6,
+        "injection": 6,
+        "ambiguous": 4,
+        "agent": 6,
+        "answered_sentences": 56,
+        "citations": 65
+      }
+    },
+    "final": {
+      "cases": 47,
+      "hit_at_3": 1.0,
+      "mrr": 1.0,
+      "answer_quality": 0.92,
+      "groundedness": 0.931,
+      "citation_accuracy": 0.845,
+      "refusal_accuracy": 1.0,
+      "false_refusals": 0,
+      "hallucination_rate": 0.0,
+      "injection_block_rate": 1.0,
+      "unsafe_outputs": 0,
+      "ambiguous_handled": 1.0,
+      "agent_task_success": 1.0,
+      "latency_p50_ms": 5257.2,
+      "latency_p95_ms": 44272.5,
+      "latency_median_ms": 5257.2,
+      "providers": {
+        "gemini": 26,
+        "local": 3,
+        "none": 12
+      },
+      "counts": {
+        "answerable": 25,
+        "with_relevant_docs": 25,
+        "traps": 6,
+        "injection": 6,
+        "ambiguous": 4,
+        "agent": 6,
+        "answered_sentences": 72,
+        "citations": 71
+      }
+    }
+  }
+}

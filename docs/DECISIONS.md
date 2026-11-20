@@ -89,3 +89,18 @@ Short record of each design choice and the reason. Newest phase at the bottom.
 | D-61 | Stored upload names get a random prefix and live only in `storage/uploads/` | No overwrites, no path traversal; the original name is kept only in sanitised form. |
 | D-62 | Eligibility statistics are computed from current profiles, not from check events | "How many students can apply to X" should not depend on who happened to click. |
 | D-63 | Logs are returned as readable sentences, not raw payloads | SHOWCASE.md forbids raw JSON on screen. |
+
+## Phase 6 - Tests and evaluation
+
+| # | Decision | Reason |
+|---|---|---|
+| D-64 | Metrics are computed by code, with no LLM judge | Same answers always get the same scores, the eval runs offline, and no model grades itself. |
+| D-65 | "Supported" = 60% content-word overlap or 0.72 embedding similarity with a sentence of the passage, heading included | Simple, explainable, and it accepts paraphrase without accepting unrelated text. Its limits are written down in `docs/evaluation.md`. |
+| D-66 | Baseline agent = no retries, no fallbacks, every step required | Makes the value of the recovery design measurable rather than claimed. |
+| D-67 | Two eval runs: Gemini (the configured provider) and extractive (no key) | The brief requires the app to work without a key; the offline run shows how well it does. |
+| D-68 | Every figure in the docs is written by `eval/report.py` | "Real results only": numbers can only come from result files. |
+| D-69 | First runs are archived, not overwritten | The fixes in section 7 of the evaluation are visible against the run that found them. |
+| D-70 | Refuse questions that name something absent from every document | A student asking about a company that never visits must not get another company's cut-off. Acronyms that are initials of a corpus phrase are allowed so "DSA" still works. |
+| D-71 | Model answers under 5 words or repeating prompt markup are rejected | A degenerate local-model answer is worse than an extractive one. |
+| D-72 | Re-grade saved answers after a metric fix instead of calling Gemini again | Cheaper and keeps the answers fixed; `regrade.py` refuses to run if retrieval no longer matches the saved run. |
+| D-73 | Chart colours: teal #0E8F86 (baseline) and brand blue #1D4ED8 (final) | Validated with the dataviz palette checker (lightness, chroma, colour-blind separation, contrast). Slate failed the chroma floor; orange is too close to the reserved warning colour. |

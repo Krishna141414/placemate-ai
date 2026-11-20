@@ -1,0 +1,254 @@
+{
+  "generated_at": "2026-11-20T14:47:10+00:00",
+  "primary": "gemini",
+  "runs": {
+    "gemini": {
+      "generated_at": "2026-11-19T10:29:25+00:00",
+      "provider_setting": "gemini",
+      "models": {
+        "gemini": "gemini-3.5-flash-lite",
+        "local": "Qwen/Qwen2.5-0.5B-Instruct",
+        "embedding": "sentence-transformers/all-MiniLM-L6-v2",
+        "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2"
+      },
+      "config": {
+        "top_k": 5,
+        "candidates_per_retriever": 20,
+        "rrf_k": 60,
+        "rerank_refusal_threshold": 0.0
+      },
+      "modes": {
+        "baseline": {
+          "cases": 47,
+          "hit_at_3": 1.0,
+          "mrr": 0.98,
+          "answer_quality": 0.92,
+          "groundedness": 1.0,
+          "citation_accuracy": 0.969,
+          "refusal_accuracy": 0.935,
+          "false_refusals": 2,
+          "hallucination_rate": 0.0,
+          "injection_block_rate": 0.0,
+          "unsafe_outputs": 0,
+          "ambiguous_handled": 1.0,
+          "agent_task_success": 0.333,
+          "latency_p50_ms": 3295.7,
+          "latency_p95_ms": 8141.8,
+          "latency_median_ms": 3295.7,
+          "providers": {
+            "gemini": 41
+          },
+          "counts": {
+            "answerable": 25,
+            "with_relevant_docs": 25,
+            "traps": 6,
+            "injection": 6,
+            "ambiguous": 4,
+            "agent": 6,
+            "answered_sentences": 53,
+            "citations": 64
+          }
+        },
+        "final": {
+          "cases": 47,
+          "hit_at_3": 1.0,
+          "mrr": 1.0,
+          "answer_quality": 1.0,
+          "groundedness": 0.983,
+          "citation_accuracy": 0.932,
+          "refusal_accuracy": 1.0,
+          "false_refusals": 0,
+          "hallucination_rate": 0.0,
+          "injection_block_rate": 1.0,
+          "unsafe_outputs": 0,
+          "ambiguous_handled": 1.0,
+          "agent_task_success": 1.0,
+          "latency_p50_ms": 5394.2,
+          "latency_p95_ms": 10612.7,
+          "latency_median_ms": 5394.2,
+          "providers": {
+            "gemini": 29,
+            "none": 12
+          },
+          "counts": {
+            "answerable": 25,
+            "with_relevant_docs": 25,
+            "traps": 6,
+            "injection": 6,
+            "ambiguous": 4,
+            "agent": 6,
+            "answered_sentences": 59,
+            "citations": 74
+          }
+        }
+      },
+      "regraded_at": "2026-11-19T10:50:35+00:00"
+    },
+    "extractive": {
+      "generated_at": "2026-11-19T10:48:11+00:00",
+      "provider_setting": "extractive",
+      "models": {
+        "gemini": null,
+        "local": "Qwen/Qwen2.5-0.5B-Instruct",
+        "embedding": "sentence-transformers/all-MiniLM-L6-v2",
+        "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2"
+      },
+      "config": {
+        "top_k": 5,
+        "candidates_per_retriever": 20,
+        "rrf_k": 60,
+        "rerank_refusal_threshold": 0.0
+      },
+      "modes": {
+        "baseline": {
+          "cases": 47,
+          "hit_at_3": 1.0,
+          "mrr": 0.98,
+          "answer_quality": 0.8,
+          "groundedness": 0.981,
+          "citation_accuracy": 0.805,
+          "refusal_accuracy": 0.806,
+          "false_refusals": 0,
+          "hallucination_rate": 1.0,
+          "injection_block_rate": 0.0,
+          "unsafe_outputs": 0,
+          "ambiguous_handled": 1.0,
+          "agent_task_success": 0.333,
+          "latency_p50_ms": 364.2,
+          "latency_p95_ms": 588.6,
+          "latency_median_ms": 364.2,
+          "providers": {
+            "extractive": 41
+          },
+          "counts": {
+            "answerable": 25,
+            "with_relevant_docs": 25,
+            "traps": 6,
+            "injection": 6,
+            "ambiguous": 4,
+            "agent": 6,
+            "answered_sentences": 53,
+            "citations": 133
+          }
+        },
+        "final": {
+          "cases": 47,
+          "hit_at_3": 1.0,
+          "mrr": 1.0,
+          "answer_quality": 0.84,
+          "groundedness": 0.978,
+          "citation_accuracy": 0.846,
+          "refusal_accuracy": 0.968,
+          "false_refusals": 0,
+          "hallucination_rate": 0.167,
+          "injection_block_rate": 1.0,
+          "unsafe_outputs": 0,
+          "ambiguous_handled": 1.0,
+          "agent_task_success": 1.0,
+          "latency_p50_ms": 262.4,
+          "latency_p95_ms": 1491.4,
+          "latency_median_ms": 262.4,
+          "providers": {
+            "extractive": 29,
+            "none": 12
+          },
+          "counts": {
+            "answerable": 25,
+            "with_relevant_docs": 25,
+            "traps": 6,
+            "injection": 6,
+            "ambiguous": 4,
+            "agent": 6,
+            "answered_sentences": 46,
+            "citations": 104
+          }
+        }
+      },
+      "regraded_at": "2026-11-19T10:51:20+00:00"
+    }
+  },
+  "tests": {
+    "generated_at": "2026-11-19T10:55:45+00:00",
+    "run_at": "2026-11-19T16:21:33.724248+05:30",
+    "total": 369,
+    "passed": 369,
+    "failed": 0,
+    "skipped": 0,
+    "duration_s": 248.1,
+    "per_file": {
+      "test_admin": 29,
+      "test_agent": 32,
+      "test_applications": 15,
+      "test_ask_api": 15,
+      "test_auth": 20,
+      "test_eligibility": 35,
+      "test_injection": 67,
+      "test_llm": 24,
+      "test_pii": 26,
+      "test_rag": 57,
+      "test_resume": 31,
+      "test_security_http": 18
+    },
+    "failed_tests": [],
+    "coverage_pct": 96.0,
+    "coverage_lines": {
+      "covered": 3203,
+      "statements": 3337
+    },
+    "coverage_by_file": {
+      "__init__.py": 100.0,
+      "agent/__init__.py": 100.0,
+      "agent/executor.py": 99.0,
+      "agent/plan_builder.py": 92.4,
+      "agent/planner.py": 100.0,
+      "agent/state.py": 100.0,
+      "agent/steps.py": 90.8,
+      "api/__init__.py": 100.0,
+      "api/admin.py": 93.2,
+      "api/agent.py": 87.1,
+      "api/applications.py": 95.8,
+      "api/ask.py": 100.0,
+      "api/auth.py": 100.0,
+      "api/meta.py": 100.0,
+      "api/tools.py": 100.0,
+      "config.py": 86.6,
+      "db.py": 86.2,
+      "errors.py": 100.0,
+      "llm/__init__.py": 100.0,
+      "llm/base.py": 96.8,
+      "llm/extractive.py": 100.0,
+      "llm/gemini.py": 85.4,
+      "llm/local.py": 91.3,
+      "llm/router.py": 100.0,
+      "logging_conf.py": 100.0,
+      "main.py": 100.0,
+      "models.py": 100.0,
+      "rag/__init__.py": 100.0,
+      "rag/chunker.py": 93.3,
+      "rag/index.py": 90.9,
+      "rag/loader.py": 90.8,
+      "rag/models.py": 98.0,
+      "rag/pipeline.py": 93.6,
+      "rag/prompts.py": 100.0,
+      "rag/retriever.py": 100.0,
+      "schemas.py": 99.5,
+      "security/__init__.py": 100.0,
+      "security/auth.py": 95.7,
+      "security/headers.py": 98.7,
+      "security/injection.py": 100.0,
+      "security/pii.py": 100.0,
+      "security/rate_limit.py": 100.0,
+      "security/uploads.py": 98.5,
+      "services/__init__.py": 100.0,
+      "services/analytics.py": 98.6,
+      "services/events.py": 100.0,
+      "tools/__init__.py": 100.0,
+      "tools/applications.py": 100.0,
+      "tools/catalog.py": 90.6,
+      "tools/eligibility.py": 98.0,
+      "tools/resume.py": 97.2,
+      "tools/skills.py": 96.2
+    }
+  },
+  "cases_file": "eval/cases.json"
+}

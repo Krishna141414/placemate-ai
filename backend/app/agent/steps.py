@@ -20,6 +20,7 @@ from app.llm import router
 from app.llm.base import LLMRequest, Passage, ProviderError
 from app.models import StudentProfile, User
 from app.rag.index import get_index
+from app.rag.pipeline import answer_problem
 from app.rag.prompts import NOT_IN_DOCUMENTS, SYSTEM_PROMPT, build_prompt
 from app.rag.retriever import retrieve
 from app.security.injection import filter_output, scan_user_input
@@ -180,6 +181,9 @@ def step_build_plan(ctx: StepContext) -> tuple[dict[str, Any], str]:
     def accept(text: str) -> str | None:
         if NOT_IN_DOCUMENTS in text:
             return "no answer in sources"
+        problem = answer_problem(text)
+        if problem:
+            return problem
         return None if filter_output(text, len(passages), allowed)[1] else "no valid citation"
 
     try:

@@ -2,7 +2,7 @@
 
 Every item in the official brief and in `CLAUDE.md`, where it is implemented, what proves it, and its status. Updated at the end of every phase.
 
-Status values: `planned`, `in progress`, `done`. Last updated: Phase 5 (2026-11-19).
+Status values: `planned`, `in progress`, `done`. Last updated: Phase 6 (2026-11-20).
 
 ## A. Official brief
 
@@ -15,14 +15,14 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 5 (2026-11-
 | A5 | RAG | `backend/app/rag/` | `tests/test_rag.py`, eval Hit@3 / MRR | done |
 | A6 | Tools | `backend/app/tools/` | `tests/test_eligibility.py`, `test_resume.py`, `test_applications.py` | done |
 | A7 | Agent | `backend/app/agent/` | `tests/test_agent.py`, eval agent task success | done |
-| A8 | Evaluation | `eval/` | `eval/results/`, `docs/evaluation.md` | planned |
-| A9 | Testing | `backend/tests/`, `frontend/e2e/` | `docs/test-evidence.md` | planned |
+| A8 | Evaluation | `eval/` | `eval/results/`, `docs/evaluation.md` | done |
+| A9 | Testing | `backend/tests/`, `frontend/e2e/` | `docs/test-evidence.md` | in progress |
 | A10 | Security considerations | `backend/app/security/` | `SECURITY.md`, security tests | planned |
 | A11 | Usable application interface | `frontend/` | `screenshots/`, Playwright smoke test | planned |
 | A12 | Submit code | Repository | GitHub `main` | in progress |
 | A13 | Submit README | `README.md` | Document | planned |
 | A14 | Submit architecture | `docs/architecture.md` | Document | done |
-| A15 | Submit test evidence | `docs/test-evidence.md` | Document | planned |
+| A15 | Submit test evidence | `docs/test-evidence.md` | Document | done |
 | A16 | Submit screenshots | `screenshots/` | Files | planned |
 | A17 | Submit documentation | `docs/` | Files | in progress |
 
@@ -117,14 +117,14 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 5 (2026-11-
 
 | # | Requirement | Implemented in | Proof | Status |
 |---|---|---|---|---|
-| H1 | pytest: tools, API, RAG, agent, security | `backend/tests/` | `docs/test-evidence.md` | planned |
-| H2 | Coverage reported | `scripts/test.ps1` | `docs/test-evidence.md` | planned |
-| H3 | About 40 eval cases across six categories | `eval/cases.json` | File | planned |
-| H4 | Metrics: Hit@3, MRR, groundedness, citation accuracy, refusal accuracy, injection block rate, agent success, latency, provider | `eval/metrics.py` | `eval/results/summary.json` | planned |
-| H5 | Baseline vs final | `eval/run_eval.py` | `docs/evaluation.md` | planned |
-| H6 | Results and charts saved | `eval/results/` | Files | planned |
+| H1 | pytest: tools, API, RAG, agent, security | `backend/tests/` | `docs/test-evidence.md` | done |
+| H2 | Coverage reported | `scripts/test.ps1` | `docs/test-evidence.md` | done |
+| H3 | About 40 eval cases across six categories | `eval/cases.json` | File | done |
+| H4 | Metrics: Hit@3, MRR, groundedness, citation accuracy, refusal accuracy, injection block rate, agent success, latency, provider | `eval/metrics.py` | `eval/results/summary.json` | done |
+| H5 | Baseline vs final | `eval/run_eval.py` | `docs/evaluation.md` | done |
+| H6 | Results and charts saved | `eval/results/` | Files | done |
 | H7 | Playwright smoke test of main flows | `frontend/e2e/smoke.spec.ts` | `docs/test-evidence.md` | planned |
-| H8 | Real results only | All docs generated from result files | Review in Phase 9 | planned |
+| H8 | Real results only | All docs generated from result files | Review in Phase 9 | in progress |
 
 ## I. Showcase (`SHOWCASE.md`)
 
@@ -149,8 +149,8 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 5 (2026-11-
 | J1 | `README.md` | Root | planned |
 | J2 | `docs/requirements.md` | Done in Phase 1 | done |
 | J3 | `docs/architecture.md` with diagram + Mermaid | Done in Phase 1 | done |
-| J4 | `docs/evaluation.md` | Phase 6 | planned |
-| J5 | `docs/test-evidence.md` | Phase 6, updated Phase 9 | planned |
+| J4 | `docs/evaluation.md` | Phase 6 | done |
+| J5 | `docs/test-evidence.md` | Phase 6, updated Phase 9 | in progress |
 | J6 | `SECURITY.md` | Phase 10 | planned |
 | J7 | `docs/api.md` | Phase 10 | planned |
 | J8 | `docs/REQUIREMENTS_MATRIX.md` | This file | in progress |

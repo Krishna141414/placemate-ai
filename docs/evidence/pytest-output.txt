@@ -1,0 +1,67 @@
+﻿........................................................................ [ 19%]
+........................................................................ [ 39%]
+........................................................................ [ 58%]
+........................................................................ [ 78%]
+........................................................................ [ 97%]
+.........                                                                [100%]
+=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.14.0-final-0 _______________
+
+Name                         Stmts   Miss  Cover
+------------------------------------------------
+app\__init__.py                  0      0   100%
+app\agent\__init__.py            0      0   100%
+app\agent\executor.py          197      2    99%
+app\agent\plan_builder.py       79      6    92%
+app\agent\planner.py            12      0   100%
+app\agent\state.py              49      0   100%
+app\agent\steps.py             131     12    91%
+app\api\__init__.py              0      0   100%
+app\api\admin.py                88      6    93%
+app\api\agent.py                62      8    87%
+app\api\applications.py         48      2    96%
+app\api\ask.py                  93      0   100%
+app\api\auth.py                 46      0   100%
+app\api\meta.py                 26      0   100%
+app\api\tools.py                48      0   100%
+app\config.py                   82     11    87%
+app\db.py                       29      4    86%
+app\errors.py                   41      0   100%
+app\llm\__init__.py              0      0   100%
+app\llm\base.py                 31      1    97%
+app\llm\extractive.py           84      0   100%
+app\llm\gemini.py               41      6    85%
+app\llm\local.py                69      6    91%
+app\llm\router.py               47      0   100%
+app\logging_conf.py             57      0   100%
+app\main.py                     49      0   100%
+app\models.py                   99      0   100%
+app\rag\__init__.py              0      0   100%
+app\rag\chunker.py             120      8    93%
+app\rag\index.py               164     15    91%
+app\rag\loader.py              119     11    91%
+app\rag\models.py               51      1    98%
+app\rag\pipeline.py            220     14    94%
+app\rag\prompts.py              14      0   100%
+app\rag\retriever.py            72      0   100%
+app\schemas.py                 216      1    99%
+app\security\__init__.py         0      0   100%
+app\security\auth.py            70      3    96%
+app\security\headers.py         79      1    99%
+app\security\injection.py       85      0   100%
+app\security\pii.py             46      0   100%
+app\security\rate_limit.py      60      0   100%
+app\security\uploads.py         66      1    98%
+app\services\__init__.py         0      0   100%
+app\services\analytics.py       71      1    99%
+app\services\events.py          24      0   100%
+app\tools\__init__.py            0      0   100%
+app\tools\applications.py       36      0   100%
+app\tools\catalog.py            85      8    91%
+app\tools\eligibility.py        98      2    98%
+app\tools\resume.py            107      3    97%
+app\tools\skills.py             26      1    96%
+------------------------------------------------
+TOTAL                         3337    134    96%
+Coverage JSON written to file D:\Internship Projects\placemate-ai\docs\evidence\coverage.json
+369 passed in 248.11s (0:04:08)

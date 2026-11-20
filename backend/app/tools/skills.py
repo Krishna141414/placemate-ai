@@ -98,7 +98,7 @@ SKILLS: tuple[Skill, ...] = (
     # General
     Skill("aptitude", (_word("aptitude"), r"quantitative", r"logical reasoning")),
     # Not the branch name "Electronics and Communication (Engineering)".
-    Skill("communication", (r"(?<!and )(?<!& )communication(?! engineering)", r"public speaking", r"presentation skills")),
+    Skill("communication", (r"(?<!and )(?<!& )\bcommunication\b(?! engineering)", r"public speaking", r"presentation skills")),
 )
 
 _BY_NAME = {skill.name: skill for skill in SKILLS}

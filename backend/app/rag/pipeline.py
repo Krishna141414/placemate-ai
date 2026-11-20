@@ -37,6 +37,55 @@ BLOCKED_MESSAGE = (
 )
 SNIPPET_CHARS = 320
 _RAW_CITATION_RE = re.compile(r"\[(\d{1,3})\]")
+_SENTENCE_RE = re.compile(r"[^.!?]+[.!?]?")
+_WORD_RE = re.compile(r"[A-Za-z][A-Za-z0-9&+.'-]*")
+
+
+_PROMPT_MARKUP_RE = re.compile(r"(?i)source\s+n\s*=|</?\s*source\b|</?\s*question\b|\bsources:\s*$")
+MIN_ANSWER_WORDS = 5
+
+
+def answer_problem(text: str) -> str | None:
+    """Quality checks every model answer must pass, whatever the provider.
+
+    A small local model sometimes returns only "[1]" or repeats the prompt's
+    source markup; such an answer is rejected so the router moves on.
+    """
+    if len(_RAW_CITATION_RE.sub("", text).split()) < MIN_ANSWER_WORDS:
+        return "answer too short"
+    if _PROMPT_MARKUP_RE.search(text):
+        return "answer repeated the prompt markup"
+    return None
+
+
+def unknown_terms(question: str, vocabulary: set[str], initialisms: set[str] = frozenset()) -> list[str]:
+    """Names in the question that appear in no document.
+
+    A capitalised word that is not the first word of its sentence, or an
+    all-caps acronym, is treated as a name. If none of its tokens is in the
+    corpus vocabulary, the documents cannot be about it ("What is the CGPA
+    cut-off for Google?"), so the question is refused instead of answered
+    with another company's rule.
+    """
+    from app.rag.index import tokenize
+
+    missing: list[str] = []
+    for sentence in _SENTENCE_RE.findall(question):
+        words = _WORD_RE.findall(sentence)
+        for position, word in enumerate(words):
+            word = word.strip(".'-")
+            is_acronym = len(word) >= 2 and word.isupper()
+            is_name = word[:1].isupper() and position > 0
+            if not (is_acronym or is_name):
+                continue
+            tokens = tokenize(word)
+            if not tokens or any(token in vocabulary for token in tokens):
+                continue
+            if is_acronym and word.lower() in initialisms:
+                continue
+            if word not in missing:
+                missing.append(word)
+    return missing
 
 
 @dataclass
@@ -184,6 +233,25 @@ def run_pipeline(question: str, *, mode: Mode = "final") -> Iterator[dict[str, A
 
     # 4. Grounding check --------------------------------------------------
     if guarded:
+        from app.rag.index import get_index
+
+        index = get_index()
+        unknown = unknown_terms(question, index.vocabulary, index.initialisms)
+        if unknown:
+            names = ", ".join(f'"{name}"' for name in unknown)
+            yield add(
+                Step(
+                    "grounding",
+                    "Grounding check",
+                    "refused",
+                    f"The question names {names}, which does not appear in any document. No model was called.",
+                )
+            )
+            result.refused = True
+            result.answer = f"I could not find {names} in the placement documents, so I will not guess. " + REFUSAL_MESSAGE.split(", so I will not guess. ", 1)[1]
+            yield from ({"type": "delta", "text": piece} for piece in _words(result.answer))
+            yield finish()
+            return
         threshold = settings.rerank_refusal_threshold
         if not results or results[0].score < threshold:
             best = f"{results[0].score:.2f}" if results else "none"
@@ -234,6 +302,9 @@ def run_pipeline(question: str, *, mode: Mode = "final") -> Iterator[dict[str, A
             return "leaked the system prompt"
         if NOT_IN_DOCUMENTS in text:
             return None
+        problem = answer_problem(text)
+        if problem:
+            return problem
         _, citations, _ = filter_output(text, len(passages), allowed_text)
         if not citations:
             return "answer had no valid citation"

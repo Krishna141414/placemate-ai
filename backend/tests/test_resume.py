@@ -32,6 +32,7 @@ def demo_resume(name: str = "ananya_rao") -> str:
         ("OOP concepts", {"object oriented programming"}),
         ("Arduino and ESP32 projects", {"microcontrollers"}),
         ("Spring Boot microservices", {"spring boot", "java", "microservices"}),
+        ("Good communication skills", {"communication"}),
     ],
 )
 def test_skill_extraction(text, expected):

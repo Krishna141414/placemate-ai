@@ -373,3 +373,56 @@ def test_pipeline_emits_events_in_order(app):
     assert kinds.count("final") == 1
     streamed = "".join(e["text"] for e in run_pipeline("What is the dress code for interviews?") if e["type"] == "delta")
     assert streamed == answer_question("What is the dress code for interviews?").answer
+
+
+# --- names that appear in no document ------------------------------------------
+
+
+@pytest.mark.parametrize(
+    "question,unknown",
+    [
+        ("What is the minimum CGPA to apply to Microsoft?", ["Microsoft"]),
+        ("Does Wipro visit our campus?", ["Wipro"]),
+        ("What is the cut-off at Infosys and Accenture?", ["Infosys", "Accenture"]),
+        ("What is a JWT?", ["JWT"]),
+        ("What is the minimum CGPA for Nimbusware Technologies?", []),
+        ("Which branches can apply to Halcyon Embedded?", []),
+        ("What does the STAR method stand for?", []),
+        ("What is DSA?", []),  # initials of "data structures and algorithms"
+        ("How do I prepare for the HR round?", []),
+        ("Please tell me the dress code. Also, what about PPO?", []),  # sentence-initial words are not names
+        ("can i sit for another company after placement", []),
+    ],
+)
+def test_unknown_terms(app, question, unknown):
+    from app.rag.pipeline import unknown_terms
+
+    index = get_index()
+    assert unknown_terms(question, index.vocabulary, index.initialisms) == unknown
+
+
+def test_question_about_an_unknown_company_is_refused(app, monkeypatch):
+    def _must_not_run(*args, **kwargs):
+        raise AssertionError("a model was called for a company that is not in the documents")
+
+    monkeypatch.setattr(router, "generate", _must_not_run)
+    result = answer_question("What is the minimum CGPA to apply to Microsoft?")
+    assert result.refused is True
+    assert result.answer.startswith('I could not find "Microsoft" in the placement documents')
+    assert result.steps[-1]["name"] == "grounding" and "Microsoft" in result.steps[-1]["detail"]
+
+
+@pytest.mark.parametrize(
+    "text,reason",
+    [
+        ("[1]", "gemini: answer too short"),
+        ("Yes [1].", "gemini: answer too short"),
+        ('[source n="1"] - Students apply through the portal before the deadline [1].', "gemini: answer repeated the prompt markup"),
+        ("<source> Formal dress is compulsory for all interview rounds [1].", "gemini: answer repeated the prompt markup"),
+    ],
+)
+def test_degenerate_model_answers_are_rejected(app, monkeypatch, text, reason):
+    use_chain(monkeypatch, FakeProvider("gemini", text=text))
+    result = answer_question("What is the dress code for interviews?")
+    assert result.provider == "extractive"
+    assert result.fallbacks == [reason]

@@ -80,6 +80,27 @@ class IndexStore:
         return len(self.chunks)
 
     @property
+    def vocabulary(self) -> set[str]:
+        """Every BM25 token in the corpus (computed once)."""
+        if not hasattr(self, "_vocabulary"):
+            self._vocabulary = {token for chunk in self.chunks for token in tokenize(chunk.index_text)}
+        return self._vocabulary
+
+    @property
+    def initialisms(self) -> set[str]:
+        """Initials of every run of 2-4 content words, so "DSA" is known
+        because the corpus says "data structures and algorithms"."""
+        if not hasattr(self, "_initialisms"):
+            found: set[str] = set()
+            for chunk in self.chunks:
+                tokens = tokenize(chunk.index_text)
+                for size in (2, 3, 4):
+                    for i in range(len(tokens) - size + 1):
+                        found.add("".join(token[0] for token in tokens[i : i + size]))
+            self._initialisms = found
+        return self._initialisms
+
+    @property
     def document_count(self) -> int:
         return len({chunk.doc_key for chunk in self.chunks})
 

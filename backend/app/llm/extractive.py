@@ -126,6 +126,6 @@ class ExtractiveProvider:
         chosen.sort(key=lambda u: (u.passage.n, u.position))
         parts = []
         for unit in chosen:
-            text = unit.text if unit.text[-1] in ".!?" else unit.text + "."
+            text = unit.text if unit.text[-1] in ".!?:" else unit.text + "."
             parts.append(f"{text} [{unit.passage.n}]")
         return " ".join(parts)

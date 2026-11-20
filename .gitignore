@@ -49,3 +49,6 @@ desktop.ini
 .idea/
 .vscode/*
 !.vscode/extensions.json
+
+# Evaluation scratch databases and indexes
+eval/.work/
