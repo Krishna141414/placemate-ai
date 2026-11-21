@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import shutil
 
 import pytest
@@ -436,3 +437,24 @@ def test_snippets_are_plain_text():
     )
     long = plain_snippet("word " * 200, 50)
     assert long.endswith("...") and len(long) <= 53
+
+
+def test_models_go_offline_only_when_both_are_cached(tmp_path, monkeypatch):
+    from app.config import get_settings
+    from app.rag import models
+
+    settings = get_settings()
+    monkeypatch.setenv("HF_HUB_CACHE", str(tmp_path))
+    monkeypatch.delenv("HF_HUB_OFFLINE", raising=False)
+    monkeypatch.delenv("TRANSFORMERS_OFFLINE", raising=False)
+
+    # Nothing cached: the first start must be allowed to download.
+    models._prepare_environment()
+    assert "HF_HUB_OFFLINE" not in os.environ
+
+    for model_id in (settings.embedding_model, settings.reranker_model):
+        snapshot = models.model_cache_dir(model_id) / "snapshots" / "abc123"
+        snapshot.mkdir(parents=True)
+        (snapshot / "config.json").write_text("{}", encoding="utf-8")
+    models._prepare_environment()
+    assert os.environ.get("HF_HUB_OFFLINE") == "1"

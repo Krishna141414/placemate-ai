@@ -77,4 +77,4 @@ finally {
 }
 
 Write-Host "`nSetup finished. Start the app with:  .\scripts\dev.ps1" -ForegroundColor Green
-Write-Host "The first start downloads the embedding and reranker models (about 170 MB) if they are not cached yet."
+Write-Host "The first start downloads the embedding and reranker models (about 180 MB) if they are not cached yet."

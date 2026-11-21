@@ -1,8 +1,9 @@
 """Embedding and reranking models, loaded once and shared.
 
-Both run on CPU and are read from the local Hugging Face cache. Offline mode
-is switched on before the libraries are imported, so starting the app never
-needs the network.
+Both run on CPU and are read from the local Hugging Face cache. When both are
+already cached, offline mode is switched on before the libraries are imported,
+so starting the app never needs the network. On a machine that has never
+downloaded them, the first start fetches them (about 180 MB) instead of failing.
 """
 
 from __future__ import annotations
@@ -11,6 +12,7 @@ import logging
 import os
 import threading
 import time
+from pathlib import Path
 
 import numpy as np
 
@@ -23,8 +25,23 @@ _embedder = None
 _reranker = None
 
 
+def model_cache_dir(model_id: str) -> Path:
+    """Where huggingface_hub keeps a model (honours HF_HOME and HF_HUB_CACHE)."""
+    hub = Path(os.environ.get("HF_HOME", Path.home() / ".cache" / "huggingface")) / "hub"
+    if os.environ.get("HF_HUB_CACHE"):
+        hub = Path(os.environ["HF_HUB_CACHE"])
+    return hub / f"models--{model_id.replace('/', '--')}"
+
+
+def is_cached(model_id: str) -> bool:
+    snapshots = model_cache_dir(model_id) / "snapshots"
+    return snapshots.is_dir() and any(snapshots.iterdir())
+
+
 def _prepare_environment() -> None:
-    if get_settings().hf_offline:
+    settings = get_settings()
+    # Offline only when there is nothing to download; a fresh machine needs the Hub once.
+    if settings.hf_offline and is_cached(settings.embedding_model) and is_cached(settings.reranker_model):
         os.environ.setdefault("HF_HUB_OFFLINE", "1")
         os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
     os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
