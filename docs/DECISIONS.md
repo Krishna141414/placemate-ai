@@ -146,3 +146,9 @@ Short record of each design choice and the reason. Newest phase at the bottom.
 | D-108 | Registry code (`components/ui`, `components/ai-elements`) keeps its upstream patterns; three React Compiler advisories are off for those folders only | Easier to update from the registries; our own code keeps the full rule set and passes it. |
 | D-109 | Headings and buttons use sentence case, not Title Case | The Web Interface Guidelines suggest Title Case, but the design brief (Hallmark, Humanizer) uses sentence case throughout; one style is applied everywhere. |
 | D-110 | The idle "Start tour" button hides while a dialog is open, and the Ask input leaves room for it on phones | On a phone it covered the send button and could cover dialog buttons. |
+| D-111 | `npm run setup` / `dev:all` / `reset-demo` at the repository root wrap the PowerShell scripts with `-ExecutionPolicy Bypass` | Windows blocks unsigned scripts by default; one familiar command avoids that first-run failure. |
+| D-112 | `dev.ps1` runs the backend in its own window and the frontend in the current one | Two readable logs without adding a process manager dependency. |
+| D-113 | Retrieval models go offline only when both are already cached | The default `hf_offline=True` stopped a fresh machine from downloading them, so the backend could not start. Cached machines still never touch the network. |
+| D-114 | The answer renderer turns "- " lines into a list and drops `**` markers | Models sometimes reply in light markdown; raw markers must never show (SHOWCASE.md: no raw output on screen). |
+| D-115 | The approval dialog focuses itself on open, not its first focusable element | The first focusable element is a citation chip, and focusing it popped a preview over the plan. |
+| D-116 | Evaluation run logs are committed (un-ignored from `*.log`) | They are part of the evidence the docs point to and contain no secrets or personal data. |

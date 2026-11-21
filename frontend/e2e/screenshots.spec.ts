@@ -64,6 +64,9 @@ test.describe("student pages", () => {
     const blocked = await lastAnswer(page);
     await blocked.evaluate((el) => el.scrollIntoView({ block: "start" }));
     await shot(page, "09-ask-injection-blocked", info.project.name);
+    // Not captured on its own; it gives the coordinator's "not answered" list something real to show.
+    await page.locator('[data-tour="ask-example-unanswerable"]').click();
+    await lastAnswer(page);
 
     // After the questions, so the dashboard's recent questions are not empty on a fresh demo.
     await page.goto("/dashboard");

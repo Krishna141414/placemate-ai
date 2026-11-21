@@ -2,7 +2,7 @@
 
 PlaceMate handles student profiles and resumes, and it puts a language model between users and the college's documents. This file lists each protection, where it lives in the code, and the test that proves it. Every item can also be tried live on the app's **Security** page (`frontend/app/(app)/security/security-view.tsx`), which sends real requests to the backend and shows the status codes that come back.
 
-All tests are in `backend/tests/` unless noted. The last full run (379 passed, 96.0% coverage) is in `docs/evidence/pytest-output.txt`.
+All tests are in `backend/tests/` unless noted. The last full run (380 passed, 96.0% coverage) is in `docs/evidence/pytest-output.txt`.
 
 ## Summary
 

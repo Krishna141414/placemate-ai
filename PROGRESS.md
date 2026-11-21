@@ -16,13 +16,22 @@ Resume rule: read `CLAUDE.md` and this file, then continue `BUILD_PROMPT.md` fro
 | 7 | Frontend app | done |
 | 8 | Landing showcase + Guided Tour | done |
 | 9 | Verify | done |
-| 10 | Docs & finish | next |
+| 10 | Docs & finish | done |
 
 ## Next step
 
-Phase 10, step 1: `scripts/setup.ps1`, `scripts/dev.ps1` (+ root `npm run dev:all`), `scripts/reset-demo.ps1` (stop backend, `python -m app.seed --reset`, restart). Then reset the demo data and retake the screenshots (`cd frontend; npm run screenshots`), then README (Humanizer), `SECURITY.md`, `docs/api.md`, `docs/CODE_MAP.md`, final `docs/REQUIREMENTS_MATRIX.md`, fresh-clone check, final push and summary.
+All phases are done. To record a demo: `npm run reset-demo`, then `npm run dev:all`, open http://localhost:3000 and press Start tour.
 
 Dev servers: backend `backend/.venv/Scripts/python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000` (from `backend/`), frontend `npx next dev --port 3000` (from `frontend/`). Browse at `http://localhost:3000`.
+
+## Phase 10 - Docs & finish (done 2026-11-21)
+
+- 10.1 Scripts: `scripts/setup.ps1` (venv with `py -3.14`, pinned packages from the CPU wheel index, `.env` from the example, `npm ci`), `scripts/dev.ps1` (backend in its own window, waits for `/health`, frontend here), `scripts/reset-demo.ps1` (stops the backend, `python -m app.seed --reset`, rebuilds the index, restarts). Root `package.json`: `npm run setup`, `dev:all`, `reset-demo`, `test:backend`, `test:e2e`, `eval`.
+- 10.1 Docs: `README.md` (Humanizer rules applied: plain sentences, no staged contrasts, real numbers only), `SECURITY.md` (17 measures, each with its file and test; every claim checked against the code), `docs/api.md` (from the live OpenAPI schema), `docs/CODE_MAP.md` (four parts; formula and names checked against the code), final `docs/REQUIREMENTS_MATRIX.md` (every row done), decisions D-111 to D-116.
+- Fixes found while writing them: retrieval models were forced offline even when not cached (a fresh machine could not start; now offline only when both are cached, with a test); model answers in light markdown now render as lists; the approval dialog focused a citation chip and opened its preview; evaluation run logs were git-ignored by `*.log` (now kept as evidence).
+- 10.2 Fresh-clone check in `D:\pmfc`: `npm run setup` from zero (torch 2.15.0+cpu, no CUDA), `npm run dev:all` started both servers on a new database and index (34 documents, 227 chunks), 18/18 Playwright smoke tests and 379 backend tests passed against the clone. `git status --ignored` reviewed: nothing needed is ignored. (The tool would not delete `D:\pmfc` afterwards; it can be deleted by hand.)
+- 10.2 Final runs: `scripts/test.ps1` 380/380 passed, coverage 96.0%; `eval-summary.json` and the doc tables regenerated; demo reset, screenshots retaken (26 desktop + 26 mobile), demo reset again for recording.
+- 10.3 Pushed to `main`.
 
 ## Phase 9 - Verify (done 2026-11-21)
 

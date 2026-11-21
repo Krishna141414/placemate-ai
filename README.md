@@ -197,7 +197,7 @@ The method, both full tables, the bugs the evaluation found and how they were fi
 
 | Suite | Result |
 |---|---|
-| Backend (pytest) | **379 passed**, 0 failed, **96.0% line coverage** |
+| Backend (pytest) | **380 passed**, 0 failed, **96.0% line coverage** |
 | Frontend smoke tests (Playwright) | **18 passed**: login, ask (cited, refused, blocked), eligibility, resume match, agent with recovery and approval, tracker, roles, coordinator pages, tour controls |
 | Guided tour, all 30 steps in Auto mode with a pause | **passed** |
 | `tsc`, ESLint, `next build` | clean |

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-21T15:24:00+00:00",
+  "generated_at": "2026-11-21T15:54:04+00:00",
   "primary": "gemini",
   "runs": {
     "gemini": {
@@ -168,13 +168,13 @@
     }
   },
   "tests": {
-    "generated_at": "2026-11-21T15:23:51+00:00",
-    "run_at": "2026-11-21T20:51:17.308952+05:30",
-    "total": 379,
-    "passed": 379,
+    "generated_at": "2026-11-21T15:54:04+00:00",
+    "run_at": "2026-11-21T21:23:13.442168+05:30",
+    "total": 380,
+    "passed": 380,
     "failed": 0,
     "skipped": 0,
-    "duration_s": 150.0,
+    "duration_s": 49.6,
     "per_file": {
       "test_admin": 29,
       "test_agent": 34,
@@ -185,7 +185,7 @@
       "test_injection": 67,
       "test_llm": 24,
       "test_pii": 27,
-      "test_rag": 58,
+      "test_rag": 59,
       "test_resume": 31,
       "test_security_http": 19,
       "test_timestamps": 2
@@ -193,8 +193,8 @@
     "failed_tests": [],
     "coverage_pct": 96.0,
     "coverage_lines": {
-      "covered": 3257,
-      "statements": 3393
+      "covered": 3267,
+      "statements": 3403
     },
     "coverage_by_file": {
       "__init__.py": 100.0,
@@ -228,7 +228,7 @@
       "rag/chunker.py": 93.3,
       "rag/index.py": 90.9,
       "rag/loader.py": 90.8,
-      "rag/models.py": 98.0,
+      "rag/models.py": 98.4,
       "rag/pipeline.py": 93.8,
       "rag/prompts.py": 100.0,
       "rag/retriever.py": 100.0,

@@ -16,15 +16,15 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 7 (2026-11-
 | A6 | Tools | `backend/app/tools/` | `tests/test_eligibility.py`, `test_resume.py`, `test_applications.py` | done |
 | A7 | Agent | `backend/app/agent/` | `tests/test_agent.py`, eval agent task success | done |
 | A8 | Evaluation | `eval/` | `eval/results/`, `docs/evaluation.md` | done |
-| A9 | Testing | `backend/tests/`, `frontend/e2e/` | `docs/test-evidence.md`: 379 pytest (96.0% coverage), 18 Playwright smoke, full tour run | done |
-| A10 | Security considerations | `backend/app/security/` | `SECURITY.md`, security tests | planned |
+| A9 | Testing | `backend/tests/`, `frontend/e2e/` | `docs/test-evidence.md`: 380 pytest (96.0% coverage), 18 Playwright smoke, full tour run | done |
+| A10 | Security considerations | `backend/app/security/` | `SECURITY.md` (17 measures, each with file and test); live checks on the Security page | done |
 | A11 | Usable application interface | `frontend/` | `screenshots/` (26 desktop + 26 mobile), Playwright smoke + tour | done |
-| A12 | Submit code | Repository | GitHub `main` | in progress |
-| A13 | Submit README | `README.md` | Document | planned |
+| A12 | Submit code | Repository | GitHub `main` | done |
+| A13 | Submit README | `README.md` | `README.md` | done |
 | A14 | Submit architecture | `docs/architecture.md` | Document | done |
 | A15 | Submit test evidence | `docs/test-evidence.md` | Document | done |
 | A16 | Submit screenshots | `screenshots/` | `screenshots/desktop/`, `screenshots/mobile/` (retaken after the demo reset in Phase 10) | done |
-| A17 | Submit documentation | `docs/` | Files | in progress |
+| A17 | Submit documentation | `docs/` | `docs/` (requirements, architecture, evaluation, test evidence, API, code map, decisions, this matrix) | done |
 
 ## B. Users and features
 
@@ -65,7 +65,7 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 7 (2026-11-
 | D3 | About 15 interview experiences | `backend/data/interviews/` | Files | done |
 | D4 | About 6 prep guides | `backend/data/guides/` | Files | done |
 | D5 | `students_seed.json`, demo resumes | `backend/data/` | Files | done |
-| D6 | Fictional only, marked as sample data | `backend/data/README.md`, `README.md` | Document | planned |
+| D6 | Fictional only, marked as sample data | `backend/data/README.md`, `README.md` | `backend/data/README.md`, `README.md` (sample data note at the top) | done |
 | D7 | Upload `.md` / `.txt` / `.pdf` then re-index | `app/api/admin.py`, `app/rag/index.py` | `tests/test_admin.py` | done |
 
 ## E. LLM providers
@@ -89,7 +89,7 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 7 (2026-11-
 | F4 | Next.js App Router, TypeScript, Tailwind, shadcn/ui | `frontend/` | Build | done |
 | F5 | AI Elements for chat, citations, reasoning, tool calls | `frontend/components/ai-elements/` | Ask and Prep pages | done |
 | F6 | Motion; GSAP + ScrollTrigger + Lenis on landing | `frontend/components/landing/` (`landing-page.tsx`, `smooth-scroll.tsx`, `hero-answer.tsx`) | Landing page checked at 1280x800 and 390x844, reduced motion checked | done |
-| F7 | One command to run both | `scripts/dev.ps1` | Fresh-clone check | planned |
+| F7 | One command to run both | `scripts/dev.ps1` | `npm run dev:all` → `scripts/dev.ps1`; `npm run setup` → `scripts/setup.ps1` | done |
 | F8 | `.gitignore` covers venv, node_modules, .next, .env, DB, logs, indexes | `.gitignore` | Phase 0 | done |
 | F9 | `screenshots/` kept with `.gitkeep` | `screenshots/.gitkeep` | Phase 0 | done |
 
@@ -111,7 +111,7 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 7 (2026-11-
 | G12 | Secrets only in `.env`; `.env.example` committed | `.env.example`, `app/config.py` | Phase 0 | done |
 | G13 | No stack traces to users | `app/errors.py` | `tests/test_security_http.py` | done |
 | G14 | Dependency pinning | `requirements.txt`, `package-lock.json` | Files | done |
-| G15 | `SECURITY.md` with file locations | `SECURITY.md` | Document | planned |
+| G15 | `SECURITY.md` with file locations | `SECURITY.md` | `SECURITY.md` | done |
 
 ## H. Evaluation and testing
 
@@ -146,24 +146,24 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 7 (2026-11-
 
 | # | Requirement | Implemented in | Status |
 |---|---|---|---|
-| J1 | `README.md` | Root | planned |
+| J1 | `README.md` | Root | done |
 | J2 | `docs/requirements.md` | Done in Phase 1 | done |
 | J3 | `docs/architecture.md` with diagram + Mermaid | Done in Phase 1 | done |
 | J4 | `docs/evaluation.md` | Phase 6 | done |
-| J5 | `docs/test-evidence.md` | Phase 6, updated Phase 9 | in progress |
-| J6 | `SECURITY.md` | Phase 10 | planned |
-| J7 | `docs/api.md` | Phase 10 | planned |
-| J8 | `docs/REQUIREMENTS_MATRIX.md` | This file | in progress |
-| J9 | `docs/DECISIONS.md` | Started Phase 1 | in progress |
-| J10 | `docs/CODE_MAP.md` | Phase 10 | planned |
+| J5 | `docs/test-evidence.md` | Phase 6, updated Phase 9 | done |
+| J6 | `SECURITY.md` | Phase 10 | done |
+| J7 | `docs/api.md` | Phase 10 | done |
+| J8 | `docs/REQUIREMENTS_MATRIX.md` | This file | done |
+| J9 | `docs/DECISIONS.md` | Started Phase 1 | done |
+| J10 | `docs/CODE_MAP.md` | Phase 10 | done |
 | J11 | `docs/research.md` | Done in Phase 1 | done |
-| J12 | `PROGRESS.md` kept current | Root | in progress |
+| J12 | `PROGRESS.md` kept current | Root | done |
 
 ## K. Process rules
 
 | # | Rule | Proof | Status |
 |---|---|---|---|
-| K1 | Phases in order; commit + push after each | Git history | in progress |
-| K2 | Fresh-clone check | Phase 10 notes in `PROGRESS.md` | planned |
-| K3 | No source file hidden by `.gitignore` | `git status --ignored` review in Phase 10 | planned |
-| K4 | Everything on `main` | GitHub | in progress |
+| K1 | Phases in order; commit + push after each | Git history: one or more commits per phase, all pushed | done |
+| K2 | Fresh-clone check | Fresh clone into `D:\pmfc` on 2026-11-21: `npm run setup` (CPU torch 2.15.0+cpu), `npm run dev:all`, 18/18 Playwright smoke tests and 379 backend tests (slow test deselected) passed against the clone | done |
+| K3 | No source file hidden by `.gitignore` | `git status --ignored` reviewed: only dependencies, caches, runtime storage, test artefacts and local state are ignored; evaluation run logs were un-ignored as evidence | done |
+| K4 | Everything on `main` | GitHub | done |

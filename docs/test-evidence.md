@@ -23,7 +23,7 @@ Tests never call the Gemini API: `backend/tests/conftest.py` sets `LLM_PROVIDER=
 ## 2. Backend tests (pytest)
 
 <!-- eval:tests:start -->
-**379 passed, 0 failed, 0 skipped** in 150.0 s (run at 2026-11-21T20:51:17.308952+05:30). Line coverage of `backend/app`: **96.0%** (3257 of 3393 statements).
+**380 passed, 0 failed, 0 skipped** in 49.6 s (run at 2026-11-21T21:23:13.442168+05:30). Line coverage of `backend/app`: **96.0%** (3267 of 3403 statements).
 
 | Test file | Tests |
 |---|---:|
@@ -36,7 +36,7 @@ Tests never call the Gemini API: `backend/tests/conftest.py` sets `LLM_PROVIDER=
 | `test_injection.py` | 67 |
 | `test_llm.py` | 24 |
 | `test_pii.py` | 27 |
-| `test_rag.py` | 58 |
+| `test_rag.py` | 59 |
 | `test_resume.py` | 31 |
 | `test_security_http.py` | 19 |
 | `test_timestamps.py` | 2 |
