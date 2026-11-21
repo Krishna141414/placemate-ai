@@ -298,7 +298,7 @@ export function AskView() {
         <ConversationScrollButton />
       </Conversation>
 
-      <div className="sticky bottom-[var(--tour-inset,0px)] mx-auto mt-6 w-full max-w-3xl bg-background pb-2 pt-2" data-tour-obstacle>
+      <div className="sticky bottom-[var(--tour-inset,0px)] mx-auto mt-6 w-full max-w-3xl bg-background pt-2 pb-14 sm:pb-2" data-tour-obstacle>
         <Suggestions className="mb-3" data-tour="ask-examples">
           {EXAMPLES.map((example) => (
             <Suggestion

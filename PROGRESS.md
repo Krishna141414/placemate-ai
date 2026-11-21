@@ -15,14 +15,22 @@ Resume rule: read `CLAUDE.md` and this file, then continue `BUILD_PROMPT.md` fro
 | 6 | Tests & evaluation | done |
 | 7 | Frontend app | done |
 | 8 | Landing showcase + Guided Tour | done |
-| 9 | Verify | next |
-| 10 | Docs & finish | todo |
+| 9 | Verify | done |
+| 10 | Docs & finish | next |
 
 ## Next step
 
-Phase 9, step 1: start backend + frontend; Playwright smoke tests in `frontend/e2e/` (login, ask, eligibility, prep agent with approval, tour start) and screenshots of the landing page and every app page at desktop (1280x800) and mobile (390x844) into `screenshots/`. Wait for chart animations before full-page shots. The tour bar exposes `data-phase` (running / ready / stuck) for tests to wait on.
+Phase 10, step 1: `scripts/setup.ps1`, `scripts/dev.ps1` (+ root `npm run dev:all`), `scripts/reset-demo.ps1` (stop backend, `python -m app.seed --reset`, restart). Then reset the demo data and retake the screenshots (`cd frontend; npm run screenshots`), then README (Humanizer), `SECURITY.md`, `docs/api.md`, `docs/CODE_MAP.md`, final `docs/REQUIREMENTS_MATRIX.md`, fresh-clone check, final push and summary.
 
 Dev servers: backend `backend/.venv/Scripts/python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000` (from `backend/`), frontend `npx next dev --port 3000` (from `frontend/`). Browse at `http://localhost:3000`.
+
+## Phase 9 - Verify (done 2026-11-21)
+
+- 9.1 Playwright in `frontend/` (`@playwright/test` 1.65.1 pinned; Edge fallback when its Chromium is missing). `e2e/smoke.spec.ts`: 18 tests, all passing (visitor, ask x3, eligibility, resume, agent with recovery and approval, tracker, 403, coordinator upload / analytics / evaluation / security, tour controls). `e2e/screenshots.spec.ts`: 26 views at desktop and mobile into `screenshots/`. Scripts `npm run test:e2e`, `test:tour`, `screenshots`, `typecheck`.
+- 9.2 Audits: Hallmark sloplint clean (45 app files + landing). Web Interface Guidelines: added a skip link, made shadcn `SidebarInset` a div (two `main` landmarks), `color-scheme`, `touch-action`, replaced `transition-all` in registry components, ellipsis placeholders, tab panel focus ring, `spellCheck` off on email. ESLint now clean on the whole frontend.
+- 9.3 Full guided tour in Auto mode with a pause halfway: `e2e/tour.spec.ts` passed (30 steps, none stuck).
+- Bugs found and fixed: a 429 on the session check logged users out (now a 429 page; API budget 120/min); SQLite timestamps had no timezone (UTCDateTime type + `tests/test_timestamps.py`); idle tour button covered the Ask send button on phones.
+- 9.4 Verification: `tsc`, `eslint .`, `next build` (17 routes) all clean; `scripts/test.ps1`: 379/379 passed, coverage 96.0%; `eval-summary.json` and the doc tables regenerated. Requirements matrix rows for testing, interface, screenshots, reduced motion, raw JSON and audits marked done with evidence. Decisions D-103 to D-110.
 
 ## Phase 8 - Landing showcase + Guided Tour (done 2026-11-21)
 

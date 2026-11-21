@@ -16,14 +16,14 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 7 (2026-11-
 | A6 | Tools | `backend/app/tools/` | `tests/test_eligibility.py`, `test_resume.py`, `test_applications.py` | done |
 | A7 | Agent | `backend/app/agent/` | `tests/test_agent.py`, eval agent task success | done |
 | A8 | Evaluation | `eval/` | `eval/results/`, `docs/evaluation.md` | done |
-| A9 | Testing | `backend/tests/`, `frontend/e2e/` | `docs/test-evidence.md` | in progress |
+| A9 | Testing | `backend/tests/`, `frontend/e2e/` | `docs/test-evidence.md`: 379 pytest (96.0% coverage), 18 Playwright smoke, full tour run | done |
 | A10 | Security considerations | `backend/app/security/` | `SECURITY.md`, security tests | planned |
-| A11 | Usable application interface | `frontend/` | `screenshots/`, Playwright smoke test | in progress |
+| A11 | Usable application interface | `frontend/` | `screenshots/` (26 desktop + 26 mobile), Playwright smoke + tour | done |
 | A12 | Submit code | Repository | GitHub `main` | in progress |
 | A13 | Submit README | `README.md` | Document | planned |
 | A14 | Submit architecture | `docs/architecture.md` | Document | done |
 | A15 | Submit test evidence | `docs/test-evidence.md` | Document | done |
-| A16 | Submit screenshots | `screenshots/` | Files | planned |
+| A16 | Submit screenshots | `screenshots/` | `screenshots/desktop/`, `screenshots/mobile/` (retaken after the demo reset in Phase 10) | done |
 | A17 | Submit documentation | `docs/` | Files | in progress |
 
 ## B. Users and features
@@ -83,7 +83,7 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 7 (2026-11-
 
 | # | Requirement | Implemented in | Proof | Status |
 |---|---|---|---|---|
-| F1 | FastAPI, SQLAlchemy + SQLite, Pydantic, FAISS, rank-bm25 | `backend/` | `requirements.txt` | planned |
+| F1 | FastAPI, SQLAlchemy + SQLite, Pydantic, FAISS, rank-bm25 | `backend/` | `backend/requirements.txt` (pinned, CPU wheel index) | done |
 | F2 | Structured JSON logging | `app/logging_conf.py` | `tests/test_security_http.py` | done |
 | F3 | OpenAPI at `/docs` | `app/main.py` | Manual check in Phase 3 | done |
 | F4 | Next.js App Router, TypeScript, Tailwind, shadcn/ui | `frontend/` | Build | done |
@@ -123,8 +123,8 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 7 (2026-11-
 | H4 | Metrics: Hit@3, MRR, groundedness, citation accuracy, refusal accuracy, injection block rate, agent success, latency, provider | `eval/metrics.py` | `eval/results/summary.json` | done |
 | H5 | Baseline vs final | `eval/run_eval.py` | `docs/evaluation.md` | done |
 | H6 | Results and charts saved | `eval/results/` | Files | done |
-| H7 | Playwright smoke test of main flows | `frontend/e2e/smoke.spec.ts` | `docs/test-evidence.md` | planned |
-| H8 | Real results only | All docs generated from result files | Review in Phase 9 | in progress |
+| H7 | Playwright smoke test of main flows | `frontend/e2e/smoke.spec.ts` | `docs/evidence/e2e-smoke-output.txt` (18 passed) | done |
+| H8 | Real results only | All docs generated from result files | Tables written by `eval/report.py` from result files; test counts from `eval/results/tests.json` | done |
 
 ## I. Showcase (`SHOWCASE.md`)
 
@@ -137,10 +137,10 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 7 (2026-11-
 | I5 | Demo accounts with "Use demo account" buttons | `app/seed.py`, login page | Smoke test | done |
 | I6 | Guided Tour: manual default, bar, spotlight, keyboard, survives navigation | `frontend/components/tour/` (provider, bar, spotlight, store), `frontend/lib/tour-script.ts` (30 steps, each naming its requirement) | All 30 steps run in the browser (manual), Auto + Space pause/resume checked, reload resumes the step, phone layout checked; full run again in Phase 9 | done |
 | I7 | One speed config shared by tour and animations | `frontend/lib/speed.ts` (`SPEEDS`, `TOUR_LIMITS`) | Speed toggle in the tour bar changes the landing typing, count-ups and tour pacing | done |
-| I8 | `prefers-reduced-motion` respected | Landing + Motion config | Phase 9 check | planned |
-| I9 | No raw JSON on screen | All pages | Phase 9 review | planned |
-| I10 | Desktop + mobile screenshots of every page | `screenshots/` | Files | planned |
-| I11 | Hallmark + Web Design Guidelines audits fixed | Phase 9 | `PROGRESS.md` notes | planned |
+| I8 | `prefers-reduced-motion` respected | Landing + Motion config | Landing checked with reduced motion (no pinning, no smoothing, all screens shown); `lib/speed.ts` zeroes reveals and count-ups | done |
+| I9 | No raw JSON on screen | All pages | Raw API output only in collapsed, highlighted blocks (agent step cards, security results) | done |
+| I10 | Desktop + mobile screenshots of every page | `screenshots/` | `screenshots/desktop/`, `screenshots/mobile/` | done |
+| I11 | Hallmark + Web Design Guidelines audits fixed | Phase 9 | `docs/test-evidence.md` section 5 | done |
 
 ## J. Documentation
 

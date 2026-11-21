@@ -16,6 +16,11 @@ async function shot(page: Page, name: string, projectName: string, options: { fu
   await page.screenshot({ path: `../screenshots/${folder(projectName)}/${name}.png`, fullPage: options.fullPage ?? false });
 }
 
+/** Toasts are useful in use but cover the top bar in a still image. */
+async function waitForToasts(page: Page) {
+  await expect(page.locator("[data-sonner-toast]")).toHaveCount(0, { timeout: 15_000 });
+}
+
 async function scrollTo(page: Page, selector: string) {
   await page.locator(selector).first().evaluate((el) => el.scrollIntoView({ block: "start" }));
   await page.waitForTimeout(400);
@@ -50,10 +55,6 @@ test.describe("student pages", () => {
   test.use({ storageState: STATE.student });
 
   test("dashboard, ask, eligibility, resume", async ({ page }, info) => {
-    await page.goto("/dashboard");
-    await expect(page.locator('[data-tour="dashboard-eligibility"]')).toBeVisible();
-    await shot(page, "07-dashboard", info.project.name);
-
     await page.goto("/ask");
     await page.locator('[data-tour="ask-example-policy"]').click();
     const answer = await lastAnswer(page);
@@ -63,6 +64,11 @@ test.describe("student pages", () => {
     const blocked = await lastAnswer(page);
     await blocked.evaluate((el) => el.scrollIntoView({ block: "start" }));
     await shot(page, "09-ask-injection-blocked", info.project.name);
+
+    // After the questions, so the dashboard's recent questions are not empty on a fresh demo.
+    await page.goto("/dashboard");
+    await expect(page.locator('[data-tour="dashboard-eligibility"]')).toBeVisible();
+    await shot(page, "07-dashboard", info.project.name);
 
     await page.goto("/eligibility?company=orbitpay");
     await expect(page.locator('[data-tour="eligibility-result"]')).toBeVisible();
@@ -86,11 +92,15 @@ test.describe("student pages", () => {
     await page.goto("/agent?company=nimbusware&fault=retrieve_process");
     await page.locator('[data-tour="agent-start"]').click();
     await expect(page.locator('[data-tour="approval-dialog"]')).toBeVisible({ timeout: 180_000 });
+    // Move the pointer off the dialog so no citation preview is open in the image.
+    await page.mouse.move(1, 1);
+    await page.waitForTimeout(400);
     await shot(page, "14-agent-approval", info.project.name);
     await page.locator('[data-tour="approval-approve"]').click();
     await expect(page.locator('[data-tour="agent-confirmation"]')).toBeVisible();
     await page.mouse.move(0, 0);
     await page.evaluate(() => window.scrollTo(0, 0));
+    await waitForToasts(page);
     await shot(page, "15-agent-recovered-and-saved", info.project.name);
 
     await page.goto("/applications");
@@ -117,6 +127,7 @@ test.describe("coordinator pages", () => {
     await page.goto("/documents");
     await page.locator('[data-tour="upload-demo-invalid"]').click();
     await expect(page.locator('[data-tour="upload-error"]')).toBeVisible();
+    await waitForToasts(page);
     await shot(page, "17-documents-upload-rejected", info.project.name);
 
     await page.goto("/analytics");

@@ -5,6 +5,7 @@ import { chromium, defineConfig, devices } from "@playwright/test";
 // End-to-end smoke tests and the README screenshots.
 // Both servers start automatically (or are reused if already running):
 //   npm run test:e2e          smoke tests
+//   npm run test:tour         the whole guided tour in auto mode
 //   npm run screenshots       desktop + mobile screenshots into ../screenshots
 
 // Use Playwright's own Chromium when it is installed (`npx playwright install chromium`);
@@ -42,6 +43,11 @@ export default defineConfig({
       name: "smoke",
       testMatch: /smoke\.spec\.ts/,
       dependencies: ["setup"],
+      use: { ...devices["Desktop Chrome"], viewport: { width: 1280, height: 800 } },
+    },
+    {
+      name: "tour",
+      testMatch: /tour\.spec\.ts/,
       use: { ...devices["Desktop Chrome"], viewport: { width: 1280, height: 800 } },
     },
     {

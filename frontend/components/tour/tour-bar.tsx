@@ -47,7 +47,7 @@ export function TourBar({ onNext, onBack }: { onNext: () => void; onBack: () => 
 
   if (!state.active) {
     return (
-      <div className="tour-ui fixed right-4 bottom-4 z-[70]" data-tour-ui>
+      <div className="tour-ui tour-idle fixed right-4 bottom-4 z-[70]" data-tour-ui>
         <Button type="button" size="sm" variant="outline" className="shadow-[var(--shadow-soft)]" onClick={startTour}>
           <Play aria-hidden="true" />
           Start tour

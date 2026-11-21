@@ -13,29 +13,33 @@ All from the repository root in PowerShell, after `.\scripts\setup.ps1`.
 | Evaluation, Gemini + offline | `.\scripts\eval.ps1` | `eval/results/<provider>/` (cases, summary, charts, run log) |
 | Evaluation, offline only | `.\scripts\eval.ps1 -Providers extractive` | `eval/results/extractive/` |
 | Rewrite the tables in the docs | `backend\.venv\Scripts\python.exe eval\report.py` | `docs/evaluation.md`, this file |
-| Frontend smoke tests | `cd frontend; npx playwright test` | added in Phase 9 |
+| Frontend smoke tests (18) | `cd frontend; npm run test:e2e` | `docs/evidence/e2e-smoke-output.txt` |
+| Whole guided tour, Auto mode | `cd frontend; npm run test:tour` | `docs/evidence/e2e-tour-output.txt` |
+| Screenshots, desktop + mobile | `cd frontend; npm run screenshots` | `screenshots/desktop/`, `screenshots/mobile/` |
+| Frontend typecheck, lint, build | `cd frontend; npm run typecheck; npm run lint; npm run build` | console |
 
 Tests never call the Gemini API: `backend/tests/conftest.py` sets `LLM_PROVIDER=extractive`, clears the key, and uses a throw-away database and index in a temporary folder. The one slow test loads the real cached `Qwen2.5-0.5B-Instruct` and generates on CPU.
 
 ## 2. Backend tests (pytest)
 
 <!-- eval:tests:start -->
-**369 passed, 0 failed, 0 skipped** in 248.1 s (run at 2026-11-19T16:21:33.724248+05:30). Line coverage of `backend/app`: **96.0%** (3203 of 3337 statements).
+**379 passed, 0 failed, 0 skipped** in 150.0 s (run at 2026-11-21T20:51:17.308952+05:30). Line coverage of `backend/app`: **96.0%** (3257 of 3393 statements).
 
 | Test file | Tests |
 |---|---:|
 | `test_admin.py` | 29 |
-| `test_agent.py` | 32 |
+| `test_agent.py` | 34 |
 | `test_applications.py` | 15 |
 | `test_ask_api.py` | 15 |
-| `test_auth.py` | 20 |
+| `test_auth.py` | 23 |
 | `test_eligibility.py` | 35 |
 | `test_injection.py` | 67 |
 | `test_llm.py` | 24 |
-| `test_pii.py` | 26 |
-| `test_rag.py` | 57 |
+| `test_pii.py` | 27 |
+| `test_rag.py` | 58 |
 | `test_resume.py` | 31 |
-| `test_security_http.py` | 18 |
+| `test_security_http.py` | 19 |
+| `test_timestamps.py` | 2 |
 <!-- eval:tests:end -->
 
 What the suites cover, mapped to the brief:
@@ -117,4 +121,28 @@ Recorded in `PROGRESS.md` as each phase finished:
 
 ## 5. Frontend and screenshots
 
-Added in Phase 9: Playwright smoke tests of login, ask, eligibility and the prep agent with approval, and the list of screenshots in `screenshots/`.
+Playwright runs against the real backend and model (`frontend/playwright.config.ts` starts both servers, or reuses running ones). Logins are made once per role in `e2e/auth.setup.ts` so the run stays under the login rate limit. When Playwright's own Chromium is not installed, the config uses Microsoft Edge on Windows.
+
+**Smoke tests** (`frontend/e2e/smoke.spec.ts`), last run 2026-11-21: **18 passed** in 49.6 s (`docs/evidence/e2e-smoke-output.txt`).
+
+| Area | What is checked |
+|---|---|
+| Visitor | Landing renders with numbers from the results file and no tour bar until Start tour; demo login lands on the dashboard; app pages redirect to login; 404 page |
+| Ask | Cited answer with citation chips, source cards and provider badge; refusal for a question outside the documents; injection blocked with no sources |
+| Tools | Eligibility fails OrbitPay on CGPA with the reason; resume match shows a score, skill chips and the PII notice |
+| Agent | A forced failure in the process search is recovered after a retry; approval dialog; approve saves; tracker lists the application |
+| Roles | A student gets the 403 page on a coordinator page, with one `main` landmark |
+| Coordinator | Invalid upload rejected with the reason; analytics and evaluation load real data; the live injection check reports Protected |
+| Guided tour | Manual by default, Next, Space pauses and resumes, Back, state survives a reload, Exit |
+
+Each test also fails on any console error, except the status codes a test causes on purpose (the 415 of the invalid upload).
+
+**Guided tour** (`frontend/e2e/tour.spec.ts`): all 30 steps in Auto mode at Fast speed, with Space pressed halfway (the step stays put for 5 s, then resumes). **1 passed** in 2.0 min (`docs/evidence/e2e-tour-output.txt`); no step ended as "did not finish in time". Allowed console entries are the refused requests the tour shows on purpose (401, 403, 413, 415, 429).
+
+**Static checks**, 2026-11-21: `tsc --noEmit` clean, `eslint .` clean, `next build` succeeded (17 routes).
+
+**Audits** (Phase 9): Hallmark `sloplint` clean on 45 app files (one documented dismissal) and on the landing page; Vercel Web Interface Guidelines review fixed: skip link, a single `main` landmark (shadcn `SidebarInset` was a second one), `color-scheme`, `touch-action`, no `transition: all`, placeholders ending in an ellipsis, a focus ring on tab panels, `spellCheck` off on the email field.
+
+**Screenshots** (`npm run screenshots`): 26 views at 1280x800 in `screenshots/desktop/` and the same 26 at 390x844 in `screenshots/mobile/`: landing (hero, problem, walkthrough, pipeline, evidence), login, dashboard, ask (cited answer, injection blocked), eligibility (one company, all), resume match and PII notice, agent approval and the recovered, saved run, applications, documents (rejected upload), analytics (two views), evaluation (two views), security, guided tour, 404, 403, and the dashboard in dark mode.
+
+Bugs found by these runs and fixed: a rate-limited session check was treated as a logout (now a 429 page, and the API budget is 120 a minute); timestamps from SQLite were sent without a timezone and shown 5.5 hours off (now UTC-aware, with `tests/test_timestamps.py`); an upload promise was reported as unhandled; the approval dialog closed when the tour bar was clicked.

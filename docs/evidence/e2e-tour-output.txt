@@ -1,0 +1,6 @@
+
+Running 1 test using 1 worker
+
+  ok 1 [tour] › e2e\tour.spec.ts:10:1 › the full guided tour runs in auto mode, and pause holds it (2.0m)
+
+  1 passed (2.0m)

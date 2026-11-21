@@ -368,6 +368,11 @@ label {
   box-shadow: 0 0 0 9999px var(--scrim), 0 0 0 2px var(--blue);
   transition: opacity var(--dur-short) ease;
 }
+/* The idle "Start tour" button steps aside while a dialog is open (it could sit on the dialog's buttons). */
+body:has([role="dialog"][data-state="open"]) .tour-idle,
+body:has([role="alertdialog"][data-state="open"]) .tour-idle {
+  display: none;
+}
 :root[data-tour-active] body {
   padding-bottom: var(--tour-inset, 0px);
 }

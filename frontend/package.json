@@ -9,7 +9,8 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test:e2e": "playwright test --project=smoke",
-    "screenshots": "playwright test --project=screenshots-desktop --project=screenshots-mobile"
+    "screenshots": "playwright test --project=screenshots-desktop --project=screenshots-mobile",
+    "test:tour": "playwright test --project=tour"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
