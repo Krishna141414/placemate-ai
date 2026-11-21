@@ -398,6 +398,12 @@ export function AgentView() {
           className="max-h-[90dvh] overflow-y-auto sm:max-w-2xl"
           data-tour="approval-dialog"
           // The guided tour's bar sits outside the dialog; pressing it must not dismiss the dialog.
+          // Focus the dialog itself, not its first focusable element: that is a
+          // citation chip, and focusing it would pop its preview over the plan.
+          onOpenAutoFocus={(event) => {
+            event.preventDefault();
+            (event.currentTarget as HTMLElement | null)?.focus?.();
+          }}
           onInteractOutside={(event) => {
             if ((event.target as Element | null)?.closest?.("[data-tour-ui]")) event.preventDefault();
           }}
