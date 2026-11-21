@@ -33,6 +33,8 @@ npm-debug.log*
 *.sqlite3
 logs/
 *.log
+# Evaluation run logs are evidence (no secrets, no PII): keep them.
+!eval/results/**/run.log
 backend/storage/
 backend/.model_cache/
 
