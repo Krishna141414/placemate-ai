@@ -48,6 +48,12 @@ class UserOut(BaseModel):
     profile: ProfileOut | None = None
 
 
+class SessionOut(BaseModel):
+    """Who is logged in; user is null for a visitor."""
+
+    user: UserOut | None = None
+
+
 class ProfileUpdate(StrictModel):
     branch: str | None = Field(default=None, min_length=2, max_length=20)
     cgpa: float | None = Field(default=None, ge=0, le=10)

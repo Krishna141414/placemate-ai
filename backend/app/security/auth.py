@@ -110,6 +110,14 @@ def get_current_user(request: Request, db: Session = Depends(get_db)) -> User:
     return user
 
 
+def get_optional_user(request: Request, db: Session = Depends(get_db)) -> User | None:
+    """The logged-in user, or None for a visitor or an invalid session (never raises)."""
+    try:
+        return get_current_user(request, db)
+    except AppError:
+        return None
+
+
 def require_role(*roles: str):
     """Dependency factory: allow only the given roles."""
 

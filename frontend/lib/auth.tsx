@@ -29,7 +29,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const refresh = useCallback(async () => {
     try {
-      const me = await api<User>("/api/auth/me");
+      const me = (await api<{ user: User | null }>("/api/auth/session")).user;
       setUser(me);
       setOffline(false);
       return me;
@@ -44,8 +44,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let alive = true;
-    api<User>("/api/auth/me")
-      .then((me) => {
+    api<{ user: User | null }>("/api/auth/session")
+      .then(({ user: me }) => {
         if (!alive) return;
         setUser(me);
         setOffline(false);

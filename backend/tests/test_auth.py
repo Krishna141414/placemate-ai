@@ -63,6 +63,25 @@ def test_me_returns_the_logged_in_user(student_client):
     assert response.json()["profile"]["has_resume"] is True
 
 
+def test_session_is_null_for_a_visitor(client):
+    response = client.get("/api/auth/session")
+    assert response.status_code == 200
+    assert response.json() == {"user": None}
+
+
+def test_session_is_null_for_a_tampered_token(client):
+    client.cookies.set(COOKIE, "not.a.real-token")
+    response = client.get("/api/auth/session")
+    assert response.status_code == 200
+    assert response.json()["user"] is None
+
+
+def test_session_returns_the_logged_in_user(student_client):
+    response = student_client.get("/api/auth/session")
+    assert response.status_code == 200
+    assert response.json()["user"]["email"] == DEMO_STUDENT_EMAIL
+
+
 def test_tampered_token_is_rejected(client):
     client.cookies.set(COOKIE, "not.a.real-token")
     assert client.get("/api/auth/me").status_code == 401

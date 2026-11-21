@@ -8,12 +8,13 @@ from sqlalchemy.orm import Session
 from app.db import get_db
 from app.errors import AppError
 from app.models import StudentProfile, User
-from app.schemas import LoginRequest, ProfileOut, ProfileUpdate, UserOut
+from app.schemas import LoginRequest, ProfileOut, ProfileUpdate, SessionOut, UserOut
 from app.security.auth import (
     authenticate,
     clear_session_cookie,
     create_token,
     get_current_user,
+    get_optional_user,
     require_student,
     set_session_cookie,
 )
@@ -57,6 +58,13 @@ def logout(response: Response) -> Response:
 @router.get("/me", response_model=UserOut, summary="The logged-in user")
 def me(user: User = Depends(get_current_user)) -> UserOut:
     return user_out(user)
+
+
+@router.get("/session", response_model=SessionOut, summary="The logged-in user, or null for a visitor")
+def session(user: User | None = Depends(get_optional_user)) -> SessionOut:
+    # Public pages check the session with this instead of /me, so a visitor
+    # gets a 200 with user=null rather than a 401 in the browser console.
+    return SessionOut(user=user_out(user) if user else None)
 
 
 @router.patch("/profile", response_model=UserOut, summary="Update the student's own profile")

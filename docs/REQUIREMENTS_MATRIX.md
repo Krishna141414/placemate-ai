@@ -88,7 +88,7 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 7 (2026-11-
 | F3 | OpenAPI at `/docs` | `app/main.py` | Manual check in Phase 3 | done |
 | F4 | Next.js App Router, TypeScript, Tailwind, shadcn/ui | `frontend/` | Build | done |
 | F5 | AI Elements for chat, citations, reasoning, tool calls | `frontend/components/ai-elements/` | Ask and Prep pages | done |
-| F6 | Motion; GSAP + ScrollTrigger + Lenis on landing | `frontend/components/landing/` | Landing page | in progress |
+| F6 | Motion; GSAP + ScrollTrigger + Lenis on landing | `frontend/components/landing/` (`landing-page.tsx`, `smooth-scroll.tsx`, `hero-answer.tsx`) | Landing page checked at 1280x800 and 390x844, reduced motion checked | done |
 | F7 | One command to run both | `scripts/dev.ps1` | Fresh-clone check | planned |
 | F8 | `.gitignore` covers venv, node_modules, .next, .env, DB, logs, indexes | `.gitignore` | Phase 0 | done |
 | F9 | `screenshots/` kept with `.gitkeep` | `screenshots/.gitkeep` | Phase 0 | done |
@@ -131,7 +131,7 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 7 (2026-11-
 | # | Requirement | Implemented in | Proof | Status |
 |---|---|---|---|---|
 | I1 | White + navy identity, typography, spacing | `frontend/app/globals.css` | Hallmark audit, screenshots | done |
-| I2 | Landing: six scroll sections | `frontend/components/landing/` | Screenshots | planned |
+| I2 | Landing: six scroll sections | `frontend/components/landing/landing-page.tsx` | Browser check; screenshots in Phase 9 | done |
 | I3 | Ten app pages with ready examples | `frontend/app/(app)/` | Screenshots | done |
 | I4 | Error pages 404 / 403 / 429 / 500, toasts, skeletons, empty states | `frontend/app/` | Screenshots | done |
 | I5 | Demo accounts with "Use demo account" buttons | `app/seed.py`, login page | Smoke test | done |

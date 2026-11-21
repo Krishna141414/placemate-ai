@@ -1,0 +1,148 @@
+/* Hallmark · shape: product story (custom, SHOWCASE.md sections) · genre: modern-minimal · theme: brand (SHOWCASE.md)
+ * paper: #FFFFFF / #F8FAFC · accent: #1D4ED8 · display: Inter · body: Inter
+ * nav: edge-aligned wordmark, two links, one action · footer: a line of credits and the repository link
+ * hero: split, head and actions on the left, a working answer card on the right · signature: the cited answer with its source card
+ * sections: hero · problem · pinned walkthrough · pipeline · evidence · stack + footer · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S5 R4 V3 · weakest: V, a split hero is the expected form for a product page; kept it because the right column carries the real product, not an illustration */
+
+/* Landing-only pieces. Colours come from the tokens in app/globals.css. */
+
+.landing-frame {
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  background: var(--paper);
+  box-shadow: var(--shadow-soft);
+}
+
+.landing-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+}
+
+/* Landing links and buttons: a visible focus ring and a pressed state. */
+.landing a:focus-visible,
+.landing button:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.landing a:active {
+  opacity: 0.8;
+}
+.landing button:disabled {
+  opacity: 0.5;
+}
+
+/* Pipeline: a line that draws itself (scaleX / scaleY only) and nodes that light up (opacity only).
+ * Everything is drawn by default; GSAP animates *from* the empty state, so the diagram reads without JS. */
+.pipe-row {
+  display: grid;
+  gap: 0;
+}
+.pipe-item {
+  display: grid;
+  grid-template-rows: auto 1.5rem;
+  justify-items: center;
+}
+.pipe-item:last-child {
+  grid-template-rows: auto;
+}
+.pipe-node {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100%;
+}
+.pipe-node > .pipe-lit {
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  border: 1px solid var(--blue);
+  background: var(--blue-soft-2);
+}
+.pipe-line {
+  position: relative;
+  width: 2px;
+  height: 100%;
+  background: var(--rule);
+  border-radius: 999px;
+}
+.pipe-line > span {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--blue);
+  transform-origin: center top;
+}
+
+@media (min-width: 768px) {
+  .pipe-row {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .pipe-item {
+    grid-template-rows: none;
+    grid-template-columns: minmax(0, 1fr) 1.5rem;
+    align-items: stretch;
+  }
+  .pipe-item:last-child {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pipe-line {
+    width: 100%;
+    height: 2px;
+    align-self: center;
+  }
+  .pipe-line > span {
+    transform-origin: left center;
+  }
+}
+
+/* Walkthrough. By default each feature is a caption over its screenshot.
+ * On large screens with motion allowed, the page script sets data-pinned and the
+ * section becomes captions on the left and one frame on the right. */
+.walk-caps {
+  display: none;
+}
+.walk-stack {
+  display: grid;
+  gap: 3rem;
+}
+.walk-stack > figure {
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.walk[data-pinned] .walk-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr);
+  gap: 3rem;
+  align-items: center;
+}
+.walk[data-pinned] .walk-caps {
+  display: grid;
+  gap: 1.75rem;
+}
+.walk[data-pinned] .walk-cap {
+  border-left: 2px solid var(--rule);
+  padding-left: 1rem;
+}
+.walk[data-pinned] .walk-stack {
+  position: relative;
+  display: block;
+  aspect-ratio: 1008 / 640;
+}
+.walk[data-pinned] .walk-stack > figure {
+  position: absolute;
+  inset: 0;
+}
+.walk[data-pinned] .walk-stack figcaption {
+  display: none;
+}
+.walk[data-pinned] .walk-stack .landing-frame {
+  height: 100%;
+}

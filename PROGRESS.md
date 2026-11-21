@@ -14,15 +14,20 @@ Resume rule: read `CLAUDE.md` and this file, then continue `BUILD_PROMPT.md` fro
 | 5 | Tools & agent | done |
 | 6 | Tests & evaluation | done |
 | 7 | Frontend app | done |
-| 8 | Landing showcase + Guided Tour | next |
+| 8 | Landing showcase + Guided Tour | in progress |
 | 9 | Verify | todo |
 | 10 | Docs & finish | todo |
 
 ## Next step
 
-Phase 8, step 1: landing page `/` (replace the stub in `frontend/app/page.tsx`) with GSAP + ScrollTrigger + Lenis, six sections from SHOWCASE.md (hero with animated answer card, problem cards, pinned product walkthrough of the 4 features, animated pipeline diagram for RAG and agent, "built responsibly" count-ups read from `/eval-summary.json`, tech stack + footer). Load the gsap-* skills and Humanizer for copy; Hallmark page rules apply (not app scope). Then step 2: Guided Tour (`components/tour/`, `lib/tour-script.ts`) using the `data-tour` attributes already on every page.
+Phase 8, step 2: Guided Tour (`components/tour/` replacing the placeholder `tour-provider.tsx`, `lib/tour-script.ts`) using the `data-tour` attributes on every page and the landing sections (`landing-hero`, `landing-answer`, `landing-problem`, `landing-walkthrough`, `landing-pipeline`, `landing-evidence`, `landing-stack`). The hero card replays when the tour dispatches `pm:hero-replay`.
 
 Dev servers: backend `backend/.venv/Scripts/python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000` (from `backend/`), frontend `npx next dev --port 3000` (from `frontend/`). Browse at `http://localhost:3000`.
+
+## Phase 8 - Landing showcase + Guided Tour (in progress)
+
+- 8.1 Landing page `/` (`components/landing/`): hero with a real Gemini answer card (finished on load, Replay types it out), problem cards (rise in on scroll), pinned walkthrough of the four features using real screenshots in `public/product/` (pins only at 1024px+ with motion allowed; a captioned list otherwise), two-track pipeline that draws with the scroll (horizontal on desktop, vertical on phones), count-ups read from `/eval-summary.json`, stack list and footer. Lenis smooth scroll driven by the GSAP ticker; off under reduced motion. Copy checked with Humanizer; Hallmark sloplint (page scope) clean after adding focus/active states and renaming a generic heading. Checked at 1280x800, 390x844 and with reduced motion: no console errors or warnings.
+- Backend: `GET /api/auth/session` (200 with `user: null` for visitors) so public pages stop logging a 401; 3 tests added. Decisions D-87 to D-92.
 
 ## Phase 7 - Frontend app (done 2026-11-20)
 
