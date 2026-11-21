@@ -323,12 +323,18 @@
   color: var(--primary-foreground);
 }
 
-/* Spotlight used by the guided tour. */
+/* Guided tour: the spotlight hole (moved by transform every frame, so only opacity transitions)
+ * and the space the page keeps free under the tour bar. */
 .tour-spotlight {
   position: fixed;
+  top: 0;
+  left: 0;
   z-index: 60;
   pointer-events: none;
   border-radius: 14px;
   box-shadow: 0 0 0 9999px var(--scrim), 0 0 0 2px var(--blue);
-  transition: transform var(--dur-short) var(--ease-out-soft), opacity var(--dur-short) ease;
+  transition: opacity var(--dur-short) ease;
+}
+:root[data-tour-active] body {
+  padding-bottom: var(--tour-inset, 0px);
 }

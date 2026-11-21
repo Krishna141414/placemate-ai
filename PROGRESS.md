@@ -14,20 +14,24 @@ Resume rule: read `CLAUDE.md` and this file, then continue `BUILD_PROMPT.md` fro
 | 5 | Tools & agent | done |
 | 6 | Tests & evaluation | done |
 | 7 | Frontend app | done |
-| 8 | Landing showcase + Guided Tour | in progress |
-| 9 | Verify | todo |
+| 8 | Landing showcase + Guided Tour | done |
+| 9 | Verify | next |
 | 10 | Docs & finish | todo |
 
 ## Next step
 
-Phase 8, step 2: Guided Tour (`components/tour/` replacing the placeholder `tour-provider.tsx`, `lib/tour-script.ts`) using the `data-tour` attributes on every page and the landing sections (`landing-hero`, `landing-answer`, `landing-problem`, `landing-walkthrough`, `landing-pipeline`, `landing-evidence`, `landing-stack`). The hero card replays when the tour dispatches `pm:hero-replay`.
+Phase 9, step 1: start backend + frontend; Playwright smoke tests in `frontend/e2e/` (login, ask, eligibility, prep agent with approval, tour start) and screenshots of the landing page and every app page at desktop (1280x800) and mobile (390x844) into `screenshots/`. Wait for chart animations before full-page shots. The tour bar exposes `data-phase` (running / ready / stuck) for tests to wait on.
 
 Dev servers: backend `backend/.venv/Scripts/python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000` (from `backend/`), frontend `npx next dev --port 3000` (from `frontend/`). Browse at `http://localhost:3000`.
 
-## Phase 8 - Landing showcase + Guided Tour (in progress)
+## Phase 8 - Landing showcase + Guided Tour (done 2026-11-21)
 
 - 8.1 Landing page `/` (`components/landing/`): hero with a real Gemini answer card (finished on load, Replay types it out), problem cards (rise in on scroll), pinned walkthrough of the four features using real screenshots in `public/product/` (pins only at 1024px+ with motion allowed; a captioned list otherwise), two-track pipeline that draws with the scroll (horizontal on desktop, vertical on phones), count-ups read from `/eval-summary.json`, stack list and footer. Lenis smooth scroll driven by the GSAP ticker; off under reduced motion. Copy checked with Humanizer; Hallmark sloplint (page scope) clean after adding focus/active states and renaming a generic heading. Checked at 1280x800, 390x844 and with reduced motion: no console errors or warnings.
 - Backend: `GET /api/auth/session` (200 with `user: null` for visitors) so public pages stop logging a 401; 3 tests added. Decisions D-87 to D-92.
+- 8.2 Guided Tour: `lib/tour-script.ts` (30 steps from the landing page through student and coordinator flows, each naming the requirement it proves), `components/tour/` (store mirrored to sessionStorage, runner in the provider, bar with the caption docked in it, spotlight clipped above the bar). Manual by default; nothing starts until Start tour. Back / Pause-Play / Next / step count / Manual-Auto / Slow-Medium-Fast / Exit; Space and arrows. Steps log in as the right demo user, navigate, spotlight, and run real actions (ask three examples, resume match, agent run with a failing search and approval, uploads, live security checks). Limits in `lib/speed.ts` (`TOUR_LIMITS`). Page hooks: `data-status` on answer turns, the Ask input keeps above the bar, `?fault=` on the agent page, the approval dialog ignores clicks on the tour bar.
+- Fixed on the way: an upload promise reported as unhandled before its catch was attached (documents page); CompanySelect switching from uncontrolled to controlled.
+- Checked in the browser: all 30 steps forward in manual mode with real Gemini answers and agent run, reload resumes the step, Auto + Space pause/resume, phone layout, Exit cleans up. Hallmark sloplint clean on tour files (1 advisory: pressed state comes from the shared Button). Decisions D-93 to D-102.
+- 8.3 Committed and pushed.
 
 ## Phase 7 - Frontend app (done 2026-11-20)
 

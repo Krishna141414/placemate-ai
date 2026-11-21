@@ -135,8 +135,8 @@ Status values: `planned`, `in progress`, `done`. Last updated: Phase 7 (2026-11-
 | I3 | Ten app pages with ready examples | `frontend/app/(app)/` | Screenshots | done |
 | I4 | Error pages 404 / 403 / 429 / 500, toasts, skeletons, empty states | `frontend/app/` | Screenshots | done |
 | I5 | Demo accounts with "Use demo account" buttons | `app/seed.py`, login page | Smoke test | done |
-| I6 | Guided Tour: manual default, bar, spotlight, keyboard, survives navigation | `frontend/components/tour/` | Phase 9 tour run | planned |
-| I7 | One speed config shared by tour and animations | `frontend/lib/speed.ts` | Code | planned |
+| I6 | Guided Tour: manual default, bar, spotlight, keyboard, survives navigation | `frontend/components/tour/` (provider, bar, spotlight, store), `frontend/lib/tour-script.ts` (30 steps, each naming its requirement) | All 30 steps run in the browser (manual), Auto + Space pause/resume checked, reload resumes the step, phone layout checked; full run again in Phase 9 | done |
+| I7 | One speed config shared by tour and animations | `frontend/lib/speed.ts` (`SPEEDS`, `TOUR_LIMITS`) | Speed toggle in the tour bar changes the landing typing, count-ups and tour pacing | done |
 | I8 | `prefers-reduced-motion` respected | Landing + Motion config | Phase 9 check | planned |
 | I9 | No raw JSON on screen | All pages | Phase 9 review | planned |
 | I10 | Desktop + mobile screenshots of every page | `screenshots/` | Files | planned |

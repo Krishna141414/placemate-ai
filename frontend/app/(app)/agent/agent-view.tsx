@@ -65,7 +65,9 @@ export function AgentView() {
   const runParam = params.get("run");
   const { t } = useSpeed();
 
-  const [fault, setFault] = useState<string>("none");
+  // `?fault=` preselects a demo failure (the guided tour uses it); anything unknown means none.
+  const faultParam = params.get("fault");
+  const [fault, setFault] = useState<string>(() => (FAULTS.some((option) => option.value === faultParam) ? faultParam! : "none"));
   const [view, setView] = useState<View>(IDLE);
   const [running, setRunning] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -392,7 +394,14 @@ export function AgentView() {
       )}
 
       <Dialog open={dialogOpen && Boolean(pending) && !decided} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-2xl" data-tour="approval-dialog">
+        <DialogContent
+          className="max-h-[90dvh] overflow-y-auto sm:max-w-2xl"
+          data-tour="approval-dialog"
+          // The guided tour's bar sits outside the dialog; pressing it must not dismiss the dialog.
+          onInteractOutside={(event) => {
+            if ((event.target as Element | null)?.closest?.("[data-tour-ui]")) event.preventDefault();
+          }}
+        >
           <DialogHeader>
             <DialogTitle>Save this plan?</DialogTitle>
             <DialogDescription>Approving writes two things. Rejecting writes nothing.</DialogDescription>

@@ -98,6 +98,9 @@ export function DocumentsView() {
     const form = new FormData();
     form.append("file", file);
     const request = api<UploadResult>("/api/admin/documents", { method: "POST", form });
+    // The request runs while the stages are shown; mark it handled now so an
+    // early rejection is not reported as unhandled. It is awaited below.
+    request.catch(() => undefined);
     try {
       // Show each server-side stage briefly so the steps can be followed.
       await sleep(t.reveal);

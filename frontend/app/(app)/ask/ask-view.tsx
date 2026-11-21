@@ -241,7 +241,7 @@ export function AskView() {
             </div>
           )}
           {turns.map((turn) => (
-            <div key={turn.key} className="space-y-4" data-tour="answer-turn">
+            <div key={turn.key} className="space-y-4" data-tour="answer-turn" data-status={turn.status}>
               <Message from="user">
                 <MessageContent>{turn.question}</MessageContent>
               </Message>
@@ -298,7 +298,7 @@ export function AskView() {
         <ConversationScrollButton />
       </Conversation>
 
-      <div className="sticky bottom-0 mx-auto mt-6 w-full max-w-3xl bg-background pb-2 pt-2">
+      <div className="sticky bottom-[var(--tour-inset,0px)] mx-auto mt-6 w-full max-w-3xl bg-background pb-2 pt-2" data-tour-obstacle>
         <Suggestions className="mb-3" data-tour="ask-examples">
           {EXAMPLES.map((example) => (
             <Suggestion

@@ -99,3 +99,20 @@ export function useSpeed(): SpeedContextValue {
 }
 
 export const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+
+/**
+ * Guided-tour limits. These are ceilings, not pacing: the tour moves on as soon
+ * as the thing it waits for appears. Pacing comes from `Timings` above.
+ */
+export const TOUR_LIMITS = {
+  /** waiting for a page's element to render after navigation */
+  target: 12_000,
+  /** waiting for a cited answer from the model */
+  answer: 90_000,
+  /** waiting for the prep agent to reach the approval step */
+  agent: 180_000,
+  /** waiting for an upload, a match or a live security check */
+  action: 30_000,
+  /** how long the scroll may take to settle before the spotlight is placed */
+  settle: 1_200,
+} as const;
