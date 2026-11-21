@@ -201,7 +201,7 @@ export function LandingPage() {
           </nav>
         </header>
 
-        <main>
+        <main id="main">
           {/* 1. Hero */}
           <section className="mx-auto grid max-w-[var(--container)] items-center gap-12 px-4 pt-10 pb-20 sm:px-6 lg:grid-cols-[1fr_1.05fr] lg:pt-16 lg:pb-28" data-tour="landing-hero">
             <div>

@@ -1,0 +1,23 @@
+
+Running 18 tests using 1 worker
+
+  ok  1 [setup] › e2e\auth.setup.ts:8:3 › log in as the demo student (124ms)
+  ok  2 [setup] › e2e\auth.setup.ts:8:3 › log in as the demo coordinator (64ms)
+  ok  3 [smoke] › e2e\smoke.spec.ts:9:3 › visitor › landing page renders and nothing moves until Start tour (775ms)
+  ok  4 [smoke] › e2e\smoke.spec.ts:22:3 › visitor › demo student button logs in and lands on the dashboard (920ms)
+  ok  5 [smoke] › e2e\smoke.spec.ts:31:3 › visitor › app pages redirect to login without a session (437ms)
+  ok  6 [smoke] › e2e\smoke.spec.ts:36:3 › visitor › unknown pages show the 404 page (439ms)
+  ok  7 [smoke] › e2e\smoke.spec.ts:45:3 › student › ask: cited answer with sources and pipeline steps (11.7s)
+  ok  8 [smoke] › e2e\smoke.spec.ts:57:3 › student › ask: a question outside the documents is refused (7.1s)
+  ok  9 [smoke] › e2e\smoke.spec.ts:64:3 › student › ask: a prompt-injection attempt is blocked (1.9s)
+  ok 10 [smoke] › e2e\smoke.spec.ts:72:3 › student › eligibility: a failing criterion is shown with its reason (679ms)
+  ok 11 [smoke] › e2e\smoke.spec.ts:81:3 › student › resume match: score, skills and the PII notice (1.3s)
+  ok 12 [smoke] › e2e\smoke.spec.ts:93:3 › student › prep agent: recovers from a failed step and saves only after approval (11.1s)
+  ok 13 [smoke] › e2e\smoke.spec.ts:106:3 › student › applications tracker lists the saved application (726ms)
+  ok 14 [smoke] › e2e\smoke.spec.ts:111:3 › student › a coordinator page shows 403 to a student (577ms)
+  ok 15 [smoke] › e2e\smoke.spec.ts:121:3 › coordinator › documents: an invalid file is rejected with a reason (2.4s)
+  ok 16 [smoke] › e2e\smoke.spec.ts:129:3 › coordinator › analytics and evaluation pages load real data (1.3s)
+  ok 17 [smoke] › e2e\smoke.spec.ts:140:3 › coordinator › security: the injection check runs live and reports protected (1.0s)
+  ok 18 [smoke] › e2e\smoke.spec.ts:148:3 › guided tour › manual mode: Start, Next, Space pauses, Back, Exit (5.4s)
+
+  18 passed (49.6s)

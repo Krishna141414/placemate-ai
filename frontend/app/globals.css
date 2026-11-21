@@ -13,6 +13,7 @@
 /* ---------------------------------------------------------------- tokens */
 /* Palette from SHOWCASE.md. Every colour below is used through a token. */
 :root {
+  color-scheme: light;
   --navy: #0b1f3a;
   --navy-2: #13294b;
   --slate: #475569;
@@ -97,6 +98,7 @@
 }
 
 :root[data-theme="dark"] {
+  color-scheme: dark;
   --paper: #0b1220;
   --paper-2: #0e1628;
   --paper-3: #162033;
@@ -321,6 +323,37 @@
 .cite-chip[data-active="true"] {
   background: var(--blue);
   color: var(--primary-foreground);
+}
+
+/* Skip link: hidden until it receives keyboard focus. */
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 80;
+  padding: 0.5rem 0.875rem;
+  border-radius: 0.5rem;
+  background: var(--blue);
+  color: var(--primary-foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transform: translateY(-200%);
+}
+.skip-link:focus-visible {
+  transform: none;
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Taps register at once (no double-tap zoom wait) on controls. */
+a,
+button,
+[role="button"],
+[role="tab"],
+[role="radio"],
+summary,
+label {
+  touch-action: manipulation;
 }
 
 /* Guided tour: the spotlight hole (moved by transform every frame, so only opacity transitions)

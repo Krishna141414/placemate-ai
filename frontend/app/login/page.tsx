@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: "Log in" };
 
 export default function LoginPage() {
   return (
-    <main className="grid min-h-dvh lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+    <main id="main" className="grid min-h-dvh lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
       <div className="flex items-center justify-center px-6 py-16">
         <Suspense>
           <LoginForm />

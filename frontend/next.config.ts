@@ -5,6 +5,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // The dev-mode badge would sit over the sidebar footer in screenshots and recordings.
+  devIndicators: false,
   turbopack: {
     rules: {
       "*.css": {

@@ -23,6 +23,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${geistMono.variable} antialiased`}>
       <body className="min-h-dvh">
+        <a href="#main" className="skip-link">
+          Skip to content
+        </a>
         <Providers>{children}</Providers>
       </body>
     </html>

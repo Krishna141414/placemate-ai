@@ -205,7 +205,7 @@ export function SecurityView() {
         <MeasureCard
           id="ratelimit"
           title="Rate limiting"
-          protects="Each address gets a request budget per minute: 10 for login, 60 for the API, and 5 for this demo endpoint, so the limit can be seen without locking anyone out."
+          protects="Each address gets a request budget per minute: 10 for login, 120 for the API, and 5 for this demo endpoint, so the limit can be seen without locking anyone out."
           file="backend/app/security/rate_limit.py"
           action="Send 6 requests"
           run={async () => {

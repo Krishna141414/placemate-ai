@@ -198,13 +198,13 @@ function ShellSkeleton() {
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
-  const { user, loading, offline } = useAuth();
+  const { user, loading, offline, limited } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && !user && !offline) router.replace(`/login?next=${encodeURIComponent(pathname)}`);
-  }, [loading, user, offline, pathname, router]);
+    if (!loading && !user && !offline && limited === null) router.replace(`/login?next=${encodeURIComponent(pathname)}`);
+  }, [loading, user, offline, limited, pathname, router]);
 
   if (loading) return <ShellSkeleton />;
   if (offline) {
@@ -213,6 +213,16 @@ export function AppShell({ children }: { children: ReactNode }) {
         code="Offline"
         title="PlaceMate's server is not reachable"
         message="The backend did not answer. Start it with scripts\dev.ps1 (or uvicorn on port 8000) and reload."
+        action={{ label: "Try again", onClick: () => window.location.reload() }}
+      />
+    );
+  }
+  if (!user && limited !== null) {
+    return (
+      <StatusView
+        code="429"
+        title="Too many requests for a moment"
+        message={`PlaceMate limits how fast one address can call it. Wait about ${limited} seconds, then try again. You are still logged in.`}
         action={{ label: "Try again", onClick: () => window.location.reload() }}
       />
     );

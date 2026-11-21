@@ -69,7 +69,7 @@ class Settings(BaseSettings):
     baseline_refusal_threshold: float = 0.35
 
     # --- Limits ---
-    rate_limit_per_minute: int = 60
+    rate_limit_per_minute: int = 120
     auth_rate_limit_per_minute: int = 10
     probe_rate_limit_per_minute: int = 5
     max_upload_mb: int = 5

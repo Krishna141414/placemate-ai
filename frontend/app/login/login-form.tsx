@@ -101,6 +101,7 @@ export function LoginForm() {
             name="email"
             type="email"
             autoComplete="username"
+            spellCheck={false}
             inputMode="email"
             required
             value={email}

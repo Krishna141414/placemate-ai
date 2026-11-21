@@ -324,7 +324,7 @@ export function AskView() {
             <PromptInputTextarea
               value={input}
               onChange={(event) => setInput(event.target.value)}
-              placeholder="Ask about eligibility, a company, a policy or preparation"
+              placeholder="Ask about eligibility, a company, a policy or preparation…"
               aria-label="Your question"
               maxLength={2000}
             />

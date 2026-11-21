@@ -277,7 +277,7 @@ export function ApplicationsView() {
               </div>
               <div className="grid gap-1.5">
                 <Label htmlFor="app-notes">Notes</Label>
-                <Textarea id="app-notes" name="notes" maxLength={1000} value={draft.notes} onChange={(event) => setDraft({ ...draft, notes: event.target.value })} placeholder="Test date, contact, what to revise" />
+                <Textarea id="app-notes" name="notes" maxLength={1000} value={draft.notes} onChange={(event) => setDraft({ ...draft, notes: event.target.value })} placeholder="Test date, contact, what to revise…" />
               </div>
               <p role="alert" aria-live="polite" className="min-h-5 text-sm text-error">
                 {formError}

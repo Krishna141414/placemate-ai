@@ -32,8 +32,10 @@ export function StatusView({
       </Button>
     );
 
+  // A standalone error page is the page's main landmark; inside the app shell it is not.
+  const Root = embedded ? "div" : "main";
   return (
-    <div className={cn("grid place-items-center px-6", embedded ? "py-20" : "min-h-dvh py-16")}>
+    <Root id={embedded ? undefined : "main"} className={cn("grid place-items-center px-6", embedded ? "py-20" : "min-h-dvh py-16")}>
       <div className="max-w-md text-center">
         <p className="text-sm font-medium text-muted-foreground num">{code}</p>
         <h1 className="mt-2 text-2xl font-semibold tracking-tight">{title}</h1>
@@ -45,6 +47,6 @@ export function StatusView({
           </div>
         )}
       </div>
-    </div>
+    </Root>
   );
 }

@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "playwright test --project=smoke",
+    "screenshots": "playwright test --project=screenshots-desktop --project=screenshots-mobile"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -38,6 +41,7 @@
     "use-stick-to-bottom": "^1.1.6"
   },
   "devDependencies": {
+    "@playwright/test": "1.65.1",
     "@tailwindcss/turbopack": "4.3.3",
     "@types/node": "^20",
     "@types/react": "^19",

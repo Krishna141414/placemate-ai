@@ -10,6 +10,8 @@ interface AuthValue {
   loading: boolean;
   /** set when the backend could not be reached at all */
   offline: boolean;
+  /** seconds to wait when the session check itself was rate limited (not the same as logged out) */
+  limited: number | null;
   login: (email: string, password: string) => Promise<User>;
   logout: () => Promise<void>;
   refresh: () => Promise<User | null>;
@@ -26,14 +28,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [offline, setOffline] = useState(false);
+  const [limited, setLimited] = useState<number | null>(null);
 
   const refresh = useCallback(async () => {
     try {
       const me = (await api<{ user: User | null }>("/api/auth/session")).user;
       setUser(me);
       setOffline(false);
+      setLimited(null);
       return me;
     } catch (error) {
+      // A rate-limited check says nothing about the session: keep the user.
+      if (error instanceof ApiError && error.status === 429) {
+        setLimited(error.retryAfter ?? 60);
+        return null;
+      }
       setUser(null);
       setOffline(error instanceof ApiError && error.status === 0);
       return null;
@@ -52,6 +61,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       })
       .catch((error) => {
         if (!alive) return;
+        if (error instanceof ApiError && error.status === 429) {
+          setLimited(error.retryAfter ?? 60);
+          return;
+        }
         setUser(null);
         setOffline(error instanceof ApiError && error.status === 0);
       })
@@ -65,6 +78,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const me = await api<User>("/api/auth/login", { method: "POST", body: { email, password } });
     setUser(me);
     setOffline(false);
+    setLimited(null);
     return me;
   }, []);
 
@@ -76,7 +90,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const value = useMemo(() => ({ user, loading, offline, login, logout, refresh }), [user, loading, offline, login, logout, refresh]);
+  const value = useMemo(
+    () => ({ user, loading, offline, limited, login, logout, refresh }),
+    [user, loading, offline, limited, login, logout, refresh],
+  );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
