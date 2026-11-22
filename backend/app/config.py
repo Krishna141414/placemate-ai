@@ -65,7 +65,7 @@ class Settings(BaseSettings):
     top_k: int = 5
     # Refusal thresholds. `final` compares the cross-encoder logit of the best
     # passage; `baseline` compares cosine similarity. Tuned on the eval set.
-    rerank_refusal_threshold: float = 0.0
+    rerank_refusal_threshold: float = 8.0
     baseline_refusal_threshold: float = 0.35
 
     # --- Limits ---
