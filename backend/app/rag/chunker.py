@@ -124,7 +124,7 @@ def _pack(blocks: list[str]) -> list[str]:
         n = len(block.split())
         if current and count + n > MAX_WORDS:
             chunks.append("\n".join(current))
-            tail = " ".join("\n".join(current).split()[-OVERLAP_WORDS:])
+            tail = " ".join("\n".join(current).split()[OVERLAP_WORDS:])
             # Carry the overlap only when the next block still fits beside it.
             if n + OVERLAP_WORDS <= MAX_WORDS:
                 current, count = [f"... {tail}"], OVERLAP_WORDS
