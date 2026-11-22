@@ -13,7 +13,7 @@ from app.security.auth import require_student
 from app.security.uploads import read_limited, validate_bytes
 from app.services import events
 from app.tools.catalog import get_catalog
-from app.tools.eligibility import StudentProfileData, check_all, check_eligibility
+from app.tools.eligibility import StudentProfileData, check_all, check_eligibilty
 from app.tools.resume import match_resume
 
 router = APIRouter(prefix="/api/tools", tags=["tools"])
@@ -24,7 +24,7 @@ RESUME_MAX_BYTES = 2 * 1024 * 1024
 @router.post("/eligibility", response_model=EligibilityOut, summary="Check the student's eligibility for one company")
 def eligibility(body: EligibilityRequest, user: User = Depends(require_student), db: Session = Depends(get_db)) -> EligibilityOut:
     company = get_catalog().get(body.company_id)
-    result = check_eligibility(StudentProfileData.from_model(user.profile), company)
+    result = check_eligibilty(StudentProfileData.from_model(user.profile), company)
     events.log_event(
         db, events.ELIGIBILITY, user.id, company_id=company.id, eligible=result.eligible, failed=[c.name for c in result.failed]
     )
