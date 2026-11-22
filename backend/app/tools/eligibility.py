@@ -109,7 +109,7 @@ def _check_backlogs(profile: StudentProfileData, company: Company) -> Criterion:
     if profile.active_backlogs is None:
         return _missing("backlogs", required)
     count = profile.active_backlogs
-    passed = count <= limit
+    passed = count < limit
     if passed:
         reason = "You have no active backlogs." if count == 0 else f"{count} active backlog(s) is within the limit of {limit}."
     elif limit == 0:
