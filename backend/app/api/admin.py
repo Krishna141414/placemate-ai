@@ -21,7 +21,7 @@ from app.security.uploads import read_limited, sanitize_filename, validate_bytes
 from app.services import analytics, events
 
 logger = logging.getLogger("placemate.admin")
-router = APIRouter(prefix="/api/admin", tags=["coordinator"], dependencies=[Depends(require_coordinator)])
+router = APIRouter(prefix="/api/admin", tags=["coordinator"])
 
 
 def _reindex(db: Session) -> ReindexOut:
