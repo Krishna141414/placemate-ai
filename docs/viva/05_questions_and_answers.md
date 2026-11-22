@@ -131,27 +131,27 @@ Postgres instead of SQLite, a managed vector store (pgvector or Qdrant) with one
 
 **B1. Overfitting vs underfitting?**
 Overfitting: the model learns the training data, noise included, so training accuracy is high and validation accuracy is low. Underfitting: too simple to learn the pattern, so both are low. Fixes: more data, regularisation, dropout or early stopping for overfitting; a bigger model or better features for underfitting.
-*In PlaceMate:* my refusal threshold and fixes were tuned on the same eval set, a kind of overfitting to it; that's why I say a held-out set is needed. **Your example:** ___
+*In PlaceMate:* my refusal threshold and fixes were tuned on the same eval set, a kind of overfitting to it; that's why I say a held-out set is needed. **Your example:** Task 3 (hotel cancellation). Random Forest overfit more than HistGradientBoosting, with a bigger train-vs-CV gap and a 16.6 MB model. The tuned HGB had a CV PR-AUC of 0.715 with a gap of only 0.055 and a 0.89 MB model, so I chose it. In Task 4 I used early stopping (patience 3) for the same reason.
 
 **B2. Why split data into train, validation and test?**
 Train fits the model; validation chooses hyperparameters and when to stop; test is touched once at the end to estimate real performance. Using the test set for decisions leaks it and makes the score optimistic.
-*In PlaceMate:* my 47 cases acted as validation, not a true test set. **Your example:** ___
+*In PlaceMate:* my 47 cases acted as validation, not a true test set. **Your example:** Task 3. I tuned with cross-validation on the training data and used the test set only once at the end (ROC-AUC 0.855). I also ran a temporal check on the latest season (PR-AUC about 0.67), which is a harder, more honest test than a random split.
 
 **B3. Precision, recall, F1?**
 Precision: of what I flagged, how much was right (TP / (TP+FP)). Recall: of what was really there, how much I found (TP / (TP+FN)). F1: their harmonic mean, useful when classes are imbalanced.
-*In PlaceMate:* the injection guard needs high recall (catch attacks) without hurting precision (no false blocks on normal questions; there were 0 false refusals). **Your example:** ___
+*In PlaceMate:* the injection guard needs high recall (catch attacks) without hurting precision (no false blocks on normal questions; there were 0 false refusals). **Your example:** Task 3. Cancellations are the minority class, so accuracy (0.796) alone would mislead. I used PR-AUC as the main metric and reported F1 (0.656) at my chosen threshold.
 
 **B4. ROC-AUC?**
 The ROC curve plots true-positive rate against false-positive rate as the decision threshold moves; AUC is the area under it, 0.5 = random, 1.0 = perfect. It measures ranking quality independent of one threshold.
-*In PlaceMate:* the refusal threshold on the rerank score is exactly such a threshold choice. **Your example:** ___
+*In PlaceMate:* the refusal threshold on the rerank score is exactly such a threshold choice. **Your example:** Task 3. Test ROC-AUC was 0.855. I moved the decision threshold from 0.5 to 0.54 to trade precision against recall, without retraining the model.
 
 **B5. What is feature engineering?**
 Turning raw data into inputs a model can use: scaling, encoding categories, combining columns, extracting signals. Good features often matter more than the model choice.
-*In PlaceMate:* skill extraction from resume text, and the heading path added to each chunk, are hand-made features. **Your example:** ___
+*In PlaceMate:* skill extraction from resume text, and the heading path added to each chunk, are hand-made features. **Your example:** Task 2. I cleaned the hotel booking data (119,390 → 87,208 rows, 129,425 → 0 missing values) and built 86 features. In Task 3 I dropped country / is_domestic as possible check-in leakage and kept them only as an ablation (+0.064).
 
 **B6. How does a CNN work, and what is transfer learning?**
 Convolution filters slide over an image to detect local patterns (edges, then shapes), with pooling to reduce size; later layers combine them. Transfer learning reuses a model pretrained on a big dataset (e.g. ImageNet) and retrains only the last layers on your small dataset.
-*In PlaceMate:* the same idea, for text: I use pretrained MiniLM and a pretrained cross-encoder instead of training my own. **Your example:** ___
+*In PlaceMate:* the same idea, for text: I use pretrained MiniLM and a pretrained cross-encoder instead of training my own. **Your example:** Task 4 (EuroSAT satellite land use). MobileNetV3 pretrained on ImageNet. I first trained only the head for 3 epochs at lr 1e-3, then fine-tuned everything at 1e-4, which gave 98.32% accuracy and a macro F1 of 0.9826. I exported it to ONNX (6.1 MB) for the demo.
 
 **B7. What are tokens and the context window?**
 Models read tokens (word pieces, roughly ¾ of a word in English). The context window is the maximum tokens of input + output per call. Longer prompts cost more and are slower, and models attend less well to the middle of long contexts.
@@ -163,11 +163,11 @@ It scales the randomness of sampling the next token: near 0 = almost always the 
 
 **B9. Zero-shot vs few-shot prompting?**
 Zero-shot: just instructions. Few-shot: instructions plus a few worked examples in the prompt, which helps with format and edge cases at the cost of more tokens.
-*In PlaceMate:* zero-shot with very explicit rules; the citation format "[1] or [1][3]" is shown inline. **Your example:** ___
+*In PlaceMate:* zero-shot with very explicit rules; the citation format "[1] or [1][3]" is shown inline. **Your example:** Task 5. With Qwen2.5-0.5B I compared prompting strategies, and few-shot reached 100% on my test reviews. Asking for structured output gave 100% valid JSON.
 
 **B10. How do you get structured output from an LLM reliably?**
 Ask for a fixed format (JSON or a schema), use the provider's JSON/schema mode if it has one, then **validate** with code (e.g. Pydantic) and retry or fall back if it fails. Never trust it unchecked.
-*In PlaceMate:* answers are checked by code (citations parsed and bounded, `NOT_IN_DOCUMENTS` token, quality gate) and rejected answers fall through to the next provider. **Your example:** ___
+*In PlaceMate:* answers are checked by code (citations parsed and bounded, `NOT_IN_DOCUMENTS` token, quality gate) and rejected answers fall through to the next provider. **Your example:** Task 6. I extracted booking emails into a Pydantic schema. The output is parsed and repaired, then retried up to 2 times with the validation errors fed back, and falls back to regex if that still fails. Of 8 emails, 6 were OK first try, 1 was OK after a retry, and 1 spam email was correctly rejected.
 
 **B11. What are embeddings?**
 Vectors that represent meaning: texts with similar meaning are close together (high cosine similarity). They come from a model trained so that related pairs end up near each other.
@@ -195,7 +195,7 @@ Text that tries to override the system's instructions. Direct: the user types it
 
 **B17. What is function calling (tool use)?**
 The model is given tool descriptions; instead of text it returns "call tool X with arguments Y"; your code runs the tool and gives the result back. It lets a model use exact computation and live data.
-*In PlaceMate:* tools exist, but the agent's steps are chosen by rules, not by the model, for predictability. The same tools could be exposed as function calls to a model-driven agent. **Your example:** ___
+*In PlaceMate:* tools exist, but the agent's steps are chosen by rules, not by the model, for predictability. The same tools could be exposed as function calls to a model-driven agent. **Your example:** Task 10 (AI travel assistant). The model returns `{"tool": ..., "args": {...}}` for 6 tools (weather, currency, hotel search, book, cancel, list), and every tool's arguments are validated with Pydantic. Booking and cancelling always ask for confirmation first. If the JSON is still invalid after 1 retry, a keyword router takes over.
 
 **B18. What is an agent, and what makes one safe?**
 An LLM-based loop that plans, calls tools, looks at results and continues until the goal is done. Safety: limited tools, a step budget, retries with limits, saved state, validation of tool inputs and outputs, and human approval before irreversible actions.
@@ -227,4 +227,4 @@ Quality changes over time because the data, the users' questions or the provider
 
 **B25. What is the difference between AI, ML, deep learning and GenAI?**
 AI is the broad goal of machines doing intelligent tasks. ML learns patterns from data instead of hand-written rules. Deep learning is ML with multi-layer neural networks. GenAI is deep learning that generates new content (text, images), usually with large pretrained models.
-*In PlaceMate:* GenAI writes answers; classic deterministic code makes the decisions. **Your example:** ___
+*In PlaceMate:* GenAI writes answers; classic deterministic code makes the decisions. **Your example:** Task 3 is classic ML (gradient boosting on tabular data), Task 4 is deep learning (a CNN), and Tasks 8 and 12 are GenAI (RAG with an LLM writing answers from retrieved documents).
