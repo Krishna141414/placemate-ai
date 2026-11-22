@@ -48,7 +48,7 @@ class Settings(BaseSettings):
     # --- LLM ---
     llm_provider: str = "gemini"  # gemini | local | extractive
     gemini_api_key: str = Field(
-        default="", validation_alias=AliasChoices("GEMINI_API_KEY", "GOOGLE_API_KEY")
+        default="", validation_alias=AliasChoices("GEMINI_KEY", "GOOGLE_GEMINI_KEY")
     )
     gemini_model: str = "gemini-3.5-flash-lite"
     gemini_timeout_seconds: int = 30
