@@ -195,7 +195,7 @@ export function EligibilityView() {
     const request =
       key === "all"
         ? api<EligibilityAll>("/api/tools/eligibility/all", { method: "POST" }).then((data) => alive && setAll(data))
-        : api<Eligibility>("/api/tools/eligibility", { method: "POST", body: { company_id: key } }).then((data) => alive && setSingle(data));
+        : api<Eligibility>("/api/eligibility", { method: "POST", body: { company_id: key } }).then((data) => alive && setSingle(data));
     request
       .then(() => alive && setResult({ key, error: null }))
       .catch((err) => alive && setResult({ key, error: errorMessage(err) }));
